@@ -1,6 +1,5 @@
 # pension_operate_web
 
-<<<<<<< HEAD
 > a pension operation system
 
 ## Build Setup
@@ -20,6 +19,3 @@ npm run build --report
 ```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
-=======
-养老运营系统Web端
->>>>>>> f691fcffc3245671928b8fb6f49f1a9c8f52ef9b
