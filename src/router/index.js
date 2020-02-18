@@ -37,23 +37,44 @@ export const constantRouterMap = [
     component: Layout,
     redirect: '/pms/product',
     name: 'pms',
+<<<<<<< HEAD
     meta: {title: '商品', icon: 'product'},
+=======
+    meta: {title: '物质管理', icon: 'product'},
+>>>>>>> 63d93a4f36b2921a5ca4d3a47361b6025fc8bff0
     children: [{
       path: 'product',
       name: 'product',
       component: () => import('@/views/pms/product/index'),
+<<<<<<< HEAD
       meta: {title: '商品列表', icon: 'product-list'}
+=======
+      meta: {title: '固定资产'}
+>>>>>>> 63d93a4f36b2921a5ca4d3a47361b6025fc8bff0
     },
       {
         path: 'addProduct',
         name: 'addProduct',
         component: () => import('@/views/pms/product/add'),
+<<<<<<< HEAD
         meta: {title: '添加商品', icon: 'product-add'}
+=======
+        meta: {title: '添加'},
+        hidden: true
+      },
+      {
+        path: 'ProductView',
+        name: 'ProductView',
+        component: () => import('@/views/pms/product/view'),
+        meta: {title: '添加'},
+        hidden: true
+>>>>>>> 63d93a4f36b2921a5ca4d3a47361b6025fc8bff0
       },
       {
         path: 'updateProduct',
         name: 'updateProduct',
         component: () => import('@/views/pms/product/update'),
+<<<<<<< HEAD
         meta: {title: '修改商品', icon: 'product-add'},
         hidden: true
       },
@@ -63,19 +84,50 @@ export const constantRouterMap = [
         component: () => import('@/views/pms/product/index'),
         meta: {title: '商品回收站', icon: 'product-recycle'},
         hidden: true
+=======
+        meta: {title: '修改商品'},
+        hidden: true
+      },
+      {
+        path: 'productQuery',
+        name: 'productQuery',
+        component: () => import('@/views/pms/product/query'),
+        meta: {title: '物资查询'}
+      },
+      {
+        path: 'productPut',
+        name: 'productPut',
+        component: () => import('@/views/pms/product/put'),
+        meta: {title: '物资入库'}
+      },
+      {
+        path: 'productOut',
+        name: 'productOut',
+        component: () => import('@/views/pms/product/out'),
+        meta: {title: '物资出库'}
+>>>>>>> 63d93a4f36b2921a5ca4d3a47361b6025fc8bff0
       },
       {
         path: 'productComment',
         name: 'productComment',
         component: () => import('@/views/pms/product/index'),
+<<<<<<< HEAD
         meta: {title: '商品评价', icon: 'product-comment'},
+=======
+        meta: {title: '商品评价'},
+>>>>>>> 63d93a4f36b2921a5ca4d3a47361b6025fc8bff0
         hidden: true
       },
       {
         path: 'productCate',
         name: 'productCate',
         component: () => import('@/views/pms/productCate/index'),
+<<<<<<< HEAD
         meta: {title: '商品分类', icon: 'product-cate'}
+=======
+        meta: {title: '商品啥'},
+        hidden: true
+>>>>>>> 63d93a4f36b2921a5ca4d3a47361b6025fc8bff0
       },
       {
         path: 'addProductCate',
@@ -95,7 +147,12 @@ export const constantRouterMap = [
         path: 'productAttr',
         name: 'productAttr',
         component: () => import('@/views/pms/productAttr/index'),
+<<<<<<< HEAD
         meta: {title: '商品类型', icon: 'product-attr'}
+=======
+        meta: {title: '商品怎么了'},
+        hidden: true
+>>>>>>> 63d93a4f36b2921a5ca4d3a47361b6025fc8bff0
       },
       {
         path: 'productAttrList',
@@ -122,7 +179,11 @@ export const constantRouterMap = [
         path: 'brand',
         name: 'brand',
         component: () => import('@/views/pms/brand/index'),
+<<<<<<< HEAD
         meta: {title: '品牌管理', icon: 'product-brand'}
+=======
+        meta: {title: '盘点管理'}
+>>>>>>> 63d93a4f36b2921a5ca4d3a47361b6025fc8bff0
       },
       {
         path: 'addBrand',
@@ -135,8 +196,12 @@ export const constantRouterMap = [
         path: 'updateBrand',
         name: 'updateBrand',
         component: () => import('@/views/pms/brand/update'),
+<<<<<<< HEAD
         meta: {title: '编辑品牌'},
         hidden: true
+=======
+        meta: {title: '仓库日志'},
+>>>>>>> 63d93a4f36b2921a5ca4d3a47361b6025fc8bff0
       }
     ]
   },
@@ -154,12 +219,15 @@ export const constantRouterMap = [
         meta: {title: '会员档案', icon: 'product-list'}
       },
       {
+<<<<<<< HEAD
         path: 'in',
         name: 'in',
         component: () => import('@/views/oms/order/in'),
         meta: {title: '新建文件', icon: 'product-list'}
       },
       {
+=======
+>>>>>>> 63d93a4f36b2921a5ca4d3a47361b6025fc8bff0
         path: 'orderDetail',
         name: 'orderDetail',
         component: () => import('@/views/oms/order/orderDetail'),
@@ -174,12 +242,22 @@ export const constantRouterMap = [
         hidden:true
       },
       {
+<<<<<<< HEAD
+=======
+        path: 'orderSetting',
+        name: 'orderSetting',
+        component: () => import('@/views/oms/order/setting'),
+        meta: {title: '入住登记', icon: 'product-add'}
+      },
+      {
+>>>>>>> 63d93a4f36b2921a5ca4d3a47361b6025fc8bff0
         path: 'returnApply',
         name: 'returnApply',
         component: () => import('@/views/oms/apply/index'),
         meta: {title: '预约占床', icon: 'product-brand'}
       },
       {
+<<<<<<< HEAD
         path: 'add',
         name: 'add',
         component: () => import('@/views/oms/product/add'),
@@ -190,6 +268,11 @@ export const constantRouterMap = [
         path: 'out',
         name: 'out',
         component: () => import('@/views/oms/order/setting'),
+=======
+        path: 'returnReason',
+        name: 'returnReason',
+        component: () => import('@/views/oms/apply/reason'),
+>>>>>>> 63d93a4f36b2921a5ca4d3a47361b6025fc8bff0
         meta: {title: '退住登记', icon: 'product-brand'}
       },
       {

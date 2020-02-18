@@ -3,7 +3,11 @@
     <el-card class="filter-container" shadow="never">
       <div>
         <i class="el-icon-search"></i>
+<<<<<<< HEAD
         <span>筛选搜索</span>
+=======
+        <span>搜索</span>
+>>>>>>> 63d93a4f36b2921a5ca4d3a47361b6025fc8bff0
         <el-button
           style="float: right"
           @click="handleSearchList()"
@@ -21,6 +25,7 @@
       <div style="margin-top: 15px">
         <el-form :inline="true" :model="listQuery" size="small" label-width="140px">
           <el-form-item label="输入搜索：">
+<<<<<<< HEAD
             <el-input style="width: 203px" v-model="listQuery.keyword" placeholder="商品名称"></el-input>
           </el-form-item>
           <el-form-item label="商品货号：">
@@ -62,6 +67,9 @@
                 :value="item.value">
               </el-option>
             </el-select>
+=======
+            <el-input style="width: 203px" v-model="listQuery.keyword" placeholder="这里输入关键词"></el-input>
+>>>>>>> 63d93a4f36b2921a5ca4d3a47361b6025fc8bff0
           </el-form-item>
         </el-form>
       </div>
@@ -84,6 +92,7 @@
                 v-loading="listLoading"
                 border>
         <el-table-column type="selection" width="60" align="center"></el-table-column>
+<<<<<<< HEAD
         <el-table-column label="编号" width="100" align="center">
           <template slot-scope="scope">{{scope.row.id}}</template>
         </el-table-column>
@@ -153,6 +162,41 @@
           </template>
         </el-table-column>
         <el-table-column label="操作" width="160" align="center">
+=======
+        <el-table-column label="序号" width="100" align="center">
+          <template slot-scope="scope">{{scope.row.id}}</template>
+        </el-table-column>
+        <el-table-column label="名称" width="150" align="center">
+          <template slot-scope="scope">
+            <p>{{scope.row.name}}</p>
+          </template>
+        </el-table-column>
+        <el-table-column label="资产编号" width="120" align="center">
+          <template slot-scope="scope">
+            <p>{{scope.row.id}}</p>
+          </template>
+        </el-table-column>
+        <el-table-column label="分类" width="100" align="center">
+          <template slot-scope="scope">{{scope.row.name}}</template>
+        </el-table-column>
+        <el-table-column label="品牌" width="100" align="center">
+          <template slot-scope="scope">{{scope.row.name}}</template>
+        </el-table-column>
+        <el-table-column label="状态" width="100" align="center">
+          <template slot-scope="scope">{{scope.row.sale}}</template>
+        </el-table-column>
+        <el-table-column label="安装日期" align="center">
+          <template slot-scope="scope">
+            <p>{{scope.row.verifyStatus | verifyStatusFilter}}</p>
+          </template>
+        </el-table-column>
+        <el-table-column label="保修日期" align="center">
+          <template slot-scope="scope">
+            <p>{{scope.row.verifyStatus | verifyStatusFilter}}</p>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" width="250" align="center">
+>>>>>>> 63d93a4f36b2921a5ca4d3a47361b6025fc8bff0
           <template slot-scope="scope">
             <p>
               <el-button
@@ -163,12 +207,15 @@
                 size="mini"
                 @click="handleUpdateProduct(scope.$index, scope.row)">编辑
               </el-button>
+<<<<<<< HEAD
             </p>
             <p>
               <el-button
                 size="mini"
                 @click="handleShowLog(scope.$index, scope.row)">日志
               </el-button>
+=======
+>>>>>>> 63d93a4f36b2921a5ca4d3a47361b6025fc8bff0
               <el-button
                 size="mini"
                 type="danger"
@@ -585,7 +632,11 @@
         this.$router.push({path:'/pms/updateProduct',query:{id:row.id}});
       },
       handleShowProduct(index,row){
+<<<<<<< HEAD
         console.log("handleShowProduct",row);
+=======
+        this.$router.push({path:'/pms/ProductView',query:{id:row.id}});
+>>>>>>> 63d93a4f36b2921a5ca4d3a47361b6025fc8bff0
       },
       handleShowVerifyDetail(index,row){
         console.log("handleShowVerifyDetail",row);
