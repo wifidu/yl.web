@@ -67,7 +67,7 @@
             </template>
           </el-table-column>
           <el-table-column
-            label="健康指数"
+            label="性别"
             width="80"
             align="center">
             <template slot-scope="scope">

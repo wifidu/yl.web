@@ -4,7 +4,7 @@
 <script>
   import ProductDetail from './components/ProductDetail'
   export default {
-    name: 'addProduct',
+    name: 'add',
     components: { ProductDetail }
   }
 </script>

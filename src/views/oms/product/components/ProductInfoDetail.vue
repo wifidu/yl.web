@@ -8,22 +8,22 @@
 <!--          :options="productCateOptions">-->
 <!--        </el-cascader>-->
 <!--      </el-form-item>-->
-      <el-form-item label="会员姓名：" prop="subTitle" style="width: 40%">
-        <el-input v-model="value.subTitle"></el-input>
+      <el-form-item label="会员姓名：" prop="name" style="width: 50%">
+        <el-input v-model="value.name"></el-input>
       </el-form-item>
-      <el-form-item label="年龄：" prop="subTitle" style="width: 40%">
-        <el-input v-model="value.subTitle"></el-input>
+      <el-form-item label="年龄：" prop="age" style="width: 50%">
+        <el-input v-model="value.age"></el-input>
       </el-form-item>
-      <el-form-item label="性别：" prop="subTitle" style="width: 40%">
-        <el-input v-model="value.subTitle"></el-input>
+      <el-form-item label="性别：" prop="sex" style="width: 50%">
+        <el-input v-model="value.sex"></el-input>
       </el-form-item>
-      <el-form-item label="照护等级：" prop="subTitle" style="width: 40%">
-        <el-input v-model="value.subTitle"></el-input>
-      </el-form-item>
-      <el-form-item label="入住时间："  style="width: 40%">
+      <el-form-item label="照护等级："  style="width: 50%">
         <el-input ></el-input>
       </el-form-item>
-      <el-form-item label="床位号："  style="width: 40%">
+      <el-form-item label="入住时间："  style="width: 50%">
+        <el-input ></el-input>
+      </el-form-item>
+      <el-form-item label="床位号："  style="width: 50%">
         <el-select
           v-model="value.brandId"
           @change="handleBrandChange"
@@ -48,13 +48,13 @@
 
 
 
-      <el-form-item label="备注：">
-        <el-input
-          :autoSize="true"
-          v-model="value.description"
-          type="textarea"
-          placeholder="请输入备注"></el-input>
-      </el-form-item>
+<!--      <el-form-item label="备注：">-->
+<!--        <el-input-->
+<!--          :autoSize="true"-->
+<!--          v-model="value.description"-->
+<!--          type="textarea"-->
+<!--          placeholder="请输入备注"></el-input>-->
+<!--      </el-form-item>-->
       <el-form-item style="text-align: center">
         <el-button type="primary" size="medium" @click="handleNext('productInfoForm')">下一步，报告上传</el-button>
       </el-form-item>
@@ -93,14 +93,13 @@
         brandOptions: [],
         rules: {
           name: [
-            {required: true, message: '请输入商品名称', trigger: 'blur'},
-            {min: 2, max: 140, message: '长度在 2 到 140 个字符', trigger: 'blur'}
+            {required: true, message: '请输入会员名称', trigger: 'blur'},
+            {min: 2, max: 140, message: '长度在 1 到 70 个字', trigger: 'blur'}
           ],
-          subTitle: [{required: true, message: '请输入商品副标题', trigger: 'blur'}],
-          productCategoryId: [{required: true, message: '请选择商品分类', trigger: 'blur'}],
-          brandId: [{required: true, message: '请选择商品品牌', trigger: 'blur'}],
-          description: [{required: true, message: '请输入商品介绍', trigger: 'blur'}],
-          requiredProp: [{required: true, message: '该项为必填项', trigger: 'blur'}]
+          age: [{required: true, message: '请输入年龄', trigger: 'blur'},
+            {min: 2, max: 6, message: '长度在 1 到 6 个数字', trigger: 'blur'}],
+          sex: [{required: true, message: '请输入性别', trigger: 'blur'},
+            {min: 2, max: 10, message: '长度在 1 到 5 个字', trigger: 'blur'}],
         }
       };
     },
