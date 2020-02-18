@@ -66,22 +66,11 @@ export const constantRouterMap = [
         hidden: true
       },
       {
-        path: 'productQuery',
-        name: 'productQuery',
-        component: () => import('@/views/pms/product/query'),
-        meta: {title: '物资查询'}
-      },
-      {
-        path: 'productPut',
-        name: 'productPut',
-        component: () => import('@/views/pms/product/put'),
-        meta: {title: '物资入库'}
-      },
-      {
-        path: 'productOut',
-        name: 'productOut',
-        component: () => import('@/views/pms/product/out'),
-        meta: {title: '物资出库'}
+        path: 'productRecycle',
+        name: 'productRecycle',
+        component: () => import('@/views/pms/product/index'),
+        meta: {title: '物资查询'},
+        hidden: true
       },
       {
         path: 'productComment',
@@ -94,8 +83,7 @@ export const constantRouterMap = [
         path: 'productCate',
         name: 'productCate',
         component: () => import('@/views/pms/productCate/index'),
-        meta: {title: '商品啥'},
-        hidden: true
+        meta: {title: '物资入库'}
       },
       {
         path: 'addProductCate',
@@ -115,8 +103,7 @@ export const constantRouterMap = [
         path: 'productAttr',
         name: 'productAttr',
         component: () => import('@/views/pms/productAttr/index'),
-        meta: {title: '商品怎么了'},
-        hidden: true
+        meta: {title: '物资出库'}
       },
       {
         path: 'productAttrList',
