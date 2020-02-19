@@ -1,49 +1,15 @@
 <template> 
   <el-card class="form-container" shadow="never">
-<<<<<<< HEAD
-    <el-steps :active="active" finish-status="success" align-center>
-      <el-step title="填写商品信息"></el-step>
-      <el-step title="填写商品促销"></el-step>
-      <el-step title="填写商品属性"></el-step>
-      <el-step title="选择商品关联"></el-step>
-    </el-steps>
-=======
 <!--    <el-steps :active="active" finish-status="success" align-center>-->
 <!--      <el-step title="填写商品信息"></el-step>-->
 <!--      <el-step title="填写商品促销"></el-step>-->
 <!--      <el-step title="填写商品属性"></el-step>-->
 <!--      <el-step title="选择商品关联"></el-step>-->
 <!--    </el-steps>-->
->>>>>>> 63d93a4f36b2921a5ca4d3a47361b6025fc8bff0
     <product-info-detail
       v-show="showStatus[0]"
       v-model="productParam"
       :is-edit="isEdit"
-<<<<<<< HEAD
-      @nextStep="nextStep">
-    </product-info-detail>
-    <product-sale-detail
-      v-show="showStatus[1]"
-      v-model="productParam"
-      :is-edit="isEdit"
-      @nextStep="nextStep"
-      @prevStep="prevStep">
-    </product-sale-detail>
-    <product-attr-detail
-      v-show="showStatus[2]"
-      v-model="productParam"
-      :is-edit="isEdit"
-      @nextStep="nextStep"
-      @prevStep="prevStep">
-    </product-attr-detail>
-    <product-relation-detail
-      v-show="showStatus[3]"
-      v-model="productParam"
-      :is-edit="isEdit"
-      @prevStep="prevStep"
-      @finishCommit="finishCommit">
-    </product-relation-detail>
-=======
       :edit-id="editId"
       @nextStep="nextStep">
     </product-info-detail>
@@ -68,7 +34,6 @@
 <!--      @prevStep="prevStep"-->
 <!--      @finishCommit="finishCommit">-->
 <!--    </product-relation-detail>-->
->>>>>>> 63d93a4f36b2921a5ca4d3a47361b6025fc8bff0
   </el-card>
 </template>
 <script>
@@ -146,13 +111,10 @@
       isEdit: {
         type: Boolean,
         default: false
-<<<<<<< HEAD
-=======
       },
       editId: {
         type: Boolean,
         default: false
->>>>>>> 63d93a4f36b2921a5ca4d3a47361b6025fc8bff0
       }
     },
     data() {
@@ -163,17 +125,9 @@
       }
     },
     created(){
-<<<<<<< HEAD
-      if(this.isEdit){
         getProduct(this.$route.query.id).then(response=>{
           this.productParam=response.data;
         });
-      }
-=======
-        getProduct(this.$route.query.id).then(response=>{
-          this.productParam=response.data;
-        });
->>>>>>> 63d93a4f36b2921a5ca4d3a47361b6025fc8bff0
     },
     methods: {
       hideAll() {

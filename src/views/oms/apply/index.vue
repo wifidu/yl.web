@@ -21,11 +21,7 @@
 
 
       <div style="margin-top: 15px">
-<<<<<<< HEAD
-        <div style="background: #afb1b3; width: 100%; height: 32px; padding: 5px; margin: 10px; border-radius: 5px">
-=======
         <div style="background: #9E9E9E;width: 100%;height: 32px;padding: 5px;margin: 10px">
->>>>>>> 63d93a4f36b2921a5ca4d3a47361b6025fc8bff0
           <span style="font-size: small;width: 500px;padding: 10px;border-radius: 5px">预约信息</span>
         </div>
         <el-form :inline="true" :model="listQuery" size="small" label-width="180px">
@@ -70,13 +66,8 @@
             </el-date-picker>
           </el-form-item>
         </el-form>
-<<<<<<< HEAD
-        <div style="background: #afb1b3; width: 100%; height: 32px; padding: 5px; margin: 10px; border-radius: 5px">
-          <span style="font-size: small;width: 500px;padding: 10px; border-radius: 5px">老人信息</span>
-=======
         <div style="background: #9E9E9E;width: 100%;height: 32px;padding: 5px;margin: 10px">
           <span style="font-size: small;width: 500px;padding: 10px;border-radius: 5px">老人信息</span>
->>>>>>> 63d93a4f36b2921a5ca4d3a47361b6025fc8bff0
         </div>
         <el-form :inline="true" :model="listQuery" size="small" label-width="180px">
           <el-form-item label="身份证号：">
