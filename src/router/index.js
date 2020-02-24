@@ -37,45 +37,65 @@ export const constantRouterMap = [
     component: Layout,
     redirect: '/pms/product',
     name: 'pms',
-    meta: {title: '商品', icon: 'product'},
+    meta: {title: '物质管理', icon: 'product'},
     children: [{
       path: 'product',
       name: 'product',
       component: () => import('@/views/pms/product/index'),
-      meta: {title: '商品列表', icon: 'product-list'}
+      meta: {title: '固定资产'}
     },
       {
         path: 'addProduct',
         name: 'addProduct',
         component: () => import('@/views/pms/product/add'),
-        meta: {title: '添加商品', icon: 'product-add'}
+        meta: {title: '添加'},
+        hidden: true
+      },
+      {
+        path: 'ProductView',
+        name: 'ProductView',
+        component: () => import('@/views/pms/product/view'),
+        meta: {title: '添加'},
+        hidden: true
       },
       {
         path: 'updateProduct',
         name: 'updateProduct',
         component: () => import('@/views/pms/product/update'),
-        meta: {title: '修改商品', icon: 'product-add'},
+        meta: {title: '修改商品'},
         hidden: true
       },
       {
-        path: 'productRecycle',
-        name: 'productRecycle',
-        component: () => import('@/views/pms/product/index'),
-        meta: {title: '商品回收站', icon: 'product-recycle'},
-        hidden: true
+        path: 'productQuery',
+        name: 'productQuery',
+        component: () => import('@/views/pms/product/query'),
+        meta: {title: '物资查询'}
+      },
+      {
+        path: 'productPut',
+        name: 'productPut',
+        component: () => import('@/views/pms/product/put'),
+        meta: {title: '物资入库'}
+      },
+      {
+        path: 'productOut',
+        name: 'productOut',
+        component: () => import('@/views/pms/product/out'),
+        meta: {title: '物资出库'}
       },
       {
         path: 'productComment',
         name: 'productComment',
         component: () => import('@/views/pms/product/index'),
-        meta: {title: '商品评价', icon: 'product-comment'},
+        meta: {title: '商品评价'},
         hidden: true
       },
       {
         path: 'productCate',
         name: 'productCate',
         component: () => import('@/views/pms/productCate/index'),
-        meta: {title: '商品分类', icon: 'product-cate'}
+        meta: {title: '商品啥'},
+        hidden: true
       },
       {
         path: 'addProductCate',
@@ -95,7 +115,8 @@ export const constantRouterMap = [
         path: 'productAttr',
         name: 'productAttr',
         component: () => import('@/views/pms/productAttr/index'),
-        meta: {title: '商品类型', icon: 'product-attr'}
+        meta: {title: '商品怎么了'},
+        hidden: true
       },
       {
         path: 'productAttrList',
@@ -122,7 +143,7 @@ export const constantRouterMap = [
         path: 'brand',
         name: 'brand',
         component: () => import('@/views/pms/brand/index'),
-        meta: {title: '品牌管理', icon: 'product-brand'}
+        meta: {title: '盘点管理'}
       },
       {
         path: 'addBrand',
@@ -135,8 +156,7 @@ export const constantRouterMap = [
         path: 'updateBrand',
         name: 'updateBrand',
         component: () => import('@/views/pms/brand/update'),
-        meta: {title: '编辑品牌'},
-        hidden: true
+        meta: {title: '仓库日志'},
       }
     ]
   },
@@ -174,6 +194,12 @@ export const constantRouterMap = [
         hidden:true
       },
       {
+        path: 'orderSetting',
+        name: 'orderSetting',
+        component: () => import('@/views/oms/order/setting'),
+        meta: {title: '入住登记', icon: 'product-add'}
+      },
+      {
         path: 'returnApply',
         name: 'returnApply',
         component: () => import('@/views/oms/apply/index'),
@@ -189,7 +215,7 @@ export const constantRouterMap = [
       {
         path: 'out',
         name: 'out',
-        component: () => import('@/views/oms/order/setting'),
+        component: () => import('@/views/oms/apply/reason'),
         meta: {title: '退住登记', icon: 'product-brand'}
       },
       {

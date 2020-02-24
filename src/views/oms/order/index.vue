@@ -36,6 +36,7 @@
       <span>数据列表</span>
     </el-card>
     <div class="table-container">
+      <div></div>
       <el-table ref="orderTable"
                 :data="list"
                 style="width: 100%;"
