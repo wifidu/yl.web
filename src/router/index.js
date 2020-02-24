@@ -193,12 +193,7 @@ export const constantRouterMap = [
         meta: {title: '发货列表'},
         hidden:true
       },
-      {
-        path: 'orderSetting',
-        name: 'orderSetting',
-        component: () => import('@/views/oms/order/setting'),
-        meta: {title: '入住登记', icon: 'product-add'}
-      },
+
       {
         path: 'returnApply',
         name: 'returnApply',
@@ -211,12 +206,17 @@ export const constantRouterMap = [
         component: () => import('@/views/oms/product/add'),
         meta: {title: '入住登记', icon: 'product-add'}
       },
-
+      {
+        path: 'orderSetting',
+        name: 'orderSetting',
+        component: () => import('@/views/oms/order/setting'),
+        meta: {title: '退住登记', icon: 'product-add'}
+      },
       {
         path: 'out',
         name: 'out',
         component: () => import('@/views/oms/apply/reason'),
-        meta: {title: '退住登记', icon: 'product-brand'}
+        meta: {title: '业务变更', icon: 'product-brand'}
       },
       {
         path: 'returnReason',
