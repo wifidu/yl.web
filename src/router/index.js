@@ -171,13 +171,15 @@ export const constantRouterMap = [
         path: 'order',
         name: 'order',
         component: () => import('@/views/oms/order/index'),
-        meta: {title: '会员档案', icon: 'product-list'}
+        meta: {title: '会员档案'}
+        //meta: {title: '会员档案', icon: 'product-list'}
       },
       {
         path: 'in',
         name: 'in',
         component: () => import('@/views/oms/order/in'),
-        meta: {title: '新建文件', icon: 'product-list'}
+        meta: {title: '新建文件'}
+        //meta: {title: '新建文件', icon: 'product-list'}
       },
       {
         path: 'orderDetail',
@@ -198,56 +200,45 @@ export const constantRouterMap = [
         path: 'returnApply',
         name: 'returnApply',
         component: () => import('@/views/oms/apply/index'),
-        meta: {title: '预约占床', icon: 'product-brand'}
+        meta: {title: '预约占床'}
+        // meta: {title: '预约占床', icon: 'product-brand'}
       },
       {
         path: 'add',
         name: 'add',
         component: () => import('@/views/oms/product/add'),
-        meta: {title: '入住登记', icon: 'product-add'}
+        meta: {title: '入住登记'}
+        // meta: {title: '入住登记', icon: 'product-add'}
       },
       {
         path: 'orderSetting',
         name: 'orderSetting',
         component: () => import('@/views/oms/order/setting'),
-        meta: {title: '退住登记', icon: 'product-add'}
+        meta: {title: '退住登记'}
+        // meta: {title: '退住登记', icon: 'product-add'}
       },
       {
         path: 'out',
         name: 'out',
-        component: () => import('@/views/oms/apply/reason'),
-        meta: {title: '业务变更', icon: 'product-brand'}
+        component: () => import('@/views/oms/order/change'),
+        meta: {title: '业务变更'}
+        // meta: {title: '业务变更', icon: 'product-brand'}
+      },
+      {
+        path: 'foodChange',
+        name: 'foodChange',
+        component: () => import('@/views/oms/order/foodChange'),
+        meta: {title: '膳食变更'}
+        // meta: {title: '膳食变更', icon: 'order-return-reason'}
       },
       {
         path: 'returnReason',
         name: 'returnReason',
         component: () => import('@/views/oms/apply/reason'),
-        meta: {title: '业务变更', icon: 'order-setting'}
+        meta: {title: '外出管理'}
+        // meta: {title: '外出管理', icon: 'order-return-reason'}
       },
-      {
-        path: 'returnReason',
-        name: 'returnReason',
-        component: () => import('@/views/oms/apply/reason'),
-        meta: {title: '膳食变更', icon: 'order-return-reason'}
-      },
-      {
-        path: 'returnReason',
-        name: 'returnReason',
-        component: () => import('@/views/oms/apply/reason'),
-        meta: {title: '外出管理', icon: 'order-return-reason'}
-      },
-      {
-        path: 'returnReason',
-        name: 'returnReason',
-        component: () => import('@/views/oms/apply/reason'),
-        meta: {title: '入住评估', icon: 'order-return-reason'}
-      },
-      {
-        path: 'returnReason',
-        name: 'returnReason',
-        component: () => import('@/views/oms/apply/reason'),
-        meta: {title: '退住登记', icon: 'order-return-reason'}
-      },
+
       {
         path: 'returnApplyDetail',
         name: 'returnApplyDetail',
