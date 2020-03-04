@@ -227,7 +227,7 @@ export const constantRouterMap = [
       {
         path: 'foodChange',
         name: 'foodChange',
-        component: () => import('@/views/oms/order/foodChange'),
+        component: () => import('@/views/oms/order/change'),
         meta: {title: '膳食变更'}
         // meta: {title: '膳食变更', icon: 'order-return-reason'}
       },
