@@ -1,309 +1,231 @@
-<template> 
+<template>
   <div class="app-container">
-    <el-card class="filter-container" shadow="never">
-        <div>
-          <i class="el-icon-search"></i>
-          <span>搜索</span>
-          <el-button
-            style="float: right"
-            @click="searchBrandList()"
-            type="primary"
-            size="small">
-            查询结果
-          </el-button>
-        </div>
-        <div style="margin-top: 15px">
-          <el-form :inline="true" :model="listQuery" size="small" label-width="140px">
-            <el-form-item label="输入搜索：">
-              <el-input style="width: 203px" v-model="listQuery.keyword" placeholder="会员名称/关键字"></el-input>
-            </el-form-item>
-          </el-form>
-        </div>
+    <el-card class="filter-container" shadow="never" style="text-align: center">
+      <div style="margin-top: 15px">
+        <el-form :inline="true" size="medium">
+          <el-select v-model="valueName" placeholder="盘点名称" size="medium" style="width: 125px">
+            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+          </el-select>
+          <el-form-item>
+            <el-input v-model="input" placeholder="请输入内容" style="width: 250px"></el-input>
+          </el-form-item>
+          <el-button type="info" icon="el-icon-search" size="medium"></el-button>
+          <el-select v-model="valueY" placeholder="全部" size="medium" style="width:125px">
+            <el-option v-for="item in years" :key="item.value" :label="item.label" :value="item.value"></el-option>
+          </el-select>
+        </el-form>
+        <el-form :inline="true" size="medium">
+          <span>计划盘点时间</span>
+          <el-date-picker
+            size="medium"
+            v-model="plan_s"
+            type="datetime"
+            align="right"
+            placeholder="开始">
+          </el-date-picker>
+          <i class="el-icon-caret-right"></i>
+          <el-date-picker
+            size="medium"
+            v-model="plan_e"
+            type="datetime"
+            align="right"
+            placeholder="结束">
+          </el-date-picker>
+
+        </el-form>
+        <el-form :inline="true" size="medium"  style="margin-top: 15px">
+          <span>实际盘点时间</span>
+          <el-date-picker
+            size="medium"
+            v-model="real_s"
+            type="datetime"
+            align="right"
+            placeholder="开始">
+          </el-date-picker>
+          <i class="el-icon-caret-right"></i>
+          <el-date-picker
+            size="medium"
+            v-model="real_e"
+            type="datetime"
+            align="right"
+            placeholder="结束">
+          </el-date-picker>
+
+        </el-form>
+      </div>
     </el-card>
-    <el-card class="operate-container" shadow="never">
-      <i class="el-icon-tickets"></i>
-      <span>数据列表</span>
-      <el-button
-        class="btn-add"
-        @click="addBrand()"
-        size="mini">
-        添加
-      </el-button>
-    </el-card>
-    <div class="table-container">
-      <el-table ref="brandTable"
-                :data="list"
-                style="width: 100%"
-                @selection-change="handleSelectionChange"
-                v-loading="listLoading"
-                border>
-        <el-table-column type="selection" width="60" align="center"></el-table-column>
-        <el-table-column label="编号" width="100" align="center">
-          <template slot-scope="scope">{{scope.row.id}}</template>
-        </el-table-column>
-        <el-table-column label="品牌名称" align="center">
-          <template slot-scope="scope">{{scope.row.name}}</template>
-        </el-table-column>
-        <el-table-column label="品牌首字母" width="100" align="center">
-          <template slot-scope="scope">{{scope.row.firstLetter}}</template>
-        </el-table-column>
-        <el-table-column label="排序" width="100" align="center">
-          <template slot-scope="scope">{{scope.row.sort}}</template>
-        </el-table-column>
-        <el-table-column label="品牌制造商" width="100" align="center">
-          <template slot-scope="scope">
-            <el-switch
-              @change="handleFactoryStatusChange(scope.$index, scope.row)"
-              :active-value="1"
-              :inactive-value="0"
-              v-model="scope.row.factoryStatus">
-            </el-switch>
-          </template>
-        </el-table-column>
-        <el-table-column label="是否显示" width="100" align="center">
-          <template slot-scope="scope">
-            <el-switch
-              @change="handleShowStatusChange(scope.$index, scope.row)"
-              :active-value="1"
-              :inactive-value="0"
-              v-model="scope.row.showStatus">
-            </el-switch>
-          </template>
-        </el-table-column>
-        <el-table-column label="相关" width="220" align="center">
-          <template slot-scope="scope">
-            <span>商品：</span>
-            <el-button
-              size="mini"
-              type="text"
-              @click="getProductList(scope.$index, scope.row)">100
-            </el-button>
-            <span>评价：</span>
-            <el-button
-              size="mini"
-              type="text"
-              @click="getProductCommentList(scope.$index, scope.row)">1000
-            </el-button>
-          </template>
-        </el-table-column>
-        <el-table-column label="操作" width="200" align="center">
-          <template slot-scope="scope">
-            <el-button
-              size="mini"
-              @click="handleUpdate(scope.$index, scope.row)">编辑
-            </el-button>
-            <el-button
-              size="mini"
-              type="danger"
-              @click="handleDelete(scope.$index, scope.row)">删除
-            </el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-    </div>
-    <div class="batch-operate-container">
-      <el-select
-        size="small"
-        v-model="operateType" placeholder="批量操作">
-        <el-option
-          v-for="item in operates"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
-      </el-select>
-      <el-button
-        style="margin-left: 20px"
-        class="search-button"
-        @click="handleBatchOperate()"
-        type="primary"
-        size="small">
-        确定
-      </el-button>
-    </div>
+    <el-table
+        :data="tableData"
+        style="margin-top: 15px;width:100%">
+      <el-table-column label="盘点时间" prop="plate_time" align="center"></el-table-column>
+      <el-table-column label="盘点名称" prop="plate_name" align="center"></el-table-column>
+      <el-table-column label="盘点数量" prop="plate_number" align="center"></el-table-column>
+      <el-table-column label="合计金额" prop="sum" align="center"></el-table-column>
+      <el-table-column label="盘亏" prop="lose" align="center"></el-table-column>
+      <el-table-column label="盘盈" prop="surplus" align="center"></el-table-column>
+      <el-table-column label="盘点人" prop="people" align="center"></el-table-column>
+      <el-table-column label="完成时间" prop="finish_time" align="center"></el-table-column>
+      <el-table-column label="操作" align="center">
+        <template slot-scope="scope">
+            <el-button size="mini" @click="handleIsDisplay(scope.$index, scope.row)">{{scope.row.ope}}</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <div class="modal-bg" v-show="show">
+        <div class="modal-container">
+          <div class="modal-header">
+            {{ title }}
+          </div>
+          <div class="modal-main">
+            <slot>
+              <el-table
+                :data="tableData"
+                style="margin-top: 15px;width:100%">
+                <el-table-column label="盘点时间" prop="plate_time" align="center"></el-table-column>
+                <el-table-column label="盘点名称" prop="plate_name" align="center"></el-table-column>
+                <el-table-column label="盘点数量" prop="plate_number" align="center"></el-table-column>
+                <el-table-column label="合计金额" prop="sum" align="center"></el-table-column>
+                <el-table-column label="盘亏" prop="lose" align="center"></el-table-column>
+                <el-table-column label="盘盈" prop="surplus" align="center"></el-table-column>
+                <el-table-column label="盘点人" prop="people" align="center"></el-table-column>
+                <el-table-column label="完成时间" prop="finish_time" align="center"></el-table-column>
+              </el-table>
+            </slot>
+          </div>
+          <div class="modal-footer">
+            <el-button type="primary" @click="submit()" size="medium">确认</el-button>
+          </div>
+        </div>
+      </div>
     <div class="pagination-container">
       <el-pagination
         background
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        layout="total, sizes,prev, pager, next,jumper"
-        :page-size="listQuery.pageSize"
-        :page-sizes="[5,10,15]"
-        :current-page.sync="listQuery.pageNum"
+        :current-page="currentPage"
+        :page-sizes="[5, 10, 15]"
+        layout="total, sizes, prev, pager, next, jumper"
         :total="total">
       </el-pagination>
     </div>
   </div>
 </template>
-<script>
-  import {fetchList, updateShowStatus, updateFactoryStatus, deleteBrand} from '@/api/brand'
 
-  export default {
-    name: 'brandList',
-    data() {
-      return {
-        operates: [
-          {
-            label: "显示品牌",
-            value: "showBrand"
+<script>
+    export default {
+      name: "brand",
+      props: {
+          show: {
+            type: Boolean,
+            default: false
           },
-          {
-            label: "隐藏品牌",
-            value: "hideBrand"
+          title: {
+            type: String,
+            default: ''
           }
-        ],
-        operateType: null,
-        listQuery: {
-          keyword: null,
-          pageNum: 1,
-          pageSize: 10
         },
-        list: null,
-        total: null,
-        listLoading: true,
-        multipleSelection: []
-      }
-    },
-    created() {
-      this.getList();
-    },
-    methods: {
-      getList() {
-        this.listLoading = true;
-        fetchList(this.listQuery).then(response => {
-          this.listLoading = false;
-          this.list = response.data.list;
-          this.total = response.data.total;
-          this.totalPage = response.data.totalPage;
-          this.pageSize = response.data.pageSize;
-        });
-      },
-      handleSelectionChange(val) {
-        this.multipleSelection = val;
-      },
-      handleUpdate(index, row) {
-        this.$router.push({path: '/pms/updateBrand', query: {id: row.id}})
-      },
-      handleDelete(index, row) {
-        this.$confirm('是否要删除该品牌', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          deleteBrand(row.id).then(response => {
-            this.$message({
-              message: '删除成功',
-              type: 'success',
-              duration: 1000
-            });
-            this.getList();
-          });
-        });
-      },
-      getProductList(index, row) {
-        console.log(index, row);
-      },
-      getProductCommentList(index, row) {
-        console.log(index, row);
-      },
-      handleFactoryStatusChange(index, row) {
-        var data = new URLSearchParams();
-        data.append("ids", row.id);
-        data.append("factoryStatus", row.factoryStatus);
-        updateFactoryStatus(data).then(response => {
-          this.$message({
-            message: '修改成功',
-            type: 'success',
-            duration: 1000
-          });
-        }).catch(error => {
-          if (row.factoryStatus === 0) {
-            row.factoryStatus = 1;
-          } else {
-            row.factoryStatus = 0;
+      data(){
+          return{
+            total: 1,
+            currentPage: 5,
+            node: null,
+            options:[{
+              value:'1',label:'盘点名称'
+            }, {
+              value:'2',label:'盘点时间'
+            }, {
+              value:'3',label:'盘点数量'
+            }],
+            years:[{
+              value:'1', label:'全部'
+            }, {
+              value:'2', label:'近三年'
+            }, {
+              value:'3', label:'近五年'
+            }],
+            plan_s: '',
+            plan_e: '',
+            real_s: '',
+            real_e: '',
+            valueName: '1',
+            valueY: '1',
+            input: '',
+            tableData: [{
+              plate_time: '2018-02-22 09:02',
+              plate_name: '2月份盘点',
+              plate_number: '200',
+              sum: '10000',
+              people: 'me',
+              ope: '盘点'
+            }],
           }
-        });
       },
-      handleShowStatusChange(index, row) {
-        let data = new URLSearchParams();
-        ;
-        data.append("ids", row.id);
-        data.append("showStatus", row.showStatus);
-        updateShowStatus(data).then(response => {
-          this.$message({
-            message: '修改成功',
-            type: 'success',
-            duration: 1000
-          });
-        }).catch(error => {
-          if (row.showStatus === 0) {
-            row.showStatus = 1;
-          } else {
-            row.showStatus = 0;
-          }
-        });
-      },
-      handleSizeChange(val) {
-        this.listQuery.pageNum = 1;
-        this.listQuery.pageSize = val;
-        this.getList();
-      },
-      handleCurrentChange(val) {
-        this.listQuery.pageNum = val;
-        this.getList();
-      },
-      searchBrandList() {
-        this.listQuery.pageNum = 1;
-        this.getList();
-      },
-      handleBatchOperate() {
-        console.log(this.multipleSelection);
-        if (this.multipleSelection < 1) {
-          this.$message({
-            message: '请选择一条记录',
-            type: 'warning',
-            duration: 1000
-          });
-          return;
+      methods: {
+        handleIsDisplay(index, row) {
+            if(row.ope === '盘点'){
+              row.ope = '详情';
+              row.lose = '亏惨了';
+              row.finish_time = 'today';
+              row.surplus = '这个显示弄了我好久'
+            }
+            else{
+              this.show = true;
+              this.title = row.plate_name;
+            }
+          },
+        submit() {
+            this.show = false;
+            this.$emit('submit')
+          },
+        handleSizeChange(val) {
+          console.log('???');
+        },
+        handleCurrentChange(val) {
+          console.log('!!');
         }
-        let showStatus = 0;
-        if (this.operateType === 'showBrand') {
-          showStatus = 1;
-        } else if (this.operateType === 'hideBrand') {
-          showStatus = 0;
-        } else {
-          this.$message({
-            message: '请选择批量操作类型',
-            type: 'warning',
-            duration: 1000
-          });
-          return;
-        }
-        let ids = [];
-        for (let i = 0; i < this.multipleSelection.length; i++) {
-          ids.push(this.multipleSelection[i].id);
-        }
-        let data = new URLSearchParams();
-        data.append("ids", ids);
-        data.append("showStatus", showStatus);
-        updateShowStatus(data).then(response => {
-          this.getList();
-          this.$message({
-            message: '修改成功',
-            type: 'success',
-            duration: 1000
-          });
-        });
-      },
-      addBrand() {
-        this.$router.push({path: '/pms/addBrand'})
       }
     }
-  }
 </script>
-<style rel="stylesheet/scss" lang="scss" scoped>
 
-
+<style scoped>
+  .modal-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.5);
+    z-index: 10;
+  }
+  .modal-container {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+  }
+  .modal-header {
+    height: 50px;
+    background: #555c66;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: move;
+  }
+  .modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 57px;
+    border-top: 1px solid #ddd;
+  }
+  .modal-footer button {
+    width: 100px;
+  }
+  .modal-main {
+    padding: 15px 40px;
+  }
 </style>
-
-

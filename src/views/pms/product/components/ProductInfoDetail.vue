@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-form :model="value" :rules="rules" ref="productInfoForm" label-width="120px" style="width: 600px" size="small">
-      <el-form-item  label="资产编号：" prop="name" placeholder="001" inline>
+      <el-form-item  label="资产编号：" prop="name" placeholder="001">
           <el-input :disabled="true" v-model="value.id" :size="mini"></el-input>
           <el-button v-if="editId">自动生成资产编号</el-button>
       </el-form-item>
@@ -47,24 +47,20 @@
         <el-input :disabled="!isEdit" v-model="value.productSn"></el-input>
       </el-form-item>
       <el-form-item label="安装日期：" prop="name">
-          <el-input
+          <el-date-picker
             :disabled="!isEdit"
             v-model="value.installdate"
             type="date"
-            align="left"
-            :picker-options="选择日期"
-            prefix-icon="el-icon-date">
-          </el-input>
+            :picker-options="选择日期">
+          </el-date-picker>
       </el-form-item>
       <el-form-item label="保修期：">
-        <el-input
+        <el-date-picker
           :disabled="!isEdit"
           v-model="value.warrantydate"
           type="date"
-          align="left"
-          :picker-options="选择日期"
-          prefix-icon="el-icon-date">
-        </el-input>
+          :picker-options="选择日期">
+        </el-date-picker>
       </el-form-item>
       <el-form-item label="备注：">
         <el-input

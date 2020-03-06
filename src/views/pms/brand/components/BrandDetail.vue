@@ -1,145 +1,133 @@
-<template> 
-  <el-card class="form-container" shadow="never">
-    <el-form :model="brand" :rules="rules" ref="brandFrom" label-width="150px">
-      <el-form-item label="品牌名称：" prop="name">
-        <el-input v-model="brand.name"></el-input>
-      </el-form-item>
-      <el-form-item label="品牌首字母：">
-        <el-input v-model="brand.firstLetter"></el-input>
-      </el-form-item>
-      <el-form-item label="品牌LOGO：" prop="logo">
-        <single-upload v-model="brand.logo"></single-upload>
-      </el-form-item>
-      <el-form-item label="品牌专区大图：">
-        <single-upload v-model="brand.bigPic"></single-upload>
-      </el-form-item>
-      <el-form-item label="品牌故事：">
-        <el-input
-          placeholder="请输入内容"
-          type="textarea"
-          v-model="brand.brandStory"
-          :autosize="true"></el-input>
-      </el-form-item>
-      <el-form-item label="排序：" prop="sort">
-        <el-input v-model.number="brand.sort"></el-input>
-      </el-form-item>
-      <el-form-item label="是否显示：">
-        <el-radio-group v-model="brand.showStatus">
-          <el-radio :label="1">是</el-radio>
-          <el-radio :label="0">否</el-radio>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item label="品牌制造商：">
-        <el-radio-group v-model="brand.factoryStatus">
-          <el-radio :label="1">是</el-radio>
-          <el-radio :label="0">否</el-radio>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="onSubmit('brandFrom')">提交</el-button>
-        <el-button v-if="!isEdit" @click="resetForm('brandFrom')">重置</el-button>
-      </el-form-item>
-    </el-form>
-  </el-card>
+<template>
+  <div class="app-container" >
+    <el-card class="filter-container" shadow="never" style="text-align: center">
+      <div style="margin-top: 15px">
+        <el-form :inline="true" size="medium">
+          <el-select v-model="valueName" placeholder="单号" size="medium" style="width: 125px">
+            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+          </el-select>
+          <el-form-item>
+            <el-input v-model="input" placeholder="请输入内容" style="width: 250px"></el-input>
+          </el-form-item>
+          <el-button type="info" icon="el-icon-search" size="medium"></el-button>
+          <el-select v-model="valueY" placeholder="全部操作类型" size="medium" style="width:150px">
+            <el-option v-for="item in years" :key="item.value" :label="item.label" :value="item.value"></el-option>
+          </el-select>
+          <el-select v-model="valueHouse" placeholder="全部仓库" size="medium" style="width: 150px">
+            <el-option v-for="item in House" :key="item.value" :label="item.label" :value="item.value"></el-option>
+          </el-select>
+          <el-button type="info" size="medium" style="float:right">导出</el-button>
+        </el-form>
+        <el-form :inline="true" size="medium">
+          <span>时间</span>
+          <el-date-picker
+            size="medium"
+            v-model="plan_s"
+            type="datetime"
+            align="right"
+            placeholder="开始">
+          </el-date-picker>
+          <i class="el-icon-caret-right"></i>
+          <el-date-picker
+            size="medium"
+            v-model="plan_e"
+            type="datetime"
+            align="right"
+            placeholder="结束">
+          </el-date-picker>
+
+        </el-form>
+      </div>
+    </el-card>
+    <el-table
+      :data="tableData"
+      style="margin-top: 15px;width:100%">
+      <el-table-column label="单号" prop="odd" align="center"></el-table-column>
+      <el-table-column label="操作类型" prop="ope_name" align="center"></el-table-column>
+      <el-table-column label="仓库名称" prop="house_name" align="center"></el-table-column>
+      <el-table-column label="物资名称" prop="pro_name" align="center"></el-table-column>
+      <el-table-column label="品牌规格" prop="brand" align="center"></el-table-column>
+      <el-table-column label="供应商" prop="supplier" align="center"></el-table-column>
+      <el-table-column label="单位" prop="unit" align="center"></el-table-column>
+      <el-table-column label="单价" prop="price" align="center"></el-table-column>
+      <el-table-column label="操作数量" prop="ope_num" align="center"></el-table-column>
+      <el-table-column label="金额" prop="sum" align="center"></el-table-column>
+      <el-table-column label="操作人" prop="people" align="center"></el-table-column>
+      <el-table-column label="变动时间" prop="change_time" align="center"></el-table-column>
+    </el-table>
+    <div class="pagination-container">
+      <el-pagination
+        background
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="currentPage"
+        :page-sizes="[5, 10, 15]"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total">
+      </el-pagination>
+    </div>
+  </div>
 </template>
 <script>
-  import {createBrand, getBrand, updateBrand} from '@/api/brand'
-  import SingleUpload from '@/components/Upload/singleUpload'
-  const defaultBrand={
-    bigPic: '',
-    brandStory: '',
-    factoryStatus: 0,
-    firstLetter: '',
-    logo: '',
-    name: '',
-    showStatus: 0,
-    sort: 0
-  };
   export default {
     name: 'BrandDetail',
-    components:{SingleUpload},
-    props: {
-      isEdit: {
-        type: Boolean,
-        default: false
-      }
-    },
     data() {
-      return {
-        brand:Object.assign({}, defaultBrand),
-        rules: {
-          name: [
-            {required: true, message: '请输入会员名称', trigger: 'blur'},
-            {min: 2, max: 140, message: '长度在 2 到 140 个字符', trigger: 'blur'}
-          ],
-          logo: [
-            {required: true, message: '请输入品牌logo', trigger: 'blur'}
-          ],
-          sort: [
-            {type: 'number', message: '排序必须为数字'}
-          ],
-        }
-      }
-    },
-    created() {
-      if (this.isEdit) {
-        getBrand(this.$route.query.id).then(response => {
-          this.brand = response.data;
-        });
-      }else{
-        this.brand = Object.assign({},defaultBrand);
+      return{
+        total: 1,
+        currentPage: 5,
+        options:[{
+          value:'1',label:'单号'
+        }, {
+          value:'2',label:'物资名称'
+        }],
+        years:[{
+          value:'1', label:'全部操作类型'
+        }, {
+          value:'2', label:'出库'
+        }, {
+          value:'3', label:'入库'
+        }, {
+          value:'4', label:'盘点'
+        }],
+        House:[{
+          value:'1', label:'全部仓库'
+        }, {
+          value:'2', label:'A库'
+        }, {
+          value:'3', label:'B库'
+        }],
+        plan_s: '',
+        plan_e: '',
+        valueName: '1',
+        valueY: '1',
+        valueHouse: '1',
+        input: '',
+        tableData: [{
+          odd: '??',
+          ope_name: '!!',
+          house_name: 'oh',
+          pro_name: 'soga',
+          brand: 'kawayi',
+          supplier: 'like this',
+          unit: 'know',
+          price: '-100',
+          ope_num: 'hehe',
+          sum: 'ai',
+          people: 'me',
+          change_time: 'today'
+        }],
       }
     },
     methods: {
-      onSubmit(formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            this.$confirm('是否提交数据', '提示', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
-              type: 'warning'
-            }).then(() => {
-              if (this.isEdit) {
-                updateBrand(this.$route.query.id, this.brand).then(response => {
-                  this.$refs[formName].resetFields();
-                  this.$message({
-                    message: '修改成功',
-                    type: 'success',
-                    duration:1000
-                  });
-                  this.$router.back();
-                });
-              } else {
-                createBrand(this.brand).then(response => {
-                  this.$refs[formName].resetFields();
-                  this.brand = Object.assign({},defaultBrand);
-                  this.$message({
-                    message: '提交成功',
-                    type: 'success',
-                    duration:1000
-                  });
-                });
-              }
-            });
-
-          } else {
-            this.$message({
-              message: '验证失败',
-              type: 'error',
-              duration:1000
-            });
-            return false;
-          }
-        });
+      handleSizeChange(val) {
+        console.log('???');
       },
-      resetForm(formName) {
-        this.$refs[formName].resetFields();
-        this.brand = Object.assign({},defaultBrand);
+      handleCurrentChange(val) {
+        console.log('!!');
       }
     }
   }
 </script>
-<style>
 </style>
 
 
