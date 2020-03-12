@@ -1,93 +1,108 @@
 <template> 
-
-  <el-card class="filter-container" shadow="never" style="margin-top: 10px">
-    <div >
-      <el-card class="operate-container" shadow="never">
-        <i class="el-icon-tickets"></i>
-        <span>外出返回</span>
-        <el-button
-          size="mini"
-          @click="handleAdd"
-          class="btn-add"
-          style="margin:10px">保存
-        </el-button>
-        <el-button
-          size="mini"
-          @click="handleAdd"
-          class="btn-add"
-          style="margin:10px">返回
-        </el-button>
-        <el-form :inline="true" :model="listQuery" size="small" label-width="180px" style="margin-top: 25px">
-          <el-form-item label="会员姓名：">
-            <el-input v-model="listQuery.id" class="input-width" placeholder="姓名" style="width:300px"></el-input>
-          </el-form-item>
-          <el-form-item label="床位：">
-            <el-input v-model="listQuery.id" class="input-width" placeholder="姓名" style="width:300px"></el-input>
-          </el-form-item>
-          <el-form-item label="外出时间：">
-            <el-input v-model="listQuery.id" class="input-width" placeholder="姓名" style="width:300px"></el-input>
-          </el-form-item>
-          <el-form-item label="计划返回时间：">
-            <el-input v-model="listQuery.id" class="input-width" placeholder="姓名" style="width:300px"></el-input>
-          </el-form-item>
-          <el-form-item label="请假天数：">
-            <el-input v-model="listQuery.id" class="input-width" placeholder="姓名" style="width:300px"></el-input>
-          </el-form-item>
-          <el-form-item label="陪同人姓名：">
-            <el-input v-model="listQuery.id" class="input-width" placeholder="姓名" style="width:300px"></el-input>
-          </el-form-item>
-          <el-form-item label="陪同人电话：">
-            <el-input v-model="listQuery.id" class="input-width" placeholder="姓名" style="width:300px"></el-input>
-          </el-form-item>
-          <el-form-item label="外出原因：">
-            <el-input v-model="listQuery.id" class="input-width" placeholder="姓名" style="width:794px"></el-input>
-          </el-form-item>
-          <el-form-item label="登记人：">
-            <el-input v-model="listQuery.id" class="input-width" placeholder="姓名" style="width:300px"></el-input>
-          </el-form-item>
-          <el-form-item label="登记时间：">
-            <el-input v-model="listQuery.id" class="input-width" placeholder="姓名" style="width:300px"></el-input>
-          </el-form-item>
-          <el-form-item label="返回时间：">
-            <el-input v-model="listQuery.id" class="input-width" placeholder="姓名" style="width:300px"></el-input>
-          </el-form-item>
-          <el-form-item label="实际请假天数：">
-            <el-input v-model="listQuery.id" class="input-width" placeholder="姓名" style="width:300px"></el-input>
-          </el-form-item>
-          <el-form-item label="总计：">
-            <el-input v-model="listQuery.id" class="input-width" placeholder="姓名" style="width:300px"></el-input>
-          </el-form-item>
-        </el-form>
-      </el-card>
-      <el-card class="operate-container" shadow="never">
-        <i class="el-icon-tickets"></i>
-        <span>费用项目</span>
-      <div class="app-container">
-        <div class="table-container">
-          <el-table ref="returnReasonTable"
-                    :data="list"
-                    style="width:800px"
-                    @selection-change="handleSelectionChange"
-                    v-loading="listLoading" border>
-            <el-table-column label="项目类型" width="200" align="center">
-              <template slot-scope="scope">{{scope.row.id}}</template>
-            </el-table-column>
-            <el-table-column label="项目名称"  align="center">
-              <template slot-scope="scope">{{scope.row.name}}</template>
-            </el-table-column>
-            <el-table-column label="价格" width="200" align="center">
-              <template slot-scope="scope">{{scope.row.sort }}</template>
-            </el-table-column>
-            <el-table-column label="应退金额" width="200" align="center">
-            </el-table-column>
-          </el-table>
-        </div>
-      </div>
-      </el-card>
+  <div class="app-container">
+    <el-card class="operate-container" shadow="never">
+      <i class="el-icon-tickets"></i>
+      <span>数据列表</span>
+      <el-button
+        size="mini"
+        @click="handleAdd"
+        class="btn-add">添加
+      </el-button>
+    </el-card>
+    <div class="table-container">
+      <el-table ref="returnReasonTable"
+                :data="list"
+                style="width: 100%;"
+                @selection-change="handleSelectionChange"
+                v-loading="listLoading" border>
+        <el-table-column type="selection" width="60" align="center"></el-table-column>
+        <el-table-column label="编号" width="80" align="center">
+          <template slot-scope="scope">{{scope.row.id}}</template>
+        </el-table-column>
+        <el-table-column label="原因类型" align="center">
+          <template slot-scope="scope">{{scope.row.name}}</template>
+        </el-table-column>
+        <el-table-column label="排序" width="100" align="center">
+          <template slot-scope="scope">{{scope.row.sort }}</template>
+        </el-table-column>
+        <el-table-column label="是否可用" align="center">
+          <template slot-scope="scope">
+            <el-switch
+              v-model="scope.row.status"
+              @change="handleStatusChange(scope.$index,scope.row)"
+              :active-value="1"
+              :inactive-value="0">
+            </el-switch>
+          </template>
+        </el-table-column>
+        <el-table-column label="添加时间" width="180" align="center">
+          <template slot-scope="scope">{{scope.row.createTime | formatCreateTime}}</template>
+        </el-table-column>
+        <el-table-column label="操作" width="160" align="center">
+          <template slot-scope="scope">
+            <el-button
+              size="mini"
+              @click="handleUpdate(scope.$index, scope.row)">编辑</el-button>
+            <el-button
+              size="mini"
+              @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
     </div>
-
-
-  </el-card>
+    <div class="batch-operate-container">
+      <el-select
+        size="small"
+        v-model="operateType" placeholder="批量操作">
+        <el-option
+          v-for="item in operateOptions"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value">
+        </el-option>
+      </el-select>
+      <el-button
+        style="margin-left: 20px"
+        class="search-button"
+        @click="handleBatchOperate"
+        type="primary"
+        size="small">
+        确定
+      </el-button>
+    </div>
+    <div class="pagination-container">
+      <el-pagination
+        background
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        layout="total, sizes,prev, pager, next,jumper"
+        :current-page.sync="listQuery.pageNum"
+        :page-size="listQuery.pageSize"
+        :page-sizes="[5,10,15]"
+        :total="total">
+      </el-pagination>
+    </div>
+    <el-dialog
+      title="添加退货原因"
+      :visible.sync="dialogVisible" width="30%">
+      <el-form :model="returnReason"
+               ref="reasonForm" label-width="150px">
+        <el-form-item label="原因类型：">
+          <el-input v-model="returnReason.name" class="input-width"></el-input>
+        </el-form-item>
+        <el-form-item label="排序：">
+          <el-input v-model="returnReason.sort" class="input-width"></el-input>
+        </el-form-item>
+        <el-form-item label="是否启用：">
+          <el-switch v-model="returnReason.status" :active-value="1" :inactive-value="0"></el-switch>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="handleConfirm">确 定</el-button>
+      </span>
+    </el-dialog>
+  </div>
 </template>
 <script>
   import {formatDate} from '@/utils/date';

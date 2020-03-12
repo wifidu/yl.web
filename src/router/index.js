@@ -161,6 +161,41 @@ export const constantRouterMap = [
     ]
   },
   {
+    path: '/drug',
+    component: Layout,
+    redirect: '/drug/index',
+    name: 'drug',
+    meta: {title: '药品管理', icon: 'form'},
+    children: [{
+        path: 'drugMessage',
+        name: 'drugMessage',
+        component: () => import('@/views/drug/index'),
+        meta: {title: '药品信息'},
+      },
+      {
+        path: 'AddDrug',
+        name: 'AddDrug',
+        component: () => import('@/views/drug/Add'),
+        meta: {title: '新增药品信息'},
+        hidden: true
+      },
+      {
+        path: 'UpdateDrug',
+        name: 'UpdateDrug',
+        component: () => import('@/views/drug/Update'),
+        meta: {title: '编辑药品信息'},
+        hidden: true
+      },
+      {
+        path: 'ViewDrug',
+        name: 'ViewDrug',
+        component: () => import('@/views/drug/View'),
+        meta: {title: '查看药品信息'},
+        hidden: true
+      }
+    ]
+  },
+  {
     path:'/sms',
     component: Layout,
     redirect: '/sms/coupon',

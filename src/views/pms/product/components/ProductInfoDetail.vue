@@ -2,7 +2,7 @@
   <div>
     <el-form :model="value" :rules="rules" ref="productInfoForm" label-width="120px" style="width: 600px" size="small">
       <el-form-item  label="资产编号：" prop="name" placeholder="001">
-          <el-input :disabled="true" v-model="value.id" :size="mini"></el-input>
+          <el-input :disabled="true" v-model="value.id" size="mini"></el-input>
           <el-button v-if="editId">自动生成资产编号</el-button>
       </el-form-item>
       <el-form-item label="资产名称：" prop="name" placeholder="办公桌">
@@ -51,7 +51,7 @@
             :disabled="!isEdit"
             v-model="value.installdate"
             type="date"
-            :picker-options="选择日期">
+            placeholder="选择日期">
           </el-date-picker>
       </el-form-item>
       <el-form-item label="保修期：">
@@ -59,7 +59,7 @@
           :disabled="!isEdit"
           v-model="value.warrantydate"
           type="date"
-          :picker-options="选择日期">
+          placeholder="选择日期">
         </el-date-picker>
       </el-form-item>
       <el-form-item label="备注：">
@@ -86,7 +86,7 @@
       </el-form-item>
     </el-form>
     <el-form style="text-align: center">
-      <el-button type="success" size="mini" @click="handleindex" v-if="isEdit">保存</el-button>
+      <el-button type="success" size="mini" @click="handleIndex" v-if="isEdit">保存</el-button>
       <el-button size="mini" v-if="isEdit">取消</el-button>
     </el-form>
   </div>
@@ -236,7 +236,7 @@
         }
         return name;
       },
-      handleindex(){
+      handleIndex(){
         this.$message({
           message: '已保存',
           center: true,
