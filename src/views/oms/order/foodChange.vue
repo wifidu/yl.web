@@ -2,30 +2,24 @@
   <div class="app-container">
     <el-card class="operate-container" shadow="never">
       <i class="el-icon-tickets"></i>
-      <span>数据列表</span>
+      <span>死亡登记</span>
       <el-button
         size="mini"
         @click="handleAdd"
-        class="btn-add">添加
+        class="btn-add">保存
       </el-button>
     </el-card>
     <div class="table-container">
       <el-table ref="returnReasonTable"
-                :data="list"
+                :data="deathData"
                 style="width: 100%;"
                 @selection-change="handleSelectionChange"
                 v-loading="listLoading" border>
-        <el-table-column type="selection" width="60" align="center"></el-table-column>
-        <el-table-column label="编号" width="80" align="center">
-          <template slot-scope="scope">{{scope.row.id}}</template>
+        <el-table-column label="会员名称" prop="name" align="center">
         </el-table-column>
-        <el-table-column label="原因类型" align="center">
-          <template slot-scope="scope">{{scope.row.name}}</template>
+        <el-table-column label="床位号" prop="sort" width="100" align="center">
         </el-table-column>
-        <el-table-column label="排序" width="100" align="center">
-          <template slot-scope="scope">{{scope.row.sort }}</template>
-        </el-table-column>
-        <el-table-column label="是否可用" align="center">
+        <el-table-column label="是否去世" align="center">
           <template slot-scope="scope">
             <el-switch
               v-model="scope.row.status"
@@ -35,73 +29,21 @@
             </el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="添加时间" width="180" align="center">
-          <template slot-scope="scope">{{scope.row.createTime | formatCreateTime}}</template>
+        <el-table-column label="死亡时间" prop="deadTime" width="180" align="center">
         </el-table-column>
         <el-table-column label="操作" width="160" align="center">
           <template slot-scope="scope">
             <el-button
               size="mini"
-              @click="handleUpdate(scope.$index, scope.row)">编辑</el-button>
+              @click="handleUpdate(scope.$index, scope.row)">保存</el-button>
             <el-button
               size="mini"
-              @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+              @click="handleDelete(scope.$index, scope.row)">修改</el-button>
           </template>
         </el-table-column>
       </el-table>
     </div>
-    <div class="batch-operate-container">
-      <el-select
-        size="small"
-        v-model="operateType" placeholder="批量操作">
-        <el-option
-          v-for="item in operateOptions"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
-      </el-select>
-      <el-button
-        style="margin-left: 20px"
-        class="search-button"
-        @click="handleBatchOperate"
-        type="primary"
-        size="small">
-        确定
-      </el-button>
-    </div>
-    <div class="pagination-container">
-      <el-pagination
-        background
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        layout="total, sizes,prev, pager, next,jumper"
-        :current-page.sync="listQuery.pageNum"
-        :page-size="listQuery.pageSize"
-        :page-sizes="[5,10,15]"
-        :total="total">
-      </el-pagination>
-    </div>
-    <el-dialog
-      title="添加退货原因"
-      :visible.sync="dialogVisible" width="30%">
-      <el-form :model="returnReason"
-               ref="reasonForm" label-width="150px">
-        <el-form-item label="原因类型：">
-          <el-input v-model="returnReason.name" class="input-width"></el-input>
-        </el-form-item>
-        <el-form-item label="排序：">
-          <el-input v-model="returnReason.sort" class="input-width"></el-input>
-        </el-form-item>
-        <el-form-item label="是否启用：">
-          <el-switch v-model="returnReason.status" :active-value="1" :inactive-value="0"></el-switch>
-        </el-form-item>
-      </el-form>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="handleConfirm">确 定</el-button>
-      </span>
-    </el-dialog>
+
   </div>
 </template>
 <script>
@@ -124,6 +66,24 @@
         list: null,
         total: null,
         multipleSelection: [],
+        deathData:[
+          {
+            name:"不认识",
+            sort:103,
+            deadTime:"2018-10-06",
+          },
+          {
+            name:"也不认识",
+            sort:609,
+            deadTime:"2019-03-08",
+          },
+          {
+            name:"就是不认识",
+            sort:302,
+            deadTime:"2020-06-06",
+          }
+          ],
+
         listLoading:true,
         listQuery:Object.assign({}, defaultListQuery),
         operateType:null,

@@ -33,6 +33,94 @@ export const constantRouterMap = [
   },
   {path: '/login', component: () => import('@/views/login/index'), hidden: true},
   {
+    path: '/oms',
+    component: Layout,
+    redirect: '/oms/order',
+    name: 'oms',
+    meta: {title: '会员管理', icon: 'order'},
+    children: [
+      {
+        path: 'order',
+        name: 'order',
+        component: () => import('@/views/oms/order/index'),
+        meta: {title: '会员档案'}
+        //meta: {title: '会员档案', icon: 'product-list'}
+      },
+      {
+        path: 'in',
+        name: 'in',
+        component: () => import('@/views/oms/order/in'),
+        meta: {title: '新建文件'}
+        //meta: {title: '新建文件', icon: 'product-list'}
+      },
+      {
+        path: 'orderDetail',
+        name: 'orderDetail',
+        component: () => import('@/views/oms/order/orderDetail'),
+        meta: {title: '详细信息'},
+        hidden:true
+      },
+      {
+        path: 'deliverOrderList',
+        name: 'deliverOrderList',
+        component: () => import('@/views/oms/order/deliverOrderList'),
+        meta: {title: '发货列表'},
+        hidden:true
+      },
+
+      {
+        path: 'returnApply',
+        name: 'returnApply',
+        component: () => import('@/views/oms/apply/index'),
+        meta: {title: '预约占床'}
+        // meta: {title: '预约占床', icon: 'product-brand'}
+      },
+      {
+        path: 'add',
+        name: 'add',
+        component: () => import('@/views/oms/product/add'),
+        meta: {title: '入住登记'}
+        // meta: {title: '入住登记', icon: 'product-add'}
+      },
+      {
+        path: 'orderSetting',
+        name: 'orderSetting',
+        component: () => import('@/views/oms/order/setting'),
+        meta: {title: '退住登记'}
+        // meta: {title: '退住登记', icon: 'product-add'}
+      },
+      {
+        path: 'out',
+        name: 'out',
+        component: () => import('@/views/oms/order/change'),
+        meta: {title: '业务变更'}
+        // meta: {title: '业务变更', icon: 'product-brand'}
+      },
+      {
+        path: 'foodChange',
+        name: 'foodChange',
+        component: () => import('@/views/oms/order/foodChange'),
+        meta: {title: '死亡登记'}
+        // meta: {title: '死亡登记', icon: 'order-return-reason'}
+      },
+      {
+        path: 'returnReason',
+        name: 'returnReason',
+        component: () => import('@/views/oms/apply/reason'),
+        meta: {title: '外出管理'}
+        // meta: {title: '外出管理', icon: 'order-return-reason'}
+      },
+
+      {
+        path: 'returnApplyDetail',
+        name: 'returnApplyDetail',
+        component: () => import('@/views/oms/apply/applyDetail'),
+        meta: {title: '退住详情'},
+        hidden:true
+      }
+    ]
+  },
+  {
     path: '/pms',
     component: Layout,
     redirect: '/pms/product',
