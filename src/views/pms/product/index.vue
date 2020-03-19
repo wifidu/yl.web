@@ -92,24 +92,7 @@
       </el-table>
     </div>
     <div class="batch-operate-container">
-      <el-select
-        size="small"
-        v-model="operateType" placeholder="批量操作">
-        <el-option
-          v-for="item in operates"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
-      </el-select>
-      <el-button
-        style="margin-left: 20px"
-        class="search-button"
-        @click="handleBatchOperate()"
-        type="primary"
-        size="small">
-        确定
-      </el-button>
+      <el-button style="margin-left: 20px" size="small" type="danger" @click="handleBatchOperate">批量删除</el-button>
     </div>
     <div class="pagination-container">
       <el-pagination
@@ -219,40 +202,6 @@
           productAttr:[],
           keyword:null
         },
-        operates: [
-          {
-            label: "商品上架",
-            value: "publishOn"
-          },
-          {
-            label: "商品下架",
-            value: "publishOff"
-          },
-          {
-            label: "设为推荐",
-            value: "recommendOn"
-          },
-          {
-            label: "取消推荐",
-            value: "recommendOff"
-          },
-          {
-            label: "设为新品",
-            value: "newOn"
-          },
-          {
-            label: "取消新品",
-            value: "newOff"
-          },
-          {
-            label: "转移到分类",
-            value: "transferCategory"
-          },
-          {
-            label: "移入回收站",
-            value: "recycle"
-          }
-        ],
         operateType: null,
         listQuery: Object.assign({}, defaultListQuery),
         list: null,
@@ -261,21 +210,7 @@
         selectProductCateValue: null,
         multipleSelection: [],
         productCateOptions: [],
-        brandOptions: [],
-        publishStatusOptions: [{
-          value: 1,
-          label: '上架'
-        }, {
-          value: 0,
-          label: '下架'
-        }],
-        verifyStatusOptions: [{
-          value: 1,
-          label: '审核通过'
-        }, {
-          value: 0,
-          label: '未审核'
-        }]
+        brandOptions: []
       }
     },
     created() {
@@ -396,60 +331,25 @@
         this.$router.push({path:'/pms/addProduct'});
       },
       handleBatchOperate() {
-        if(this.operateType==null){
-          this.$message({
-            message: '请选择操作类型',
-            type: 'warning',
-            duration: 1000
-          });
-          return;
-        }
-        if(this.multipleSelection==null||this.multipleSelection.length<1){
-          this.$message({
-            message: '请选择要操作的商品',
-            type: 'warning',
-            duration: 1000
-          });
-          return;
-        }
-        this.$confirm('是否要进行该批量操作?', '提示', {
+        // if(this.multipleSelection === null || this.multipleSelection.length < 1){
+        //   this.$message({
+        //     message: '请选择要删除的物品',
+        //     type: 'warning',
+        //     duration: 1000
+        //   });
+        //   return ;
+        // }
+        this.$confirm('是否删除?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          let ids=[];
-          for(let i=0;i<this.multipleSelection.length;i++){
-            ids.push(this.multipleSelection[i].id);
-          }
-          switch (this.operateType) {
-            case this.operates[0].value:
-              this.updatePublishStatus(1,ids);
-              break;
-            case this.operates[1].value:
-              this.updatePublishStatus(0,ids);
-              break;
-            case this.operates[2].value:
-              this.updateRecommendStatus(1,ids);
-              break;
-            case this.operates[3].value:
-              this.updateRecommendStatus(0,ids);
-              break;
-            case this.operates[4].value:
-              this.updateNewStatus(1,ids);
-              break;
-            case this.operates[5].value:
-              this.updateNewStatus(0,ids);
-              break;
-            case this.operates[6].value:
-              break;
-            case this.operates[7].value:
-              this.updateDeleteStatus(1,ids);
-              break;
-            default:
-              break;
-          }
-          this.getList();
-        });
+          this.$message ({
+            message: '删除成功',
+            center: true,
+            type: 'success'
+          })
+        })
       },
       handleSizeChange(val) {
         this.listQuery.pageNum = 1;

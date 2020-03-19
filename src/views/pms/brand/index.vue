@@ -54,9 +54,9 @@
         </el-form>
       </div>
     </el-card>
-    <el-table
-        :data="tableData"
-        style="margin-top: 15px;width:100%">
+    <el-table :data="tableData"
+              border
+              style="margin-top: 15px;width:100%">
       <el-table-column label="盘点时间" prop="plate_time" align="center"></el-table-column>
       <el-table-column label="盘点名称" prop="plate_name" align="center"></el-table-column>
       <el-table-column label="盘点数量" prop="plate_number" align="center"></el-table-column>
@@ -65,7 +65,7 @@
       <el-table-column label="盘盈" prop="surplus" align="center"></el-table-column>
       <el-table-column label="盘点人" prop="people" align="center"></el-table-column>
       <el-table-column label="完成时间" prop="finish_time" align="center"></el-table-column>
-      <el-table-column label="操作" align="center">
+      <el-table-column label="操作" align="center" width="250">
         <template slot-scope="scope">
             <el-button size="mini" @click="handleIsDisplay(scope.$index, scope.row)">{{scope.row.ope}}</el-button>
         </template>

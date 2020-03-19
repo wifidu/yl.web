@@ -2,26 +2,26 @@
   <div class="app-container" >
     <el-card class="filter-container" shadow="never" style="text-align: center">
       <div style="margin-top: 15px">
-        <el-form :inline="true" size="medium">
-          <el-select v-model="valueName" placeholder="单号" size="medium" style="width: 125px">
+        <el-form :inline="true" size="small">
+          <el-select v-model="valueName" placeholder="单号" size="small" style="width: 125px">
             <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
           </el-select>
           <el-form-item>
             <el-input v-model="input" placeholder="请输入内容" style="width: 250px"></el-input>
           </el-form-item>
-          <el-button type="info" icon="el-icon-search" size="medium"></el-button>
-          <el-select v-model="valueY" placeholder="全部操作类型" size="medium" style="width:150px">
+          <el-button type="info" icon="el-icon-search" size="small"></el-button>
+          <el-select v-model="valueY" placeholder="全部操作类型" size="small" style="width:150px">
             <el-option v-for="item in years" :key="item.value" :label="item.label" :value="item.value"></el-option>
           </el-select>
-          <el-select v-model="valueHouse" placeholder="全部仓库" size="medium" style="width: 150px">
+          <el-select v-model="valueHouse" placeholder="全部仓库" size="small" style="width: 150px">
             <el-option v-for="item in House" :key="item.value" :label="item.label" :value="item.value"></el-option>
           </el-select>
-          <el-button type="info" size="medium" style="float:right">导出</el-button>
+          <el-button type="info" size="small" style="float:right">导出</el-button>
         </el-form>
-        <el-form :inline="true" size="medium">
+        <el-form :inline="true">
           <span>时间</span>
           <el-date-picker
-            size="medium"
+            size="small"
             v-model="plan_s"
             type="datetime"
             align="right"
@@ -29,7 +29,7 @@
           </el-date-picker>
           <i class="el-icon-caret-right"></i>
           <el-date-picker
-            size="medium"
+            size="small"
             v-model="plan_e"
             type="datetime"
             align="right"
@@ -40,7 +40,8 @@
       </div>
     </el-card>
     <el-table :data="tableData"
-              style="margin-top: 15px;width:100%">
+              style="margin-top: 15px;width:100%"
+              border>
       <el-table-column label="单号" prop="odd" align="center"></el-table-column>
       <el-table-column label="操作类型" prop="ope_name" align="center"></el-table-column>
       <el-table-column label="仓库名称" prop="house_name" align="center"></el-table-column>
@@ -52,7 +53,7 @@
       <el-table-column label="操作数量" prop="ope_num" align="center"></el-table-column>
       <el-table-column label="金额" prop="sum" align="center"></el-table-column>
       <el-table-column label="操作人" prop="people" align="center"></el-table-column>
-      <el-table-column label="变动时间" prop="change_time" align="center"></el-table-column>
+      <el-table-column label="变动时间" prop="change_time" align="center" width="250"></el-table-column>
     </el-table>
     <div class="pagination-container">
       <el-pagination
@@ -67,9 +68,10 @@
     </div>
   </div>
 </template>
+
 <script>
   export default {
-    name: 'BrandDetail',
+    name: 'warehouseLog',
     data() {
       return{
         total: 1,

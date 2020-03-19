@@ -1,75 +1,91 @@
 <template>
   <div>
-    <el-form :model="value" :rules="rules" ref="productInfoForm" label-width="120px" style="width: 600px" size="small">
-      <el-form-item  label="资产编号：" prop="name" placeholder="001">
+    <el-form :inline="true" :model="value" :rules="rules" ref="productInfoForm" label-width="120px" size="small">
+      <p>
+        <el-form-item  label="资产编号：" prop="name" placeholder="001">
           <el-input :disabled="true" v-model="value.id" size="mini"></el-input>
-          <el-button v-if="editId">自动生成资产编号</el-button>
-      </el-form-item>
-      <el-form-item label="资产名称：" prop="name" placeholder="办公桌">
-        <el-input :disabled="!isEdit" v-model="value.name"></el-input>
-      </el-form-item>
-      <el-form-item label="分类：" prop="brandId">
-        <el-select
-          :disabled="!isEdit"
-          v-model="value.brandId"
-          @change="handleBrandChange"
-          placeholder="办公用品">
-          <el-option
-            v-for="item in brandOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="序列号：">
-        <el-input :disabled="!isEdit" v-model="value.productSn"></el-input>
-      </el-form-item>
-      <el-form-item label="品牌：">
-        <el-input :disabled="!isEdit" v-model="value.productSn"></el-input>
-      </el-form-item>
-      <el-form-item label="位置：">
-        <el-input :disabled="!isEdit" v-model="value.location"></el-input>
-      </el-form-item>
-      <el-form-item label="型号：">
-        <el-input :disabled="!isEdit" v-model="value.productSn"></el-input>
-      </el-form-item>
-      <el-form-item label="责任部门：">
-        <el-input :disabled="!isEdit" v-model="value.productSn"></el-input>
-      </el-form-item>
-      <el-form-item label="责任人：">
-        <el-input :disabled="!isEdit" v-model="value.productSn"></el-input>
-      </el-form-item>
-      <el-form-item label="金额：">
-        <el-input :disabled="!isEdit" v-model="value.productSn"></el-input>
-      </el-form-item>
-      <el-form-item label="状态：" prop="name">
-        <el-input :disabled="!isEdit" v-model="value.productSn"></el-input>
-      </el-form-item>
-      <el-form-item label="安装日期：" prop="name">
+        </el-form-item>
+        <el-button v-if="editId" size="mini">自动生成资产编号</el-button>
+      </p>
+      <p>
+        <el-form-item label="资产名称：" prop="name" placeholder="办公桌">
+          <el-input :disabled="!isEdit" v-model="value.name"></el-input>
+        </el-form-item>
+        <el-form-item label="分类：" prop="brandId">
+          <el-select
+            :disabled="!isEdit"
+            v-model="value.brandId"
+            @change="handleBrandChange"
+            placeholder="办公用品">
+            <el-option
+              v-for="item in brandOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </el-form-item>
+      </p>
+      <p>
+        <el-form-item label="序列号：">
+          <el-input :disabled="!isEdit" v-model="value.productSn"></el-input>
+        </el-form-item>
+        <el-form-item label="品牌：">
+          <el-input :disabled="!isEdit" v-model="value.productSn"></el-input>
+        </el-form-item>
+      </p>
+      <p>
+        <el-form-item label="位置：">
+          <el-input :disabled="!isEdit" v-model="value.location"></el-input>
+        </el-form-item>
+        <el-form-item label="型号：">
+          <el-input :disabled="!isEdit" v-model="value.productSn"></el-input>
+        </el-form-item>
+      </p>
+      <p>
+        <el-form-item label="责任部门：">
+          <el-input :disabled="!isEdit" v-model="value.productSn"></el-input>
+        </el-form-item>
+        <el-form-item label="责任人：">
+          <el-input :disabled="!isEdit" v-model="value.productSn"></el-input>
+        </el-form-item>
+      </p>
+      <p>
+        <el-form-item label="金额：">
+          <el-input :disabled="!isEdit" v-model="value.productSn"></el-input>
+        </el-form-item>
+        <el-form-item label="状态：" prop="name">
+          <el-input :disabled="!isEdit" v-model="value.productSn"></el-input>
+        </el-form-item>
+      </p>
+      <p>
+        <el-form-item label="安装日期：" prop="name">
           <el-date-picker
             :disabled="!isEdit"
             v-model="value.installdate"
             type="date"
             placeholder="选择日期">
           </el-date-picker>
-      </el-form-item>
-      <el-form-item label="保修期：">
-        <el-date-picker
-          :disabled="!isEdit"
-          v-model="value.warrantydate"
-          type="date"
-          placeholder="选择日期">
-        </el-date-picker>
-      </el-form-item>
+        </el-form-item>
+        <el-form-item label="保修期：">
+          <el-date-picker
+            :disabled="!isEdit"
+            v-model="value.warrantydate"
+            type="date"
+            placeholder="选择日期">
+          </el-date-picker>
+        </el-form-item>
+      </p>
       <el-form-item label="备注：">
         <el-input
           :disabled="!isEdit"
           type="textarea"
           :rows="2"
+          style="width: 500px"
           v-model="value.textarea">
         </el-input>
       </el-form-item>
+      <p></p>
       <el-form-item v-if="isEdit" label="图片：">
         <el-upload
           class="selectProductPics"
