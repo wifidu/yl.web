@@ -39,9 +39,8 @@
         </el-form>
       </div>
     </el-card>
-    <el-table
-      :data="tableData"
-      style="margin-top: 15px;width:100%">
+    <el-table :data="tableData"
+              style="margin-top: 15px;width:100%">
       <el-table-column label="单号" prop="odd" align="center"></el-table-column>
       <el-table-column label="操作类型" prop="ope_name" align="center"></el-table-column>
       <el-table-column label="仓库名称" prop="house_name" align="center"></el-table-column>
@@ -128,6 +127,7 @@
     }
   }
 </script>
-</style>
 
+<stype>
 
+</stype>

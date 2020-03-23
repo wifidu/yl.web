@@ -42,7 +42,7 @@
         <el-input
           style="width:203px"
           type="date"
-          :picker-options="选择日期"
+          placeholder="选择日期"
           prefix-icon="el-icon-date">
         </el-input>
       </el-form-item>
