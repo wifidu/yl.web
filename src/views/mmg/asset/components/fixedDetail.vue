@@ -6,10 +6,10 @@
           <el-form-item  label="资产编号：" prop="name" placeholder="001">
             <el-input :disabled="true" size="mini"></el-input>
           </el-form-item>
-          <el-button v-if="editId" size="mini">自动生成资产编号</el-button>
+          <el-button v-if="editId" size="small">自动生成资产编号</el-button>
         </p>
         <p>
-          <el-form-item label="资产名称：" prop="name" placeholder="办公桌" size="small">
+          <el-form-item label="资产名称：" prop="name" placeholder="办公桌">
             <el-input :disabled="!isEdit"></el-input>
           </el-form-item>
           <el-form-item label="分类：" prop="brandId">
@@ -88,7 +88,7 @@
                   :auto-upload=false
                   :on-remove="handleRemove"
                   list-type="picture">
-                  <el-button size="small" type="primary">点击上传</el-button>
+                  <el-button type="primary">点击上传</el-button>
                   <div slot="tip" class="el-upload__tip">支持上传PNG、JPEG格式</div>
                 </el-upload>
               </el-form-item>
@@ -145,4 +145,7 @@
 </script>
 
 <style scoped>
+  .form-container {
+    width: 800px;
+  }
 </style>

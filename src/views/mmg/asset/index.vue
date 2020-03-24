@@ -117,10 +117,10 @@
         this.$router.push({path:'/mmg/addAsset'});
       },
       handleShow() {
-        this.$router.push({path:'/mmg/viewAsset'});
+        this.$router.push({path:'/mmg/viewAsset', query:{id:row.id}});
       },
       handleUpdate() {
-        this.$router.push({path:'/mmg/updateAsset'});
+        this.$router.push({path:'/mmg/updateAsset', query:{id:row.id}});
       },
       handleDelete(index, row){
         this.$confirm('是否要进行删除操作?', '提示', {
