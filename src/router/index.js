@@ -101,7 +101,7 @@ export const constantRouterMap = [
     path: '/fmg',
     component: Layout,
     redirect: '/fmg/collection',
-    name: 'drug',
+    name: 'fmg',
     meta: {title: '财务管理', icon: 'sms-coupon'},
     children: [{
       path: 'collection',
@@ -240,4 +240,3 @@ export default new Router({
   scrollBehavior: () => ({y: 0}),
   routes: constantRouterMap
 })
-
