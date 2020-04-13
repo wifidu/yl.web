@@ -226,7 +226,7 @@
         this.add_list.return_time=parseInt(this.add_list.return_time)
         this.add_list.actual_leave_days=parseInt(this.add_list.actual_leave_days)
         console.log(this.add_list)
-        addReason(this.add_list,'/api/member-manage/out-manage/').then(response=>{
+        addReason(this.add_list,'/member-manage/out-manage/').then(response=>{
           this.$message({
             message: '登记成功！',
             type: 'success',
@@ -245,7 +245,7 @@
         if(this.searchList.member_name == ''){
           this.getList()
         } else {
-          getList(this.searchList,"/api/member-manage/out-manage/search").then(response => {
+          getList(this.searchList,"/member-manage/out-manage/search").then(response => {
             this.listLoading = false;
             this.list = response.data;
             console.log(response)
@@ -313,7 +313,7 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          deleteOrder('/api/member-manage/out-manage/',row.id).then(response=>{
+          deleteOrder('/member-manage/out-manage/',row.id).then(response=>{
             this.getList();
             this.$message({
               type: 'success',
@@ -334,7 +334,7 @@
         }).then(() => {
           for(let i=0;i<ids.length;i++){
             console.log('删除编号:'+ids[i])
-            deleteOrder('/api/member-manage/out-manage/',ids[i]).then(response=>{
+            deleteOrder('/member-manage/out-manage/',ids[i]).then(response=>{
               this.$message({
                 message: '删除成功！',
                 type: 'success',
@@ -359,7 +359,7 @@
       },
       getList(){
         this.listLoading = true;
-        getList(this.listQuery,"/api/member-manage/out-manage/list").then(response => {
+        getList(this.listQuery,"/member-manage/out-manage/list").then(response => {
           this.listLoading = false;
           this.list = response.data.data;
           console.log(response)

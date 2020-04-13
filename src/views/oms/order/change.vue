@@ -180,7 +180,7 @@
         // this.businessList.meal_cost.cost=parseInt(this.businessList.meal_cost.cost)
         console.log('this.businessList')
         console.log(this.businessList)
-        addReason(this.businessList,'/api/member-manage/check-in/odd_number/').then(response=>{
+        addReason(this.businessList,'/member-manage/check-in/odd_number/').then(response=>{
           this.dialogVisible=false;
           console.log(response)
           this.$message({

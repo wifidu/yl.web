@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function login(username, password) {
   return request({
-    url: '/api/authorizations',
+    url: '/authorizations',
     method: 'post',
     data: {
       "username": username,
@@ -13,7 +13,7 @@ export function login(username, password) {
 
 export function getInfo() {
   return request({
-    url: '/api/user',
+    url: '/user',
     method: 'get',
   })
 }

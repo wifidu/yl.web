@@ -65,7 +65,7 @@
         this.$router.back();
       },
       getList(){
-        returnDetail(this.id,'/api/member-manage/check-out/').then(response=>{
+        returnDetail(this.id,'/member-manage/check-out/').then(response=>{
           this.listDetail=response.data
           console.log(response.data)
         })
