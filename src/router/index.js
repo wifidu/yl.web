@@ -33,6 +33,139 @@ export const constantRouterMap = [
   },
   {path: '/login', component: () => import('@/views/login/index'), hidden: true},
   {
+    path: '/oms',
+    component: Layout,
+    redirect: '/oms/order',
+    name: 'oms',
+    meta: {title: '会员管理', icon: 'order'},
+    children: [
+      {
+        path: 'order',
+        name: 'order',
+        component: () => import('@/views/oms/order/index'),
+        meta: {title: '会员档案'}
+        //meta: {title: '会员档案', icon: 'product-list'}
+      },
+      {
+        path: 'in',
+        name: 'in',
+        component: () => import('@/views/oms/order/in'),
+        meta: {title: '新增会员'},
+        hidden:true
+        //meta: {title: '新建文件', icon: 'product-list'}
+      },
+      {
+        path: 'orderDetail',
+        name: 'orderDetail',
+        component: () => import('@/views/oms/order/orderDetail'),
+        meta: {title: '详细信息'},
+        hidden:true
+      },
+      {
+        path: 'deliverOrderList',
+        name: 'deliverOrderList',
+        component: () => import('@/views/oms/order/deliverOrderList'),
+        meta: {title: '发货列表'},
+        hidden:true
+      },
+
+      {
+        path: 'returnApply',
+        name: 'returnApply',
+        component: () => import('@/views/oms/apply/index'),
+        meta: {title: '预约占床'}
+        // meta: {title: '预约占床', icon: 'product-brand'}
+      },
+      {
+        path: 'add',
+        name: 'add',
+        component: () => import('@/views/oms/product/add'),
+        meta: {title: '入住登记'}
+        // meta: {title: '入住登记', icon: 'product-add'}
+      },
+      {
+        path: 'addDetail',
+        name: 'addDetail',
+        component: () => import('@/views/oms/product/update'),
+        meta: {title: '登记信息'},
+        hidden:true,
+      },
+      {
+        path: 'viewDetail',
+        name: 'viewDetail',
+        component: () => import('@/views/oms/product/index'),
+        meta: {title: '入住详细信息'},
+        hidden:true
+      },
+      {
+        path: 'orderSetting',
+        name: 'orderSetting',
+        component: () => import('@/views/oms/order/setting'),
+        meta: {title: '退住登记'}
+        // meta: {title: '退住登记', icon: 'product-add'}
+      },
+      {
+        path: 'out',
+        name: 'out',
+        component: () => import('@/views/oms/order/change'),
+        meta: {title: '业务变更'}
+        // meta: {title: '业务变更', icon: 'product-brand'}
+      },
+      {
+        path: 'death',
+        name: 'death',
+        component: () => import('@/views/oms/order/death'),
+        meta: {title: '死亡登记'}
+        // meta: {title: '死亡登记', icon: 'order-return-reason'}
+      },
+      {
+        path: 'deathDetail',
+        name: 'deathDetail',
+        component: () => import('@/views/oms/order/deathDetail'),
+        meta: {title: '死亡登记详情'},
+        hidden:true
+
+      },
+      {
+        path: 'changeDetail',
+        name: 'changeDetail',
+        component: () => import('@/views/oms/order/changeDetail'),
+        meta: {title: '业务变更详情'},
+        hidden:true
+
+      },
+      {
+        path: 'returnReason',
+        name: 'returnReason',
+        component: () => import('@/views/oms/apply/reason'),
+        meta: {title: '外出管理'}
+        // meta: {title: '外出管理', icon: 'order-return-reason'}
+      },
+      {
+        path: 'listLogin',
+        name: 'listLogin',
+        component: () => import('@/views/oms/apply/login'),
+        meta: {title: '外出管理详情'},
+        hidden:true
+        // meta: {title: '外出管理', icon: 'order-return-reason'}
+      },
+      {
+        path: 'returnDetail',
+        name: 'returnDetail',
+        component: () => import('@/views/oms/order/deliverOrderList'),
+        meta: {title: '退住详情'},
+        hidden:true
+      },
+      {
+        path: 'returnApplyDetail',
+        name: 'returnApplyDetail',
+        component: () => import('@/views/oms/apply/applyDetail'),
+        meta: {title: '预约信息'},
+        hidden:true
+      }
+    ]
+  },
+  {
     path: '/mmg',
     component: Layout,
     redirect: '/mmg/fixedAsset',
@@ -96,72 +229,178 @@ export const constantRouterMap = [
         meta: {title: '仓库日志'},
       }
     ]
-  },
-  {
-    path: '/pms',
+  }, {
+    path:'/sms',
     component: Layout,
-    redirect: '/pms/product',
-    name: 'pms',
-    meta: {title: '物资管理（备份）', icon: 'product'},
-    children: [{
-      path: 'product',
-      name: 'product',
-      component: () => import('@/views/pms/product/index'),
-      meta: {title: '固定资产'}
-    },
+    redirect: '/sms/coupon',
+    name: 'sms',
+    meta: {title: '人事管理', icon: 'sms'},
+    children: [
       {
-        path: 'addProduct',
-        name: 'addProduct',
-        component: () => import('@/views/pms/product/add'),
-        meta: {title: '添加'},
-        hidden: true
+        path: 'flash',
+        name: 'flash',
+        component: () => import('@/views/sms/flash/index'),
+        meta: {title: '部门配置', icon: 'sms-flash'}
+      },
+      // {
+      //   path: 'flashSession',
+      //   name: 'flashSession',
+      //   component: () => import('@/views/sms/flash/sessionList'),
+      //   meta: {title: '岗位/职级管理'},
+      //   hidden:true
+      // },
+      // {
+      //   path: 'selectSession',
+      //   name: 'selectSession',
+      //   component: () => import('@/views/sms/flash/selectSessionList'),
+      //   meta: {title: '权限分配'},
+      //   hidden:true
+      // },
+      // {
+      //   path: 'flashProductRelation',
+      //   name: 'flashProductRelation',
+      //   component: () => import('@/views/sms/flash/productRelationList'),
+      //   meta: {title: '员工管理'},
+      //   hidden:true
+      // },
+      {
+        path: 'coupon',
+        name: 'coupon',
+        component: () => import('@/views/sms/coupon/index'),
+        meta: {title: '岗位/职级管理', icon: 'sms-coupon'}
       },
       {
-        path: 'ProductView',
-        name: 'ProductView',
-        component: () => import('@/views/pms/product/view'),
-        meta: {title: '查看'},
-        hidden: true
+        path: 'addCoupon',
+        name: 'addCoupon',
+        component: () => import('@/views/sms/coupon/add'),
+        meta: {title: '权限分配'},
+        hidden:true
       },
-      {
-        path: 'updateProduct',
-        name: 'updateProduct',
-        component: () => import('@/views/pms/product/update'),
-        meta: {title: '编辑'},
-        hidden: true
-      },
-      {
-        path: 'productQuery',
-        name: 'productQuery',
-        component: () => import('@/views/pms/product/query'),
-        meta: {title: '物资查询'}
-      },
-      {
-        path: 'productPut',
-        name: 'productPut',
-        component: () => import('@/views/pms/product/put'),
-        meta: {title: '物资入库'}
-      },
-      {
-        path: 'productOut',
-        name: 'productOut',
-        component: () => import('@/views/pms/product/out'),
-        meta: {title: '物资出库'}
-      },
+      // {
+      //   path: 'updateCoupon',
+      //   name: 'updateCoupon',
+      //   component: () => import('@/views/sms/coupon/update'),
+      //   meta: {title: '员工管理'},
+      //   hidden:true
+      // },
+      // {
+      //   path: 'couponHistory',
+      //   name: 'couponHistory',
+      //   component: () => import('@/views/sms/coupon/history'),
+      //   meta: {title: '优惠券领取详情'},
+      //   hidden:true
+      // },
       {
         path: 'brand',
-        name: 'brand',
-        component: () => import('@/views/pms/brand/index'),
-        meta: {title: '盘点管理'}
+        name: 'homeBrand',
+        component: () => import('@/views/sms/brand/index'),
+        meta: {title: '权限分配', icon: 'product-brand'}
       },
       {
-        path: 'updateBrand',
-        name: 'updateBrand',
-        component: () => import('@/views/pms/brand/update'),
-        meta: {title: '仓库日志'},
-      }
+        path: 'new',
+        name: 'homeNew',
+        component: () => import('@/views/sms/new/index'),
+        meta: {title: '员工管理', icon: 'sms-new'}
+      },
+      // {
+      //   path: 'hot',
+      //   name: 'homeHot',
+      //   component: () => import('@/views/sms/hot/index'),
+      //   meta: {title: '岗位/职级管理', icon: 'sms-hot'}
+      // },
+      {
+        path: 'subject',
+        name: 'homeSubject',
+        component: () => import('@/views/sms/subject/index'),
+        meta: {title: '团队管理', icon: 'sms-subject'}
+      },
+      // {
+      //   path: 'advertise',
+      //   name: 'homeAdvertise',
+      //   component: () => import('@/views/sms/advertise/index'),
+      //   meta: {title: '广告列表', icon: 'sms-ad'}
+      // },
+      // {
+      //   path: 'addAdvertise',
+      //   name: 'addHomeAdvertise',
+      //   component: () => import('@/views/sms/advertise/add'),
+      //   meta: {title: '添加广告'},
+      //   hidden:true
+      // },
+      // {
+      //   path: 'updateAdvertise',
+      //   name: 'updateHomeAdvertise',
+      //   component: () => import('@/views/sms/advertise/update'),
+      //   meta: {title: '编辑广告'},
+      //   hidden:true
+      // }
     ]
   },
+  // {
+  //   path: '/pms',
+  //   component: Layout,
+  //   redirect: '/pms/product',
+  //   name: 'pms',
+  //   meta: {title: '物资管理（备份）', icon: 'product'},
+  //   children: [{
+  //     path: 'product',
+  //     name: 'product',
+  //     component: () => import('@/views/pms/product/index'),
+  //     meta: {title: '固定资产'}
+  //   },
+  //     {
+  //       path: 'addProduct',
+  //       name: 'addProduct',
+  //       component: () => import('@/views/pms/product/add'),
+  //       meta: {title: '添加'},
+  //       hidden: true
+  //     },
+  //     {
+  //       path: 'ProductView',
+  //       name: 'ProductView',
+  //       component: () => import('@/views/pms/product/view'),
+  //       meta: {title: '查看'},
+  //       hidden: true
+  //     },
+  //     {
+  //       path: 'updateProduct',
+  //       name: 'updateProduct',
+  //       component: () => import('@/views/pms/product/update'),
+  //       meta: {title: '编辑'},
+  //       hidden: true
+  //     },
+  //     {
+  //       path: 'productQuery',
+  //       name: 'productQuery',
+  //       component: () => import('@/views/pms/product/query'),
+  //       meta: {title: '物资查询'}
+  //     },
+  //     {
+  //       path: 'productPut',
+  //       name: 'productPut',
+  //       component: () => import('@/views/pms/product/put'),
+  //       meta: {title: '物资入库'}
+  //     },
+  //     {
+  //       path: 'productOut',
+  //       name: 'productOut',
+  //       component: () => import('@/views/pms/product/out'),
+  //       meta: {title: '物资出库'}
+  //     },
+  //     {
+  //       path: 'brand',
+  //       name: 'brand',
+  //       component: () => import('@/views/pms/brand/index'),
+  //       meta: {title: '盘点管理'}
+  //     },
+  //     {
+  //       path: 'updateBrand',
+  //       name: 'updateBrand',
+  //       component: () => import('@/views/pms/brand/update'),
+  //       meta: {title: '仓库日志'},
+  //     }
+  //   ]
+  // },
   {
     path: '/drug',
     component: Layout,

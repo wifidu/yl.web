@@ -1,9 +1,16 @@
 import request from '@/utils/request'
 export function fetchList(params) {
   return request({
-    url:'/returnReason/list',
+    url:'/api/member-manage/out-manage/list',
     method:'get',
     params:params
+  })
+}
+
+export function changeList() {
+  return request({
+    url:'/api/member-manage/check-out/list?page=1&page_size=1',
+    method:'get',
   })
 }
 
@@ -23,9 +30,12 @@ export function updateStatus(params) {
   })
 }
 
-export function addReason(data) {
+export function addReason(data,path) {
   return request({
-    url:'/returnReason/create',
+    // headers: {
+    //   'Content-Type': 'application/json'
+    // },
+    url:path,
     method:'post',
     data:data
   })
