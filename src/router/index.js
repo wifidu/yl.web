@@ -229,8 +229,38 @@ export const constantRouterMap = [
         meta: {title: '仓库日志'},
       }
     ]
-  }, {
-    path:'/sms',
+  },
+  {
+    path: '/fmg',
+    component: Layout,
+    redirect: '/fmg/collection',
+    name: 'fmg',
+    meta: {title: '财务管理', icon: 'sms-coupon'},
+    children: [{
+      path: 'collection',
+      name: 'collection',
+      component: () => import('@/views/fmg/collection'),
+      meta: {title: '收款管理'}
+    }, {
+      path: 'refund',
+      name: 'refund',
+      component: () => import('@/views/fmg/refund'),
+      meta: {title: '退款管理'}
+    }, {
+      path: 'accountMG',
+      name: 'accountMG',
+      component: () => import('@/views/fmg/accountMG'),
+      meta: {title: '账户管理'}
+    }, {
+      path: 'accountMS',
+      name: 'accountMS',
+      component: () => import('@/views/fmg/accountMS'),
+      meta: {title: '账户信息'},
+      hidden: true
+    }]
+  },
+  {
+    path: '/sms',
     component: Layout,
     redirect: '/sms/coupon',
     name: 'sms',
@@ -450,4 +480,3 @@ export default new Router({
   scrollBehavior: () => ({y: 0}),
   routes: constantRouterMap
 })
-

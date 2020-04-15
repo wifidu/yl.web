@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 export function fetchList(params) {
   return request({
-    url:'/api/member-manage/check-out/list',
+    url:'/member-manage/check-out/list',
     method:'get',
     params:params
   })
@@ -9,7 +9,7 @@ export function fetchList(params) {
 
 export function bookList(params) {
   return request({
-    url:'/api/member-manage/book-bed/list',
+    url:'/member-manage/book-bed/list',
     method:'get',
     params:params
   })
@@ -17,7 +17,7 @@ export function bookList(params) {
 
 export function getList() {
   return request({
-    url:'/api/member-manage/death-registration/list?page=1&page_size=1',
+    url:'/member-manage/death-registration/list?page=1&page_size=1',
     method:'get',
 
   })
@@ -25,7 +25,7 @@ export function getList() {
 
 export function searchList(params) {
   return request({
-    url:'/api/member-manage/member-profile/search',
+    url:'/member-manage/member-profile/search',
     method:'get',
     data:params
   })
@@ -47,7 +47,7 @@ export function addList(data) {
     headers: {
       'Content-Type': 'application/json'
     },
-    url:'/api/member-manage/member-profile',
+    url:'/member-manage/member-profile',
     method:'post',
     data:data
   })
@@ -58,7 +58,7 @@ export function inList(data) {
     headers: {
       'Content-Type': 'application/json'
     },
-    url:'/api/member-manage/check-in/',
+    url:'/member-manage/check-in/',
     method:'post',
     data:data
   })
@@ -66,7 +66,7 @@ export function inList(data) {
 
 export function deleteApply(params) {
   return request({
-    url:'/api/member-manage/check-out/'+params,
+    url:'/member-manage/check-out/'+params,
     method:'delete',
     // params:params
   })
@@ -81,14 +81,14 @@ export function updateApplyStatus(id,data) {
 
 export function getApplyDetail(id) {
   return request({
-    url:'/api/member-manage/book-bed/'+id,
+    url:'/member-manage/book-bed/'+id,
     method:'get'
   })
 }
 
 export function cancelOrder(id) {
   return request({
-    url:'/api/member-manage/book-bed/'+id,
+    url:'/member-manage/book-bed/'+id,
     method:'delete'
   })
 }

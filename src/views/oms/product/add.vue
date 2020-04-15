@@ -296,7 +296,7 @@
         if(this.searchList.member_name == ''){
           this.getList()
         } else {
-          getList(this.searchList,"/api/member-manage/check-in/search").then(response => {
+          getList(this.searchList,"/member-manage/check-in/search").then(response => {
             this.listLoading = false;
             this.list = response.data;
             console.log(response)
@@ -341,7 +341,7 @@
         }).then(() => {
           for(let i=0;i<ids.length;i++){
             console.log('删除编号:'+ids[i])
-            deleteOrder('/api/member-manage/check-in/',ids[i]).then(response=>{
+            deleteOrder('/member-manage/check-in/',ids[i]).then(response=>{
               this.$message({
                 message: '删除成功！',
                 type: 'success',
@@ -386,7 +386,7 @@
       },
       getList() {
         this.listLoading = true;
-        getList(this.dataList,"/api/member-manage/check-in/list").then(response => {
+        getList(this.dataList,"/member-manage/check-in/list").then(response => {
           this.listLoading = false;
           this.list = response.data.data;
           console.log('this.list')
@@ -402,7 +402,7 @@
           let params = new URLSearchParams();
           params.append("ids",ids);
           console.log(ids)
-          deleteOrder('/api/member-manage/check-in/',ids).then(response=>{
+          deleteOrder('/member-manage/check-in/',ids).then(response=>{
             this.$message({
               message: '删除成功！',
               type: 'success',

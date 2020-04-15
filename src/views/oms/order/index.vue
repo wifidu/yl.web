@@ -301,7 +301,7 @@
           console.log('通过用户名搜索：'+this.search_name.member_name)
           console.log('data为：')
           console.log(this.search_name)
-          getList(this.search_name,"/api/member-manage/member-profile/search/").then(response => {
+          getList(this.search_name,"/member-manage/member-profile/search/").then(response => {
             this.listLoading = false;
             this.list = response.data;
             console.log(response)
@@ -311,7 +311,7 @@
           console.log('通过电话号码搜索:'+this.searchList.phone_number)
           console.log('data为：')
           console.log(this.search_phone)
-          getList(this.search_phone,"/api/member-manage/member-profile/search").then(response => {
+          getList(this.search_phone,"/member-manage/member-profile/search").then(response => {
             this.listLoading = false;
             this.list = response.data;
             console.log(response)
@@ -366,7 +366,7 @@
         }).then(() => {
           for(let i=0;i<ids.length;i++){
             console.log('删除编号:'+ids[i])
-            deleteOrder('/api/member-manage/member-profile/',ids[i]).then(response=>{
+            deleteOrder('/member-manage/member-profile/',ids[i]).then(response=>{
               this.$message({
                 message: '删除成功！',
                 type: 'success',
@@ -452,7 +452,7 @@
       },
       getList() {
         this.listLoading = true;
-        getList(this.dataList,"/api/member-manage/member-profile/list/").then(response => {
+        getList(this.dataList,"/member-manage/member-profile/list/").then(response => {
           this.listLoading = false;
           this.list = response.data.data;
           console.log(this.list)
@@ -466,7 +466,7 @@
         }).then(() => {
           let params = new URLSearchParams();
           params.append("ids",ids);
-          deleteOrder('/api/member-manage/member-profile/',ids).then(response=>{
+          deleteOrder('/member-manage/member-profile/',ids).then(response=>{
             this.$message({
               message: '删除成功！',
               type: 'success',

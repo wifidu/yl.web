@@ -292,7 +292,7 @@
         if(this.searchList.member_name == ''){
           this.getList()
         } else {
-          getList(this.searchList,"/api/member-manage/check-out/search").then(response => {
+          getList(this.searchList,"/member-manage/check-out/search").then(response => {
             this.listLoading = false;
             this.list = response.data;
             console.log(response)
@@ -303,7 +303,7 @@
         this.listQuery['check-out_time']=parseInt(this.listQuery['check-out_time'])
         this.listQuery['account_balance']=parseFloat(this.listQuery['account_balance'])
         console.log(this.listQuery)
-        appointList(this.listQuery,'/api/member-manage/check-out').then(response=>{
+        appointList(this.listQuery,'/member-manage/check-out').then(response=>{
           this.$message({
             type: 'success',
             message: '退住成功!',
@@ -353,7 +353,7 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          deleteOrder('/api/member-manage/check-out/',row.id).then(response=>{
+          deleteOrder('/member-manage/check-out/',row.id).then(response=>{
             this.getList();
             this.$message({
               type: 'success',
@@ -374,7 +374,7 @@
         }).then(() => {
           for(let i=0;i<ids.length;i++){
             console.log('删除编号:'+ids[i])
-            deleteOrder('/api/member-manage/check-out/',ids[i]).then(response=>{
+            deleteOrder('/member-manage/check-out/',ids[i]).then(response=>{
               this.$message({
                 message: '删除成功！',
                 type: 'success',

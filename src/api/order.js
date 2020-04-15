@@ -18,7 +18,7 @@ export function getList(params,path) {
 
 export function getLoginDetail(params) {
   return request({
-    url:'/api/member-manage/out-manage/'+params,
+    url:'/member-manage/out-manage/'+params,
     method:'get',
   })
 }
@@ -47,7 +47,7 @@ export function deleteOrder(path,id) {
 
 export function deleteMulOrder(data) {
   return request({
-    url:'/api/member-manage/member-profile/',
+    url:'/member-manage/member-profile/',
     method:'delete',
     data:data
   });
@@ -55,7 +55,7 @@ export function deleteMulOrder(data) {
 
 export function deleteId(id) {
   return request({
-    url:'/api/member-manage/member-profile/'+id,
+    url:'/member-manage/member-profile/'+id,
     method:'delete'
   });
 }
@@ -70,21 +70,21 @@ export function deliveryOrder(data) {
 
 export function getOrderDetail(id) {
   return request({
-    url:'/api/member-manage/member-profile/'+id,
+    url:'/member-manage/member-profile/'+id,
     method:'get'
   });
 }
 
 export function getChangeDetail(id) {
   return request({
-    url:'/api/member-manage/check-out/'+id,
+    url:'/member-manage/check-out/'+id,
     method:'get'
   });
 }
 
 export function getDetail(id) {
   return request({
-    url:'/api/member-manage/check-in/'+id,
+    url:'/member-manage/check-in/'+id,
     method:'get'
   });
 }

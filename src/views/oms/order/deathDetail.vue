@@ -65,7 +65,7 @@
         this.$router.back();
       },
       getList(){
-        returnDetail(this.id,'/api/member-manage/death-registration/').then(response=>{
+        returnDetail(this.id,'/member-manage/death-registration/').then(response=>{
           this.listDetail=response.data
           console.log(response.data)
         })

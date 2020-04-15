@@ -296,7 +296,7 @@
         if(this.searchList.member_name == ''){
           this.getList()
         } else {
-          getList(this.searchList,"/api/member-manage/death-registration/search/").then(response => {
+          getList(this.searchList,"/member-manage/death-registration/search/").then(response => {
             this.listLoading = false;
             this.list = response.data;
             console.log(response)
@@ -307,7 +307,7 @@
         this.listQuery['death_time']=parseInt(this.listQuery['death_time'])
         this.listQuery['certificate_time']=parseInt(this.listQuery['certificate_time'])
         console.log(this.listQuery)
-        appointList(this.listQuery,'/api/member-manage/death-registration/').then(response=>{
+        appointList(this.listQuery,'/member-manage/death-registration/').then(response=>{
           this.$message({
             type: 'success',
             message: '死亡登记成功!',
@@ -326,7 +326,7 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          deleteOrder('/api/member-manage/death-registration/',row.id).then(response=>{
+          deleteOrder('/member-manage/death-registration/',row.id).then(response=>{
             this.getList();
             this.$message({
               type: 'success',
@@ -347,7 +347,7 @@
         }).then(() => {
           for(let i=0;i<ids.length;i++){
             console.log('删除编号:'+ids[i])
-            deleteOrder('/api/member-manage/death-registration/',ids[i]).then(response=>{
+            deleteOrder('/member-manage/death-registration/',ids[i]).then(response=>{
               this.$message({
                 message: '删除成功！',
                 type: 'success',
@@ -369,7 +369,7 @@
       },
       getList(){
         this.listLoading=true;
-        getList(this.page,'/api/member-manage/death-registration/list/').then(response => {
+        getList(this.page,'/member-manage/death-registration/list/').then(response => {
           this.listLoading = false;
           this.list = response.data.data;
           console.log(response)
