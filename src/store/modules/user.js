@@ -8,7 +8,6 @@ const user = {
     avatar: '',
     roles_id: [],
     id: ''
-
   },
 
   mutations: {
