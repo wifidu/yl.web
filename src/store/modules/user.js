@@ -7,7 +7,7 @@ const user = {
     name: '',
     avatar: '',
     roles_id: [],
-    id:''
+    id: ''
   },
 
   mutations: {
@@ -39,7 +39,7 @@ const user = {
         login(username, userInfo.password).then(response => {
           console.log(response)
           const data = response.data
-          const tokenStr = data.token_type+" "+data.access_token
+          const tokenStr = data.token_type+' '+data.access_token
           setToken(tokenStr)
           commit('SET_TOKEN', tokenStr)
           resolve()
@@ -50,7 +50,7 @@ const user = {
     },
 
     // 获取用户信息
-    GetInfo({ commit, state }) {
+    GetInfo({ commit, state}) {
       return new Promise((resolve, reject) => {
         getInfo().then(response => {
 
