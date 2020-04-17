@@ -29,7 +29,7 @@
       <el-table :data="tableData"
                 style="width: 100%"
                 border>
-        <el-table-column label="物资名称" width="100" align="center">
+        <el-table-column label="物资名称" align="center">
           <template slot-scope="scope">{{scope.row.name}}</template>
         </el-table-column>
         <el-table-column label="品牌" width="150" align="center">
@@ -47,16 +47,16 @@
             <p>{{scope.row.unit}}</p>
           </template>
         </el-table-column>
-        <el-table-column label="数量" width="100" align="center">
+        <el-table-column label="数量" align="center">
           <template slot-scope="scope">{{scope.row.number}}</template>
         </el-table-column>
-<!--        <el-table-column label="仓库" width="100" align="center">-->
-<!--          <template slot-scope="scope">{{scope.row.warehouse_name}}</template>-->
-<!--        </el-table-column>-->
+        <el-table-column label="仓库" width="100" align="center">
+          <template slot-scope="scope">{{scope.row.mate.warehouse_name}}</template>
+        </el-table-column>
 <!--        <el-table-column label="" width="100" align="center"></el-table-column>-->
 <!--        <el-table-column label="类别" align="center">-->
 <!--          <template slot-scope="scope">-->
-<!--            <p>{{scope.row.classification}}</p>-->
+<!--            <p>{{scope.row.mate.classification}}</p>-->
 <!--          </template>-->
 <!--        </el-table-column>-->
 <!--        <el-table-column label="单号" align="center">-->
@@ -104,6 +104,7 @@
 </template>
 <script>
   import {Search, material_del} from '@/api/materialData'
+  import {formatDate} from '@/utils/date.js';
 
   export default {
     name: "queryAsset",
@@ -120,6 +121,12 @@
     created() {
       this.getTable();
     },
+    filters:{
+      formatDate(time) {
+        let date = new Date(time);
+        return formatDate(date, "yyyy-MM-dd hh:mm");
+      }
+    },
     methods: {
       getTable(){
         this.listLoading = true;
@@ -127,6 +134,7 @@
           console.log(response.data.data)
           this.tableData = response.data.data;
           this.total = response.data.total;
+          this.current_page = response.data.current_page;
         })
       },
       handleAdd() {

@@ -20,7 +20,7 @@ export function get_asset_number() {
 }
 export function asset_save(data) {
   return request({
-    url: '/material-management/fixed-assets/ ',
+    url: '/material-management/fixed-assets/',
     method: 'post',
     data: data
   })

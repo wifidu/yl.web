@@ -13,6 +13,12 @@ export function save(data) {
     data: data
   })
 }
+export function search_id(id) {
+  return request({
+    url: '/material-management/material/+id',
+    method: 'post',
+  })
+}
 export function material_del(id) {
   return request({
     url: '/material-management/material/'+id,

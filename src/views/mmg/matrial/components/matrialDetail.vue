@@ -40,8 +40,7 @@
 </template>
 
 <script>
-  import {asset_data, asset_save, get_asset_number} from '@/api/fixedAssets';
-  import {formatDate} from '@/utils/date.js';
+  import {save} from '@/api/materialData';
 
   const defaultValue = {
     id: '',
@@ -81,7 +80,7 @@
         }).then(() => {
           save(this.value).then(response => {
             this.$message({
-              message: '带*为必填信息',
+              message: '保存成功',
               type: 'error',
               duration: 1000
             });

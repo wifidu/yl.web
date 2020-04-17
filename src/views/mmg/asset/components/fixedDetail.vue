@@ -90,7 +90,7 @@
           </el-form-item>
         </p>
         <el-form-item v-if="isEdit" label="图片：">
-          <el-upload v-model="value.picture_url"
+          <el-upload
             class="selectProductPics"
             action=""
             :limit=1
@@ -195,7 +195,14 @@
               cancelButtonText: '取消',
               type: 'warning'
             }).then(() => {
-              this.value.install_date = (new Date(this.value.install_date)).getTime()/1000;
+              // this.value.install_date = (new Date(this.value.install_date)).getTime()/1000;
+              // asset_save(this.value).then(response => {
+              //   this.$message({
+              //     message: '提交成功',
+              //     type: 'success',
+              //     duration: 1000
+              //   })
+              // });
               this.$router.back()
             })
 

@@ -42,18 +42,18 @@
     <el-table :data="tableData"
               style="margin-top: 15px;width:100%"
               border>
-      <el-table-column label="单号" prop="odd" align="center"></el-table-column>
-      <el-table-column label="操作类型" prop="ope_name" align="center"></el-table-column>
-      <el-table-column label="仓库名称" prop="house_name" align="center"></el-table-column>
-      <el-table-column label="物资名称" prop="pro_name" align="center"></el-table-column>
-      <el-table-column label="品牌规格" prop="brand" align="center"></el-table-column>
-      <el-table-column label="供应商" prop="supplier" align="center"></el-table-column>
-      <el-table-column label="单位" prop="unit" align="center"></el-table-column>
-      <el-table-column label="单价" prop="price" align="center"></el-table-column>
-      <el-table-column label="操作数量" prop="ope_num" align="center"></el-table-column>
-      <el-table-column label="金额" prop="sum" align="center"></el-table-column>
-      <el-table-column label="操作人" prop="people" align="center"></el-table-column>
-      <el-table-column label="变动时间" prop="change_time" align="center" width="250"></el-table-column>
+      <el-table-column label="单号" prop="odd" align="center">{{value.odd_number}}</el-table-column>
+      <el-table-column label="操作类型" prop="ope_name" align="center">{{value.type}}</el-table-column>
+      <el-table-column label="仓库名称" prop="house_name" align="center">{{value.warehouse_name}}</el-table-column>
+      <el-table-column label="物资名称" prop="pro_name" align="center">{{value.material_name}}</el-table-column>
+      <el-table-column label="品牌规格" prop="brand" align="center">{{value.brand}}</el-table-column>
+      <el-table-column label="供应商" prop="supplier" align="center">{{value.supplier}}</el-table-column>
+      <el-table-column label="单位" prop="unit" align="center">{{value.unit}}</el-table-column>
+      <el-table-column label="单价" prop="price" align="center">{{value.price}}</el-table-column>
+      <el-table-column label="操作数量" prop="ope_num" align="center">{{value.number}}</el-table-column>
+      <el-table-column label="金额" prop="sum" align="center">{{value.total}}</el-table-column>
+      <el-table-column label="操作人" prop="people" align="center">{{value.operator}}</el-table-column>
+      <el-table-column label="变动时间" prop="change_time" align="center" width="250">{{value.operator_time}}</el-table-column>
     </el-table>
     <div class="pagination-container">
       <el-pagination
@@ -70,10 +70,14 @@
 </template>
 
 <script>
+  import {Search} from '@/api/warehouse_log'
+  import {formatDate} from '@/utils/date.js';
+
   export default {
     name: 'warehouseLog',
     data() {
       return{
+        value: null,
         total: 1,
         currentPage: 5,
         options:[{
@@ -117,9 +121,25 @@
           people: 'me',
           change_time: 'today'
         }],
+        page: 1,
+        pageSize: 5,
+      }
+    },
+    created() {
+      this.getlist();
+    },
+    filters:{
+      formatDate(time) {
+        let date = new Date(time);
+        return formatDate(date, "yyyy-MM-dd hh:mm");
       }
     },
     methods: {
+      getlist(){
+        Search(this.page, this.pageSize).then(response => {
+          this.value = response.data;
+        })
+      },
       handleSizeChange(val) {
         console.log('???');
       },

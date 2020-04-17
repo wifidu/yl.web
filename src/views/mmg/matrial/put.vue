@@ -1,5 +1,5 @@
 <template>
-  <matrial-put is-Edit="true"></matrial-put>
+  <matrial-put></matrial-put>
 </template>
 
 <script>

@@ -34,7 +34,6 @@ const user = {
       const username = userInfo.username.trim()
       return new Promise((resolve, reject) => {
         login(username, userInfo.password).then(response => {
-          console.log(response)
           const data = response.data
           const tokenStr = data.token_type+' '+data.access_token
           setToken(tokenStr)
