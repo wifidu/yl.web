@@ -7,6 +7,29 @@ export function fetchList(params) {
   })
 }
 
+export function getList(params,path) {
+  return request({
+    url:path,
+    method:'get',
+    //data:data
+    params:params
+  })
+}
+
+export function getLoginDetail(params) {
+  return request({
+    url:'/member-manage/out-manage/'+params,
+    method:'get',
+  })
+}
+
+export function returnDetail(params,path) {
+  return request({
+    url:path+params,
+    method:'get',
+  })
+}
+
 export function closeOrder(params) {
   return request({
     url:'/order/update/close',
@@ -15,12 +38,26 @@ export function closeOrder(params) {
   })
 }
 
-export function deleteOrder(params) {
+export function deleteOrder(path,id) {
   return request({
-    url:'/order/delete',
-    method:'post',
-    params:params
-  })
+    url:path+id,
+    method:'delete'
+  });
+}
+
+export function deleteMulOrder(data) {
+  return request({
+    url:'/member-manage/member-profile/',
+    method:'delete',
+    data:data
+  });
+}
+
+export function deleteId(id) {
+  return request({
+    url:'/member-manage/member-profile/'+id,
+    method:'delete'
+  });
 }
 
 export function deliveryOrder(data) {
@@ -33,7 +70,21 @@ export function deliveryOrder(data) {
 
 export function getOrderDetail(id) {
   return request({
-    url:'/order/'+id,
+    url:'/member-manage/member-profile/'+id,
+    method:'get'
+  });
+}
+
+export function getChangeDetail(id) {
+  return request({
+    url:'/member-manage/check-out/'+id,
+    method:'get'
+  });
+}
+
+export function getDetail(id) {
+  return request({
+    url:'/member-manage/check-in/'+id,
     method:'get'
   });
 }

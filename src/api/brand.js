@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 export function fetchList(params) {
   return request({
-    url:'/brand/list',
+    url:'/api/member-manage/check-in/list',
     method:'get',
     params:params
   })

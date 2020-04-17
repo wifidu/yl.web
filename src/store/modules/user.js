@@ -34,6 +34,7 @@ const user = {
       const username = userInfo.username.trim()
       return new Promise((resolve, reject) => {
         login(username, userInfo.password).then(response => {
+          console.log(response)
           const data = response.data
           const tokenStr = data.token_type+' '+data.access_token
           setToken(tokenStr)
@@ -49,6 +50,7 @@ const user = {
     GetInfo({ commit, state}) {
       return new Promise((resolve, reject) => {
         getInfo().then(response => {
+
           const data = response.data
           if (data.id && data.roles_id > 0) { // 验证返回的roles是否是一个非空数组
             commit('SET_ROLES_ID', data.roles_id)
@@ -68,14 +70,14 @@ const user = {
     // 登出
     LogOut({ commit, state }) {
       return new Promise((resolve, reject) => {
-        logout(state.token).then(() => {
+        // logout(state.token).then(() => {
           commit('SET_TOKEN', '')
           commit('SET_ROLES_ID', '')
           removeToken()
           resolve()
-        }).catch(error => {
-          reject(error)
-        })
+        // }).catch(error => {
+        //   reject(error)
+        // })
       })
     },
 
