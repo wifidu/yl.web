@@ -23,10 +23,11 @@
       <el-table :data="tableData"
                 style="width: 100%"
                 @selection-change="handleSelectionChange"
+                v-loading="listLoading"
                 border>
         <el-table-column type="selection" width="60" align="center"></el-table-column>
         <el-table-column label="序号" width="100" align="center">
-          <template slot-scope="scope">{{scope.row.number}}</template>
+          <template slot-scope="scope">{{scope.row.serial_number}}</template>
         </el-table-column>
         <el-table-column label="名称" width="150" align="center">
           <template slot-scope="scope">
@@ -45,11 +46,13 @@
           <template slot-scope="scope">{{scope.row.brand}}</template>
         </el-table-column>
         <el-table-column label="状态" width="100" align="center">
-          <template slot-scope="scope">{{scope.row.type}}</template>
+          <template slot-scope="scope">
+            {{scope.row.type === 0?'已损坏':(scope.row.type === 1?'在用':'维修中')}}
+          </template>
         </el-table-column>
         <el-table-column label="安装日期" align="center">
           <template slot-scope="scope">
-            <p>{{scope.row.install_date}}</p>
+            <p>{{scope.row.install_date | formatDate}}</p>
           </template>
         </el-table-column>
         <el-table-column label="保修日期" align="center">
@@ -84,42 +87,61 @@
     <div class="pagination-container">
       <el-pagination
         background
+        @size-change="handleSizeChange()"
+        @current-change="handleCurrentChange()"
         layout="total, sizes,prev, pager, next,jumper"
         :page-sizes="[5,10,15]"
-        :current-page.sync="currentPage"
+        :current-page.sync="pageSize"
         :total="total">
       </el-pagination>
     </div>
   </div>
 </template>
 <script>
+  import {supplies_list, asset_data_del, asset_data_batchdel} from '@/api/fixedAssets'
+  import {formatDate} from '@/utils/date.js';
+
+  const defaultQuery = {
+    content: null
+  };
   export default {
     name: "fixedAsset",
     data() {
       return {
         currentPage: 5,
         total: null,
-        multipleSelection: null,
-        tableData: [{
-          number: null,
-          name: null,
-          id: null,
-          classification: null,
-          brand: null,
-          type: null,
-          install_date: null,
-          warranty: null
-        }]
+        multipleSelection: [],
+        tableData: null,
+        listLoading: true,
+        page: 1,
+        pageSize: 5
+      }
+    },
+    created() {
+      this.getTableData();
+    },
+    filters:{
+      formatDate(time) {
+        let date = new Date(time);
+        return formatDate(date, "yyyy-MM-dd hh:mm");
       }
     },
     methods: {
+      getTableData() {
+        this.listLoading = true;
+        supplies_list(this.page, this.pageSize).then(response => {
+          this.listLoading = false;
+          this.tableData = response.data.data;
+          this.total = response.data.data.length;
+        })
+      },
       handleAdd() {
         this.$router.push({path:'/mmg/addAsset'});
       },
-      handleShow() {
+      handleShow(index, row) {
         this.$router.push({path:'/mmg/viewAsset', query:{id:row.id}});
       },
-      handleUpdate() {
+      handleUpdate(index, row) {
         this.$router.push({path:'/mmg/updateAsset', query:{id:row.id}});
       },
       handleDelete(index, row){
@@ -130,46 +152,52 @@
         }).then(() => {
           let ids = [];
           ids.push(row.id);
-          this.updateDeleteStatus(1,ids);
+          this.updataDelete(ids);
         });
       },
       handleBatchOperate() {
-        // if(this.multipleSelection === null || this.multipleSelection.length < 1){
-        //   this.$message({
-        //     message: '请选择要删除的物品',
-        //     type: 'warning',
-        //     duration: 1000
-        //   });
-        //   return ;
-        // }
+        if(this.multipleSelection === null || this.multipleSelection.length < 1){
+          this.$message({
+            message: '请选择要删除的物品',
+            type: 'warning',
+            duration: 1000
+          });
+          return ;
+        }
         this.$confirm('是否删除?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
+          let ids = [];
+          for(let i = 0;i < this.multipleSelection.length;++i){
+            ids.push(this.multipleSelection[i].id);
+          }
+          this.updataDelete(ids)
+        })
+      },
+      handleSelectionChange(val) {
+        this.multipleSelection = val;
+      },
+      handleSizeChange(val) {
+        this.page = 1;
+        this.pageSize = val;
+        this.getTableData();
+      },
+      handleCurrentChange(val) {
+        this.page = val;
+        this.getTableData();
+      },
+      updataDelete(ids){
+        asset_data_batchdel(ids).then(response => {
           this.$message ({
             message: '删除成功',
             center: true,
             type: 'success'
           })
         })
+        this.getTableData();
       },
-      handleSelectionChange(val) {
-        this.multipleSelection = val;
-      },
-      updateDeleteStatus(deleteStatus, ids) {
-        // let params = new URLSearchParams();
-        // params.append('ids', ids);
-        // params.append('deleteStatus', deleteStatus);
-        // updateDeleteStatus(params).then(response => {
-        //   this.$message({
-        //     message: '删除成功',
-        //     type: 'success',
-        //     duration: 1000
-        //   });
-        // });
-        // this.getList();
-      }
     }
   }
 </script>

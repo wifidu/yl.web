@@ -1,10 +1,10 @@
 <template> 
   <div>
     <el-card class="form-container" shadow="never">
-      <el-form :rules="rules" size="small" :inline="true" label-width="140px">
+      <el-form :value="value" :rules="rules" size="small" :inline="true" label-width="140px">
         <p>
-          <el-form-item  label="仓库名称：" prop="name">
-            <el-select v-model="warehouse_ope" :disabled="true" placeholder="A库">
+          <el-form-item  label="仓库名称：" prop="warehouse_name">
+            <el-select v-model="in_value.warehouse_name" :disabled="true">
               <el-option v-for="item in warehouse_name"
                          :key="item.value"
                          :label="item.label"
@@ -13,12 +13,12 @@
             </el-select>
           </el-form-item>
           <el-form-item  label="入库单号：">
-            <el-input :disabled="true" style="width: 203px" placeholder="2333333"></el-input>
+            <el-input :disabled="true" style="width: 203px" v-model="in_value.in_number"></el-input>
           </el-form-item>
         </p>
         <p>
-          <el-form-item label="来源：" prop="name">
-            <el-select v-model="origin_ope" placeholder="购入">
+          <el-form-item label="来源：" prop="origin">
+            <el-select v-model="in_value.origin">
               <el-option
                 v-for="item in origin"
                 :key="item.value"
@@ -27,25 +27,25 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item  label="批号：" prop="name">
-            <el-input style="width: 203px"></el-input>
+          <el-form-item  label="批号：" prop="batch_number">
+            <el-input style="width: 203px" v-model="in_value.batch_number"></el-input>
           </el-form-item>
         </p>
         <p>
-          <el-form-item label="入库时间：" prop="name">
-            <el-date-picker v-model="in_time"
+          <el-form-item label="入库时间：" prop="in_time">
+            <el-date-picker v-model="in_value.in_time"
                             type="datetime"
                             style="width: 203px"
                             placeholder="选择日期时间">
             </el-date-picker>
           </el-form-item>
           <el-form-item  label="操作人：">
-            <el-input :disabled="true" style="width: 203px" placeholder="2333333"></el-input>
+            <el-input :disabled="true" style="width: 203px" v-model="in_value.operator"></el-input>
           </el-form-item>
         </p>
         <p>
           <el-form-item label="备注：">
-            <el-input type="textarea" style="width: 558px"></el-input>
+            <el-input type="textarea" style="width: 558px" v-model="in_value.remarks"></el-input>
           </el-form-item>
         </p>
         <b>入库清单</b><br/>
@@ -57,10 +57,10 @@
             <el-col :span="6" class="table-cell-title">入库单位</el-col>
           </el-row>
           <el-row>
-            <el-col :span="6" class="table-cell">物资名称</el-col>
-            <el-col :span="6" class="table-cell">品牌</el-col>
-            <el-col :span="6" class="table-cell">型号</el-col>
-            <el-col :span="6" class="table-cell">？？</el-col>
+            <el-col :span="6" class="table-cell" v-model="value.name"></el-col>
+            <el-col :span="6" class="table-cell" v-model="value.brand"></el-col>
+            <el-col :span="6" class="table-cell" v-model="value.model"></el-col>
+            <el-col :span="6" class="table-cell" v-model="value.unit"></el-col>
           </el-row>
           <el-row>
             <el-col :span="6" class="table-cell-title">入库数量</el-col>
@@ -69,14 +69,14 @@
             <el-col :span="6" class="table-cell-title">供应商</el-col>
           </el-row>
           <el-row>
-            <el-col :span="6" class="table-cell">Are you kidding?</el-col>
-            <el-col :span="6" class="table-cell">I don't know</el-col>
-            <el-col :span="6" class="table-cell">who care</el-col>
-            <el-col :span="6" class="table-cell">？？</el-col>
+            <el-col :span="6" class="table-cell" v-model="in_value.in_material.number"></el-col>
+            <el-col :span="6" class="table-cell" v-model="in_value.in_material.price"></el-col>
+            <el-col :span="6" class="table-cell" v-model="in_value.in_material.expiry_date"></el-col>
+            <el-col :span="6" class="table-cell" v-model="in_value.in_material.supplier"></el-col>
           </el-row>
         </div>
         <el-form style="text-align: center;margin-top: 15px">
-          <el-button type="success" size="mini" @click="handleSave">保存</el-button>
+          <el-button type="success" size="mini" @click="handleSave" v-if="isEdit">保存</el-button>
           <el-button size="mini" @click="handleRet">返回</el-button>
         </el-form>
       </el-form>
@@ -85,18 +85,30 @@
 </template>
 
 <script>
+  const defaultvalue = {
+      warehouse_name: null
+  };
   export default {
-    name: "outAsset",
+    name: "matrialPut",
+    props: {
+      isEdit: {
+        type: Boolean,
+        default: false
+      }
+    },
     data() {
       return {
+        value: null,
+        in_value: null,
         total: null,
         warehouse_name: [{value:0, label:'A库'}],
-        origin: [{value:0, label:'购入'}],
-        warehouse_ope: '',
-        origin_ope: '',
-        in_time: '',
+        origin: [{value:0, label:'??'}],
         rules: {
-          name: [{required: true, message: '该项为必填项', trigger: 'blur'}]
+          name: [{required: true, message: '该项为必填项', trigger: 'blur'}],
+          warehouse_name: [{required: true, message: '该项为必填项', trigger: 'blur'}],
+          origin: [{required: true, message: '该项为必填项', trigger: 'blur'}],
+          batch_number: [{required: true, message: '该项为必填项', trigger: 'blur'}],
+          in_time: [{required: true, message: '该项为必填项', trigger: 'blur'}],
         }
       }
     },

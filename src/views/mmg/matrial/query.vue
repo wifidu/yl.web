@@ -30,7 +30,7 @@
                 style="width: 100%"
                 border>
         <el-table-column label="物资名称" width="100" align="center">
-          <template slot-scope="scope">{{scope.row.material_name}}</template>
+          <template slot-scope="scope">{{scope.row.name}}</template>
         </el-table-column>
         <el-table-column label="品牌" width="150" align="center">
           <template slot-scope="scope">
@@ -50,20 +50,20 @@
         <el-table-column label="数量" width="100" align="center">
           <template slot-scope="scope">{{scope.row.number}}</template>
         </el-table-column>
-        <el-table-column label="仓库" width="100" align="center">
-          <template slot-scope="scope">{{scope.row.warehouse_name}}</template>
-        </el-table-column>
-        <el-table-column label="" width="100" align="center"></el-table-column>
-        <el-table-column label="类别" align="center">
-          <template slot-scope="scope">
-            <p>{{scope.row.classification}}</p>
-          </template>
-        </el-table-column>
-        <el-table-column label="单号" align="center">
-          <template slot-scope="scope">
-            <p>{{scope.row.odd_number}}</p>
-          </template>
-        </el-table-column>
+<!--        <el-table-column label="仓库" width="100" align="center">-->
+<!--          <template slot-scope="scope">{{scope.row.warehouse_name}}</template>-->
+<!--        </el-table-column>-->
+<!--        <el-table-column label="" width="100" align="center"></el-table-column>-->
+<!--        <el-table-column label="类别" align="center">-->
+<!--          <template slot-scope="scope">-->
+<!--            <p>{{scope.row.classification}}</p>-->
+<!--          </template>-->
+<!--        </el-table-column>-->
+<!--        <el-table-column label="单号" align="center">-->
+<!--          <template slot-scope="scope">-->
+<!--            <p>{{scope.row.odd_number}}</p>-->
+<!--          </template>-->
+<!--        </el-table-column>-->
         <el-table-column label="操作" width="250" align="center">
           <template slot-scope="scope">
             <p>
@@ -103,27 +103,34 @@
   </div>
 </template>
 <script>
+  import {Search, material_del} from '@/api/materialData'
+
   export default {
     name: "queryAsset",
     data() {
       return {
         currentPage: 5,
         total: null,
-        tableData: [{
-          material_name: null,
-          brand: null,
-          model: null,
-          unit: null,
-          number: null,
-          warehouse_name: null,
-          classification: null,
-          odd_number: null
-        }]
+        listLoading: true,
+        tableData: null,
+        page: 1,
+        pageSize: 5,
       }
     },
+    created() {
+      this.getTable();
+    },
     methods: {
+      getTable(){
+        this.listLoading = true;
+        Search({page: 1, pageSize: 100}).then(response => {
+          console.log(response.data.data)
+          this.tableData = response.data.data;
+          this.total = response.data.total;
+        })
+      },
       handleAdd() {
-        this.$router.push({path:'/mmg/addAsset'});
+        this.$router.push({path:'/mmg/addMaterial'});
       },
       handleDelete(index, row){
         this.$confirm('是否要进行删除操作?', '提示', {
@@ -131,9 +138,7 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          let ids = [];
-          ids.push(row.id);
-          this.updateDeleteStatus(1,ids);
+          this.updateDeleteStatus(row.id);
         });
       },
       handlePut(){
@@ -143,23 +148,20 @@
         this.$router.push({path:'/mmg/outAsset'})
       },
       handleUpdate(index,row){
-        this.$router.push({path:'/mmg/updateAsset',query:{id:row.id}});
+        this.$router.push({path:'/mmg/updateMaterial',query:{id:row.id}});
       },
       handleShow(index,row){
-        this.$router.push({path:'/mmg/viewAsset',query:{id:row.id}});
+        this.$router.push({path:'/mmg/viewMaterial',query:{id:row.id}});
       },
-      updateDeleteStatus(deleteStatus, ids) {
-        // let params = new URLSearchParams();
-        // params.append('ids', ids);
-        // params.append('deleteStatus', deleteStatus);
-        // updateDeleteStatus(params).then(response => {
-        //   this.$message({
-        //     message: '删除成功',
-        //     type: 'success',
-        //     duration: 1000
-        //   });
-        // });
-        // this.getList();
+      updateDeleteStatus(id) {
+        material_del(id).then(response => {
+          this.$message({
+            message: '删除成功',
+            type: 'success',
+            duration: 1000
+          })
+        })
+        this.getTable();
       }
     }
   }

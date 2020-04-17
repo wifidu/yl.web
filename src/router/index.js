@@ -68,19 +68,40 @@ export const constantRouterMap = [
       {
         path: 'QueryAsset',
         name: 'QueryAsset',
-        component: () => import('@/views/mmg/asset/query'),
+        component: () => import('@/views/mmg/matrial/query'),
         meta: {title: '物资查询'}
+      },
+      {
+        path: 'addMaterial',
+        name: 'addMaterial',
+        component: () => import('@/views/mmg/matrial/add'),
+        meta: {title: '新增物资'},
+        hidden: true
+      },
+      {
+        path: 'updateMaterial',
+        name: 'updateMaterial',
+        component: () => import('@/views/mmg/matrial/update'),
+        meta: {title: '编辑资产'},
+        hidden: true
+      },
+      {
+        path: 'viewMaterial',
+        name: 'viewMaterial',
+        component: () => import('@/views/mmg/matrial/view'),
+        meta: {title: '资产详情'},
+        hidden: true
       },
       {
         path: 'putAsset',
         name: 'putAsset',
-        component: () => import('@/views/mmg/asset/put'),
+        component: () => import('@/views/mmg/matrial/put'),
         meta: {title: '物资入库'}
       },
       {
         path: 'outAsset',
         name: 'outAsset',
-        component: () => import('@/views/mmg/asset/out'),
+        component: () => import('@/views/mmg/matrial/out'),
         meta: {title: '物资出库'}
       },
       {

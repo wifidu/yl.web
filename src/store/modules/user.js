@@ -6,7 +6,7 @@ const user = {
     token: getToken(),
     name: '',
     avatar: '',
-    roles_id: [],
+    roles_id: '',
     id: ''
   },
 
@@ -19,9 +19,6 @@ const user = {
     },
     SET_AVATAR: (state, avatar) => {
       state.avatar = avatar
-    },
-    SET_ROLES: (state, roles) => {
-      state.roles = roles
     },
     SET_ROLES_ID: (state, roles_id) => {
       state.roles_id = roles_id
@@ -73,7 +70,7 @@ const user = {
       return new Promise((resolve, reject) => {
         logout(state.token).then(() => {
           commit('SET_TOKEN', '')
-          commit('SET_ROLES_ID', [])
+          commit('SET_ROLES_ID', '')
           removeToken()
           resolve()
         }).catch(error => {
