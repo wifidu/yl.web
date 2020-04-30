@@ -15,11 +15,10 @@ export function bookList(params) {
   })
 }
 
-export function getList() {
+export function getList(path) {
   return request({
-    url:'/member-manage/death-registration/list?page=1&page_size=1',
+    url:path,
     method:'get',
-
   })
 }
 

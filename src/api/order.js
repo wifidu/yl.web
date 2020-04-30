@@ -89,6 +89,13 @@ export function getDetail(id) {
   });
 }
 
+export function Detail(id,path) {
+  return request({
+    url:path+id,
+    method:'get'
+  });
+}
+
 export function updateReceiverInfo(data) {
   return request({
     url:'/order/update/receiverInfo',

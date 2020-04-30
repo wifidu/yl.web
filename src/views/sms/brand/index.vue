@@ -1,9 +1,70 @@
 <template> 
-  <div class="app-container">
+  <div class="app-container" >
     <el-card class="filter-container" shadow="never">
+      <div style="margin-bottom: 15px">
+        <span>退住登记</span>
+        <el-button
+          style="float:right"
+          type="primary"
+          @click="handleSaveList()"
+          size="small">
+          保存
+        </el-button>
+        <!--        <el-button-->
+        <!--          style="float:right;margin-right: 15px"-->
+        <!--          @click="handleResetSearch()"-->
+        <!--          size="small">-->
+        <!--          返回-->
+        <!--        </el-button>-->
+      </div>
+
+
+      <el-card style="margin-top: 15px" shadow="never">
+        <span style="font-size: small;width: 500px;padding: 10px;border-radius: 5px">退住信息</span>
+        <el-form :inline="true" :model="listQuery" size="small" label-width="180px" style="margin-top: 30px">
+          <el-form-item label="会员姓名：">
+            <el-input v-model="listQuery.member_name" class="input-width" placeholder="必填" style="width:300px"></el-input>
+          </el-form-item>
+          <el-form-item label="身份证号：">
+            <el-input v-model="listQuery.member_ID" class="input-width" placeholder="必填" style="width:300px"></el-input>
+          </el-form-item>
+          <el-form-item label="床位号：">
+            <el-input v-model="listQuery.bed" class="input-width" placeholder="必填" style="width:300px"></el-input>
+          </el-form-item>
+          <el-form-item label="退住时间：">
+            <el-input v-model="listQuery['check-out_time']" class="input-width" placeholder="必填" style="width:300px"></el-input>
+          </el-form-item>
+          <el-form-item label="退住原因：">
+            <el-input v-model="listQuery['check-out_reason']" class="input-width" placeholder="必填" style="width:300px"></el-input>
+          </el-form-item>
+          <el-form-item label="经办人：">
+            <el-input v-model="listQuery.manager" class="input-width" placeholder="必填" style="width:300px"></el-input>
+          </el-form-item>
+          <el-form-item label="备注：">
+            <el-input v-model="listQuery.remark" class="input-width" placeholder="必填" style="width:300px"></el-input>
+          </el-form-item>
+          <el-form-item label="账户余额：">
+            <el-input v-model="listQuery.account_balace" class="input-width" placeholder="必填" style="width:300px"></el-input>
+          </el-form-item>
+          <el-form-item label="登记时间：">
+            <el-input v-model="listQuery.manage_time" class="input-width" placeholder="必填" style="width:300px"></el-input>
+          </el-form-item>
+          <!--          <el-form-item label="费用项目：">-->
+          <!--            <el-input v-model="listQuery.expense_item" class="input-width" placeholder="必填" style="width:300px"></el-input>-->
+          <!--          </el-form-item>-->
+        </el-form>
+      </el-card>
+
+    </el-card>
+
+    <el-card class="operate-container" shadow="never" >
+      <i class="el-icon-tickets"></i>
+      <span>退住登记列表</span>
+    </el-card>
+    <el-card class="filter-container" shadow="never" style="margin-top: 20px">
       <div>
         <i class="el-icon-search"></i>
-        <span>筛选搜索</span>
+        <span>搜索</span>
         <el-button
           style="float:right"
           type="primary"
@@ -15,353 +76,249 @@
           style="float:right;margin-right: 15px"
           @click="handleResetSearch()"
           size="small">
-          重置
+          重置列表
         </el-button>
       </div>
       <div style="margin-top: 15px">
-        <el-form :inline="true" :model="listQuery" size="small" label-width="140px">
-          <el-form-item label="品牌名称：">
-            <el-input v-model="listQuery.brandName" class="input-width" placeholder="品牌名称"></el-input>
-          </el-form-item>
-          <el-form-item label="推荐状态：">
-            <el-select v-model="listQuery.recommendStatus" placeholder="全部" clearable class="input-width">
-              <el-option v-for="item in recommendOptions"
-                         :key="item.value"
-                         :label="item.label"
-                         :value="item.value">
-              </el-option>
-            </el-select>
+        <el-form :inline="true" :model="searchList" size="small" label-width="140px">
+          <el-form-item label="会员名称：">
+            <el-input v-model="searchList.member_name" class="input-width" placeholder="会员名称"></el-input>
           </el-form-item>
         </el-form>
       </div>
     </el-card>
-    <el-card class="operate-container" shadow="never">
-      <i class="el-icon-tickets"></i>
-      <span>数据列表</span>
-      <el-button size="mini" class="btn-add" @click="handleSelectBrand()">选择品牌</el-button>
-    </el-card>
-    <div class="table-container">
-      <el-table ref="homeBrandTable"
+    <div class="table-container" style="width: 100%">
+      <el-table ref="orderTable"
                 :data="list"
                 style="width: 100%;"
                 @selection-change="handleSelectionChange"
                 v-loading="listLoading" border>
         <el-table-column type="selection" width="60" align="center"></el-table-column>
-        <el-table-column label="编号" width="120" align="center">
+        <el-table-column label="会员编号" width="100" align="center">
           <template slot-scope="scope">{{scope.row.id}}</template>
         </el-table-column>
-        <el-table-column label="品牌名称" align="center">
-          <template slot-scope="scope">{{scope.row.brandName}}</template>
+        <el-table-column label="注册时间" width="180" align="center">
+          <template slot-scope="scope">{{scope.row.created_at | formatCreateTime}}</template>
         </el-table-column>
-        <el-table-column label="是否推荐" width="200" align="center">
+
+        <el-table-column label="会员名称" width="180" align="center">
+          <template slot-scope="scope">{{scope.row.member_name}}</template>
+        </el-table-column>
+        <el-table-column label="身份证号" width="" align="center">
+          <template slot-scope="scope">{{scope.row.member_ID}}</template>
+        </el-table-column>
+        <el-table-column label="床位号" width="" align="center">
+          <template slot-scope="scope">{{scope.row.bed}}</template>
+        </el-table-column>
+        <el-table-column label="退住原因" align="center">
+          <template slot-scope="scope">{{scope.row['check-out_reason']}}</template>
+        </el-table-column>
+        <el-table-column label="退住时间" align="center">
+          <template slot-scope="scope">{{scope.row['check-out_time']}}</template>
+        </el-table-column>
+        <el-table-column label="操作" width="200" align="center">
+          <!--进入详情页-->
           <template slot-scope="scope">
-            <el-switch
-            @change="handleRecommendStatusStatusChange(scope.$index, scope.row)"
-            :active-value="1"
-            :inactive-value="0"
-            v-model="scope.row.recommendStatus">
-          </el-switch>
-          </template>
-        </el-table-column>
-        <el-table-column label="排序" width="160" align="center">
-          <template slot-scope="scope">{{scope.row.sort}}</template>
-        </el-table-column>
-        <el-table-column label="状态" width="160" align="center">
-          <template slot-scope="scope">{{scope.row.recommendStatus | formatRecommendStatus}}</template>
-        </el-table-column>
-        <el-table-column label="操作" width="180" align="center">
-          <template slot-scope="scope">
-            <el-button size="mini"
-                       type="text"
-                       @click="handleEditSort(scope.$index, scope.row)">设置排序
-            </el-button>
-            <el-button size="mini"
-                       type="text"
-                       @click="handleDelete(scope.$index, scope.row)">删除
-            </el-button>
+            <el-button
+              size="mini"
+              @click="handleViewDetail(scope.$index, scope.row)"
+            >查看详情</el-button>
+
+            <el-button
+              size="mini"
+              type="danger"
+              @click="handleDeleteDetail(scope.$index, scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
-    </div>
-    <div class="batch-operate-container">
-      <el-select
-        size="small"
-        v-model="operateType" placeholder="批量操作">
-        <el-option
-          v-for="item in operates"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
-      </el-select>
       <el-button
-        style="margin-left: 20px"
+        style="margin: 20px"
         class="search-button"
         @click="handleBatchOperate()"
-        type="primary"
+        type="danger"
         size="small">
-        确定
+        批量删除
       </el-button>
     </div>
-    <div class="pagination-container">
-      <el-pagination
-        background
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        layout="total, sizes,prev, pager, next,jumper"
-        :page-size="listQuery.pageSize"
-        :page-sizes="[5,10,15]"
-        :current-page.sync="listQuery.pageNum"
-        :total="total">
-      </el-pagination>
-    </div>
-    <el-dialog title="选择品牌" :visible.sync="selectDialogVisible" width="40%">
-      <el-input v-model="dialogData.listQuery.keyword"
-                style="width: 250px;margin-bottom: 20px"
-                size="small"
-                placeholder="品牌名称搜索">
-        <el-button slot="append" icon="el-icon-search" @click="handleSelectSearch()"></el-button>
-      </el-input>
-      <el-table :data="dialogData.list"
-                @selection-change="handleDialogSelectionChange" border>
-        <el-table-column type="selection" width="60" align="center"></el-table-column>
-        <el-table-column label="品牌名称"align="center">
-          <template slot-scope="scope">{{scope.row.name}}</template>
-        </el-table-column>
-        <el-table-column label="相关" width="220" align="center">
-          <template slot-scope="scope">
-            商品：<span class="color-main">{{scope.row.productCount}}</span>
-            评价：<span class="color-main">{{scope.row.productCommentCount}}</span>
-          </template>
-        </el-table-column>
-      </el-table>
-      <div class="pagination-container">
-        <el-pagination
-          background
-          @size-change="handleDialogSizeChange"
-          @current-change="handleDialogCurrentChange"
-          layout="prev, pager, next"
-          :current-page.sync="dialogData.listQuery.pageNum"
-          :page-size="dialogData.listQuery.pageSize"
-          :page-sizes="[5,10,15]"
-          :total="dialogData.total">
-        </el-pagination>
-      </div>
-      <div style="clear: both;"></div>
-      <div slot="footer">
-        <el-button  size="small" @click="selectDialogVisible = false">取 消</el-button>
-        <el-button  size="small" type="primary" @click="handleSelectDialogConfirm()">确 定</el-button>
-      </div>
-    </el-dialog>
-    <el-dialog title="设置排序"
-               :visible.sync="sortDialogVisible"
-               width="40%">
-      <el-form :model="sortDialogData"
-               label-width="150px">
-        <el-form-item label="排序：">
-          <el-input v-model="sortDialogData.sort" style="width: 200px"></el-input>
-        </el-form-item>
-      </el-form>
-      <span slot="footer">
-        <el-button @click="sortDialogVisible = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="handleUpdateSort" size="small">确 定</el-button>
-      </span>
-    </el-dialog>
+
+
+
   </div>
 </template>
 <script>
-  import {fetchList,updateRecommendStatus,deleteHomeBrand,createHomeBrand,updateHomeBrandSort} from '@/api/homeBrand';
-  import {fetchList as fetchBrandList} from '@/api/brand';
-
+  import {formatDate} from '@/utils/date';
+  import {fetchList,deleteApply,appointList} from '@/api/returnApply';
+  import {deleteOrder,getList} from '@/api/order'
   const defaultListQuery = {
-    pageNum: 1,
-    pageSize: 5,
-    brandName: null,
-    recommendStatus: null
+    'member_name':'',
+    'member_ID': '',
+    'bed': '',
+    'check-out_time': 0,
+    'check-out_reason': '',
+    'manager': '',
+    'remark': '',
+    'manage_time': '',
+    'account_balance': 0.0,
+    'expense_item': {}
   };
-  const defaultRecommendOptions = [
+  const  sex=[{
+    label:'男',
+    value:0
+  },
     {
-      label: '未推荐',
+      label:'女',
+      value:1
+    }]
+  const defaultStatusOptions=[
+    {
+      label: '正在使用',
       value: 0
     },
     {
-      label: '推荐中',
+      label: '空闲中',
       value: 1
-    }
+    },
+    // {
+    //   label: '已完成',
+    //   value: 2
+    // },
+    // {
+    //   label: '已拒绝',
+    //   value: 3
+    // }
   ];
   export default {
-    name: 'homeBrandList',
+    name:'returnApplyList',
     data() {
       return {
-        listQuery: Object.assign({}, defaultListQuery),
-        recommendOptions: Object.assign({}, defaultRecommendOptions),
-        list: null,
-        total: null,
-        listLoading: false,
-        multipleSelection: [],
-        operates: [
+        // listQuery:Object.assign({},defaultListQuery),
+        statusOptions: Object.assign({},defaultStatusOptions),
+        list:null,
+        total:null,
+        listLoading:false,
+        searchList:{
+          'member_name':''
+        },
+        multipleSelection:[],
+        operateType:1,
+        listQuery:{
+          'member_name':'',
+          'member_ID': '',
+          'bed': '',
+          'check-out_time': 0,
+          'check-out_reason': '',
+          'manager': '',
+          'remark': '',
+          'manage_time': '',
+          'account_balance': 0.0,
+          "expense_item": {}
+        },
+        operateOptions: [
           {
-            label: "设为推荐",
-            value: 0
-          },
-          {
-            label: "取消推荐",
+            label: "批量删除",
             value: 1
-          },
-          {
-            label: "删除",
-            value: 2
           }
         ],
-        operateType: null,
-        selectDialogVisible:false,
-        dialogData:{
-          list: null,
-          total: null,
-          multipleSelection:[],
-          listQuery:{
-            keyword: null,
-            pageNum: 1,
-            pageSize: 5
-          }
-        },
-        sortDialogVisible:false,
-        sortDialogData:{sort:0,id:null}
       }
     },
-    created() {
+    created(){
       this.getList();
     },
     filters:{
-      formatRecommendStatus(status){
-        if(status===1){
-          return '推荐中';
-        }else{
-          return '未推荐';
-        }
-      }
+      // formatTime(time) {
+      //   if(time==null||time===''){
+      //     return 'N/A';
+      //   }
+      //   let date = new Date(time);
+      //   return formatDate(date, 'yyyy-MM-dd hh:mm:ss')
+      // },
+      // formatStatus(status){
+      //   for(let i=0;i<defaultStatusOptions.length;i++){
+      //     if(status===defaultStatusOptions[i].value){
+      //       return defaultStatusOptions[i].label;
+      //     }
+      //   }
+      // },
+      // formatReturnAmount(row){
+      //   return row.productRealPrice*row.productCount;
+      // }
     },
-    methods: {
-      handleResetSearch() {
-        this.listQuery = Object.assign({}, defaultListQuery);
-      },
-      handleSearchList() {
-        this.listQuery.pageNum = 1;
-        this.getList();
-      },
+    methods:{
       handleSelectionChange(val){
         this.multipleSelection = val;
       },
-      handleSizeChange(val) {
+      handleResetSearch() {
+        this.getList()
+      },
+      handleSearchList() {
         this.listQuery.pageNum = 1;
-        this.listQuery.pageSize = val;
-        this.getList();
+        this.listLoading = true;
+        console.log(this.searchList)
+        if(this.searchList.member_name == ''){
+          this.getList()
+        } else {
+          getList(this.searchList,"/member-manage/check-out/search").then(response => {
+            this.listLoading = false;
+            this.list = response.data;
+            console.log(response)
+          });
+        }
       },
-      handleCurrentChange(val) {
-        this.listQuery.pageNum = val;
-        this.getList();
-      },
-      handleRecommendStatusStatusChange(index,row){
-        this.updateRecommendStatusStatus(row.id,row.recommendStatus);
-      },
-      handleDelete(index,row){
-        this.deleteBrand(row.id);
-      },
-      handleBatchOperate(){
-        if (this.multipleSelection < 1) {
+      handleSaveList() {
+        this.listQuery['check-out_time']=parseInt(this.listQuery['check-out_time'])
+        this.listQuery['account_balance']=parseFloat(this.listQuery['account_balance'])
+        console.log(this.listQuery)
+        appointList(this.listQuery,'/member-manage/check-out').then(response=>{
           this.$message({
-            message: '请选择一条记录',
-            type: 'warning',
-            duration: 1000
+            type: 'success',
+            message: '退住成功!',
+            duration:1000
           });
-          return;
-        }
-        let ids = [];
-        for (let i = 0; i < this.multipleSelection.length; i++) {
-          ids.push(this.multipleSelection[i].id);
-        }
-        if (this.operateType === 0) {
-          //设为推荐
-          this.updateRecommendStatusStatus(ids,1);
-        } else if (this.operateType === 1) {
-          //取消推荐
-          this.updateRecommendStatusStatus(ids,0);
-        } else if(this.operateType===2){
-          //删除
-          this.deleteBrand(ids);
-        }else {
-          this.$message({
-            message: '请选择批量操作类型',
-            type: 'warning',
-            duration: 1000
-          });
-          return;
-        }
+          this.getList()
+        })
       },
-      handleSelectBrand(){
-        this.selectDialogVisible=true;
-        this.getDialogList();
+      handleViewDetail(index,row){
+        this.$router.push({path:'/oms/returnDetail',query:{id:row.id}})
       },
-      handleSelectSearch(){
-        this.getDialogList();
-      },
-      handleDialogSizeChange(val) {
-        this.dialogData.listQuery.pageNum = 1;
-        this.dialogData.listQuery.pageSize = val;
-        this.getDialogList();
-      },
-      handleDialogCurrentChange(val) {
-        this.dialogData.listQuery.pageNum = val;
-        this.getDialogList();
-      },
-      handleDialogSelectionChange(val){
-        this.dialogData.multipleSelection = val;
-      },
-      handleSelectDialogConfirm(){
-        if (this.dialogData.multipleSelection < 1) {
-          this.$message({
-            message: '请选择一条记录',
-            type: 'warning',
-            duration: 1000
-          });
-          return;
-        }
-        let selectBrands = [];
-        for (let i = 0; i < this.dialogData.multipleSelection.length; i++) {
-          selectBrands.push({
-            brandId:this.dialogData.multipleSelection[i].id,
-            brandName:this.dialogData.multipleSelection[i].name
-          });
-        }
-        this.$confirm('使用要进行添加操作?', '提示', {
+      // handleBatchOperate(){
+      //   if(this.multipleSelection==null||this.multipleSelection.length<1){
+      //     this.$message({
+      //       message: '请选择要操作的申请',
+      //       type: 'warning',
+      //       duration: 1000
+      //     });
+      //     return;
+      //   }
+      //   if(this.operateType===1){
+      //     //批量删除
+      //     this.$confirm('是否要进行删除操作?', '提示', {
+      //       confirmButtonText: '确定',
+      //       cancelButtonText: '取消',
+      //       type: 'warning'
+      //     }).then(() => {
+      //       let params = new URLSearchParams();
+      //       let ids=[];
+      //       for(let i=0;i<this.multipleSelection.length;i++){
+      //         ids.push(this.multipleSelection[i].id);
+      //       }
+      //       params.append("ids",ids);
+      //       deleteOrder('/api/member-manage/check-out/',ids).then(response=>{
+      //         this.getList();
+      //         this.$message({
+      //           type: 'success',
+      //           message: '删除成功!'
+      //         });
+      //       });
+      //     })
+      //   }
+      // },
+      handleDeleteDetail(index,row){
+        this.$confirm('是否要进行删除操作?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          createHomeBrand(selectBrands).then(response=>{
-            this.selectDialogVisible=false;
-            this.dialogData.multipleSelection=[];
-            this.getList();
-            this.$message({
-              type: 'success',
-              message: '添加成功!'
-            });
-          });
-        });
-      },
-      handleEditSort(index,row){
-        this.sortDialogVisible=true;
-        this.sortDialogData.sort=row.sort;
-        this.sortDialogData.id=row.id;
-      },
-      handleUpdateSort(){
-        this.$confirm('是否要修改排序?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          updateHomeBrandSort(this.sortDialogData).then(response=>{
-            this.sortDialogVisible=false;
+          deleteOrder('/member-manage/check-out/',row.id).then(response=>{
             this.getList();
             this.$message({
               type: 'success',
@@ -370,64 +327,182 @@
           });
         })
       },
-      getList() {
-        this.listLoading = true;
-        fetchList(this.listQuery).then(response => {
+      handleBatchOperate(){
+        let ids=[];
+        for(let i=0;i<this.multipleSelection.length;i++){
+          ids.push(this.multipleSelection[i].id);
+        }
+        this.$confirm('是否要进行该删除操作?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          for(let i=0;i<ids.length;i++){
+            console.log('删除编号:'+ids[i])
+            deleteOrder('/member-manage/check-out/',ids[i]).then(response=>{
+              this.$message({
+                message: '删除成功！',
+                type: 'success',
+                duration: 1000
+              });
+            });
+            this.getList();
+          }
+        })
+      },
+      handleSizeChange(val){
+        this.listQuery.pageNum = 1;
+        this.listQuery.pageSize = val;
+        this.getList();
+      },
+      handleCurrentChange(val){
+        this.listQuery.pageNum = val;
+        this.getList();
+      },
+      getList(){
+        this.listLoading=true;
+        fetchList().then(response => {
           this.listLoading = false;
-          this.list = response.data.list;
-          this.total = response.data.total;
-        })
-      },
-      updateRecommendStatusStatus(ids,status){
-        this.$confirm('是否要修改推荐状态?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          let params=new URLSearchParams();
-          params.append("ids",ids);
-          params.append("recommendStatus",status);
-          updateRecommendStatus(params).then(response=>{
-            this.getList();
-            this.$message({
-              type: 'success',
-              message: '修改成功!'
-            });
-          });
-        }).catch(() => {
-          this.$message({
-            type: 'success',
-            message: '已取消操作!'
-          });
-          this.getList();
+          this.list = response.data.data;
+          console.log(this.list)
         });
-      },
-      deleteBrand(ids){
-        this.$confirm('是否要删除该推荐?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          let params=new URLSearchParams();
-          params.append("ids",ids);
-          deleteHomeBrand(params).then(response=>{
-            this.getList();
-            this.$message({
-              type: 'success',
-              message: '删成功!'
-            });
-          });
-        })
-      },
-      getDialogList(){
-        fetchBrandList(this.dialogData.listQuery).then(response=>{
-          this.dialogData.list=response.data.list;
-          this.dialogData.total=response.data.total;
-        })
       }
     }
   }
 </script>
-<style></style>
+<style scoped>
+  .input-width {
+    width: 203px;
+  }
+</style>
+
+
+
+
+
+
+<!--<template> -->
+<!--  <el-card class="form-container" shadow="never">-->
+<!--    <el-form :model="orderSetting"-->
+<!--             ref="orderSettingForm"-->
+<!--             :rules="rules"-->
+<!--             label-width="150px">-->
+<!--      <el-form-item label="入住时间：" prop="flashOrderOvertime">-->
+<!--        <el-input v-model="orderSetting.flashOrderOvertime" class="input-width">-->
+<!--          <template slot="append">年</template>-->
+<!--        </el-input>-->
+<!--        <el-input v-model="orderSetting.flashOrderOvertime" class="input-width">-->
+<!--          <template slot="append">月</template>-->
+<!--        </el-input>-->
+<!--        <el-input v-model="orderSetting.flashOrderOvertime" class="input-width">-->
+<!--          <template slot="append">日</template>-->
+<!--        </el-input>-->
+<!--      </el-form-item>-->
+<!--      <el-form-item label="持续时间：" prop="confirmOvertime">-->
+<!--        <el-input v-model="orderSetting.confirmOvertime" class="input-width">-->
+<!--          <template slot="append">年</template>-->
+<!--        </el-input>-->
+<!--        <el-input v-model="orderSetting.flashOrderOvertime" class="input-width">-->
+<!--          <template slot="append">月</template>-->
+<!--        </el-input>-->
+<!--        <el-input v-model="orderSetting.flashOrderOvertime" class="input-width">-->
+<!--          <template slot="append">日</template>-->
+<!--        </el-input>-->
+<!--      </el-form-item>-->
+<!--      <el-form-item label="床位：" prop="normalOrderOvertime">-->
+<!--        <el-input v-model="orderSetting.normalOrderOvertime" class="input-width">-->
+<!--          <template slot="append">号</template>-->
+<!--        </el-input>-->
+<!--      </el-form-item>-->
+
+<!--      <el-form-item>-->
+<!--        <el-button-->
+<!--          @click="confirm('orderSettingForm')"-->
+<!--          type="primary">提交</el-button>-->
+<!--      </el-form-item>-->
+<!--    </el-form>-->
+<!--  </el-card>-->
+<!--</template>-->
+<!--<script>-->
+<!--  import {getOrderSetting,updateOrderSetting} from '@/api/orderSetting';-->
+<!--  const defaultOrderSetting = {-->
+<!--    id: null,-->
+<!--    flashOrderOvertime: 0,-->
+<!--    normalOrderOvertime: 0,-->
+<!--    confirmOvertime: 0,-->
+<!--    finishOvertime: 0,-->
+<!--    commentOvertime: 0-->
+<!--  };-->
+<!--  const checkTime = (rule, value, callback) => {-->
+<!--    if (!value) {-->
+<!--      return callback(new Error('时间不能为空'));-->
+<!--    }-->
+<!--    console.log("checkTime",value);-->
+<!--    let intValue = parseInt(value);-->
+<!--    if (!Number.isInteger(intValue)) {-->
+<!--      return callback(new Error('请输入数字值'));-->
+<!--    }-->
+<!--    callback();-->
+<!--  };-->
+<!--  export default {-->
+<!--    name: 'orderSetting',-->
+<!--    data() {-->
+<!--      return {-->
+<!--        orderSetting: Object.assign({}, defaultOrderSetting),-->
+<!--        rules: {-->
+<!--          flashOrderOvertime:{validator: checkTime, trigger: 'blur' },-->
+<!--          normalOrderOvertime:{validator: checkTime, trigger: 'blur' },-->
+<!--          confirmOvertime: {validator: checkTime, trigger: 'blur' },-->
+<!--          finishOvertime: {validator: checkTime, trigger: 'blur' },-->
+<!--          commentOvertime:{validator: checkTime, trigger: 'blur' }-->
+<!--        }-->
+<!--      }-->
+<!--    },-->
+<!--    created(){-->
+<!--      this.getDetail();-->
+<!--    },-->
+<!--    methods:{-->
+<!--      confirm(formName){-->
+<!--        this.$refs[formName].validate((valid) => {-->
+<!--          if (valid) {-->
+<!--            this.$confirm('是否要提交修改?', '提示', {-->
+<!--              confirmButtonText: '确定',-->
+<!--              cancelButtonText: '取消',-->
+<!--              type: 'warning'-->
+<!--            }).then(() => {-->
+<!--              updateOrderSetting(1,this.orderSetting).then(response=>{-->
+<!--                this.$message({-->
+<!--                  type: 'success',-->
+<!--                  message: '提交成功!',-->
+<!--                  duration:1000-->
+<!--                });-->
+<!--              })-->
+<!--            });-->
+<!--          } else {-->
+<!--            this.$message({-->
+<!--              message: '提交参数不合法',-->
+<!--              type: 'warning'-->
+<!--            });-->
+<!--            return false;-->
+<!--          }-->
+<!--        });-->
+<!--      },-->
+<!--      getDetail(){-->
+<!--        getOrderSetting(1).then(response=>{-->
+<!--          this.orderSetting=response.data;-->
+<!--        })-->
+<!--      }-->
+<!--    }-->
+<!--  }-->
+<!--</script>-->
+<!--<style scoped>-->
+<!--  .input-width {-->
+<!--    width: 50%;-->
+<!--  }-->
+
+<!--  .note-margin {-->
+<!--    margin-left: 15px;-->
+<!--  }-->
+<!--</style>-->
 
 

@@ -293,6 +293,65 @@ export const constantRouterMap = [
         component: () => import('@/views/sms/flash/index'),
         meta: {title: '部门配置', icon: 'sms-flash'}
       },
+      {
+        path: 'flashDetail',
+        name: 'flashDetail',
+        component: () => import('@/views/sms/flash/indexDetail'),
+        meta: {title: '部门配置详情'},
+        hidden: true
+      },
+      {
+        path: 'coupon',
+        name: 'coupon',
+        component: () => import('@/views/sms/coupon/index'),
+        meta: {title: '岗位管理', icon: 'sms-coupon'}
+      },
+      {
+        path: 'couponDetail',
+        name: 'couponDetail',
+        component: () => import('@/views/sms/coupon/indexDetail'),
+        meta: {title: '岗位管理详情'},
+        hidden: true
+      },
+      // {
+      //   path: 'brand',
+      //   name: 'homeBrand',
+      //   component: () => import('@/views/sms/brand/index'),
+      //   meta: {title: '权限分配', icon: 'product-brand'}
+      // },
+      // {
+      //   path: 'brandDetail',
+      //   name: 'brandDetail',
+      //   component: () => import('@/views/sms/brand/indexDetail'),
+      //   meta: {title: '权限分配详情'},
+      //   hidden: true
+      // },
+      {
+        path: 'new',
+        name: 'homeNew',
+        component: () => import('@/views/sms/new/index'),
+        meta: {title: '员工管理', icon: 'sms-new'}
+      },
+      {
+        path: 'newDetail',
+        name: 'newDetail',
+        component: () => import('@/views/sms/new/indexDetail'),
+        meta: {title: '员工管理详情'},
+        hidden: true
+      },
+      {
+        path: 'subject',
+        name: 'homeSubject',
+        component: () => import('@/views/sms/subject/index'),
+        meta: {title: '团队管理', icon: 'sms-subject'}
+      },
+      {
+        path: 'subjectDetail',
+        name: 'subjectDetail',
+        component: () => import('@/views/sms/subject/indexDetail'),
+        meta: {title: '团队管理详情'},
+        hidden: true
+      },
       // {
       //   path: 'flashSession',
       //   name: 'flashSession',
@@ -314,19 +373,7 @@ export const constantRouterMap = [
       //   meta: {title: '员工管理'},
       //   hidden:true
       // },
-      {
-        path: 'coupon',
-        name: 'coupon',
-        component: () => import('@/views/sms/coupon/index'),
-        meta: {title: '岗位/职级管理', icon: 'sms-coupon'}
-      },
-      {
-        path: 'addCoupon',
-        name: 'addCoupon',
-        component: () => import('@/views/sms/coupon/add'),
-        meta: {title: '权限分配'},
-        hidden:true
-      },
+
       // {
       //   path: 'updateCoupon',
       //   name: 'updateCoupon',
@@ -341,30 +388,14 @@ export const constantRouterMap = [
       //   meta: {title: '优惠券领取详情'},
       //   hidden:true
       // },
-      {
-        path: 'brand',
-        name: 'homeBrand',
-        component: () => import('@/views/sms/brand/index'),
-        meta: {title: '权限分配', icon: 'product-brand'}
-      },
-      {
-        path: 'new',
-        name: 'homeNew',
-        component: () => import('@/views/sms/new/index'),
-        meta: {title: '员工管理', icon: 'sms-new'}
-      },
+
       // {
       //   path: 'hot',
       //   name: 'homeHot',
       //   component: () => import('@/views/sms/hot/index'),
       //   meta: {title: '岗位/职级管理', icon: 'sms-hot'}
       // },
-      {
-        path: 'subject',
-        name: 'homeSubject',
-        component: () => import('@/views/sms/subject/index'),
-        meta: {title: '团队管理', icon: 'sms-subject'}
-      },
+
       // {
       //   path: 'advertise',
       //   name: 'homeAdvertise',
