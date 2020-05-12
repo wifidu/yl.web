@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 export function fetchList(params) {
   return request({
-    url:'/flash/list',
+    url:'/personnel-management/department-manage/list',
     method:'get',
     params:params
   })
