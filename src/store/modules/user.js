@@ -49,7 +49,6 @@ const user = {
     GetInfo({ commit, state}) {
       return new Promise((resolve, reject) => {
         getInfo().then(response => {
-
           const data = response.data
           if (data.id && data.roles_id > 0) { // 验证返回的roles是否是一个非空数组
             commit('SET_ROLES_ID', data.roles_id)

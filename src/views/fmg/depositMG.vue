@@ -11,37 +11,29 @@
           </el-form-item>
           <el-button type="info" icon="el-icon-search" size="small"></el-button>
         </el-form>
+        <el-row>
+          <el-col :span="5">
+            <div class="grid-content bg-purple">押金总额：{{this.deposit}}</div>
+          </el-col>
+        </el-row>
       </div>
     </el-card>
     <el-table :data="tableData"
               style="margin-top: 15px;width:100%"
               v-loading="listLoading"
               border>
-      <el-table-column type="selection" width="60" align="center"></el-table-column>
-      <el-table-column label="账号编号" prop="account_number" align="center"></el-table-column>
-      <el-table-column label="会员编号" prop="vip_number" align="center"></el-table-column>
-      <el-table-column label="会员姓名" prop="vip_name" align="center"></el-table-column>
-      <el-table-column label="床位" prop="bed" align="center"></el-table-column>
-      <el-table-column label="账户余额" prop="account_balance" align="center"></el-table-column>
-      <el-table-column label="床位费" prop="bed_money" align="center"></el-table-column>
-      <el-table-column label="膳食费" prop="meals" align="center"></el-table-column>
-      <el-table-column label="其他月度费" prop="month_fee" align="center"></el-table-column>
+      <el-table-column label="会员姓名" prop="member_number" align="center"></el-table-column>
+      <el-table-column label="床位" prop="beds" align="center"></el-table-column>
+      <el-table-column label="身份证" prop="cd_card" align="center"></el-table-column>
+      <el-table-column label="押金金额" prop="deposit" align="center"></el-table-column>
       <el-table-column label="操作" width="250" align="center">
         <template slot-scope="scope">
           <p>
-            <el-button size="mini" @click="handleShow(scope.$index, scope.row)">查看账单</el-button>
-            <el-button size="mini">充值</el-button>
-          </p>
-          <p>
-            <el-button size="mini">退费</el-button>
-            <el-button size="mini">提取</el-button>
+            <el-button size="mini" @click="handleShow(scope.$index, scope.row)">详情</el-button>
           </p>
         </template>
       </el-table-column>
     </el-table>
-    <div class="batch-operate-container">
-      <el-button style="margin-left: 20px" size="mini" type="danger">批量补贴</el-button>
-    </div>
     <div class="pagination-container">
       <el-pagination
         background
@@ -58,26 +50,30 @@
 
 <script>
   export default {
-    name: 'accountMG',
+    name: "depositMG",
     data() {
       return{
         total: 1,
         currentPage: 5,
         options:[{
-          value:'1', label:'账户编号'
+          value: 0, label:'会员姓名'
         }, {
-          value:'2', label:'会员姓名'
+          value: 1, label:'床号'
         }, {
-          value: '3', label: '床号'
+          value: 2, label: '身份证号'
         }],
-        plan_s: '',
-        plan_e: '',
-        valueName: '1',
+        valueName: 0,
         valueY: '1',
         valueCost: '1',
         input: '',
-        tableData: null,
+        tableData: [{
+          member_number: 1,
+          beds: 2,
+          cd_card: 3,
+          deposit: 4
+        }],
         listLoading: false,
+        deposit: 0,
       }
     },
     methods: {
@@ -88,12 +84,23 @@
         console.log('!!');
       },
       handleShow(index, row) {
-        this.$router.push({path: '/fmg/accountMS', query:{id:row.id}});
+        this.$router.push({path: '/fmg/billingMessage', query:{id:row.id}});
       }
     }
   }
 </script>
 
-<stype>
-
-</stype>
+<style scoped>
+  .el-row {
+    margin-bottom: 20px;
+  }
+  .el-col {
+    border-radius: 4px;
+  }
+  .bg-purple {
+    background: #d3dce6;
+  }
+  .bg-purple-light {
+    background: #e5e9f2;
+  }
+</style>

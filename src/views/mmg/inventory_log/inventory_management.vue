@@ -61,10 +61,16 @@
       <el-table-column label="盘点名称" align="center">{{value.name}}</el-table-column>
       <el-table-column label="盘点数量" align="center">{{value.number}}</el-table-column>
       <el-table-column label="合计金额" align="center">{{value.total}}</el-table-column>
-      <el-table-column label="盘亏" prop="lose" align="center">{{scope.row.lose}}</el-table-column>
-      <el-table-column label="盘盈" prop="surplus" align="center">{{scope.row.surplus}}</el-table-column>
+      <el-table-column label="盘亏" prop="lose" align="center">
+        <template slot-scope="scope">{{scope.row.lose}}</template>
+      </el-table-column>
+      <el-table-column label="盘盈" prop="surplus" align="center">
+        <template slot-scope="scope">{{scope.row.surplus}}</template>
+      </el-table-column>
       <el-table-column label="盘点人" align="center">{{value.check_person}}</el-table-column>
-      <el-table-column label="完成时间" prop="finish_time" align="center">{{scope.row.finish_time | formatDate}}</el-table-column>
+      <el-table-column label="完成时间" prop="finish_time" align="center">
+        <template slot-scope="scope">{{scope.row.finish_time | formatDate}}</template>
+      </el-table-column>
       <el-table-column label="操作" align="center" width="200">
         <template slot-scope="scope">
           <el-button size="mini" @click="handleIsDisplay(scope.$index, scope.row)">{{scope.row.ope}}</el-button>
@@ -119,6 +125,27 @@
   import {formatDate} from '@/utils/date.js';
   import {Search_id as warehouse_log} from '@/api/warehouse_log'
 
+  const defaultvalue = {
+    inverntory_time: null,
+    name: '1',
+    number: '2',
+    total: '3',
+    check_person: '4',
+  };
+  const defaultwlog = {
+    odd_number: '1',
+    type: '2',
+    warehouse_name: '3',
+    material_name: '4',
+    brand: '5',
+    supplier: '6',
+    unit: 'a',
+    price: 'b',
+    number: 'c',
+    total: 'd',
+    operator: 'e',
+    operator_time: '',
+  };
   export default {
     name: "inventoryManagement",
     data(){
@@ -142,6 +169,7 @@
         }, {
           value:'3', label:'近五年'
         }],
+        title: '',
         plan_s: '',
         plan_e: '',
         real_s: '',
@@ -159,7 +187,9 @@
       }
     },
     created(){
-      getlist();
+      this.value = Object.assign({},defaultvalue);
+      this.wlog = Object.assign({}, defaultwlog);
+      getList();
     },
     filters:{
       formatDate(time) {
@@ -168,8 +198,10 @@
       }
     },
     methods: {
-      getlist(){
+      getList(){
+        console.log('getlist')
         Search().then(response => {
+          console.log(response.data)
           this.value = response.data;
         })
       },

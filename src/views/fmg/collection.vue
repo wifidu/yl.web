@@ -34,6 +34,7 @@
     </el-card>
     <el-table :data="tableData"
               style="margin-top: 15px;width:100%"
+              v-loading="listLoading"
               border>
       <el-table-column label="业务时间" prop="work_time" align="center"></el-table-column>
       <el-table-column label="收款单号" prop="cost_number" align="center" width="200px"></el-table-column>
@@ -59,43 +60,52 @@
 </template>
 
 <script>
+  import {getList} from "@/api/fmg_collection"
+
   export default {
     name: 'collection',
     data() {
       return{
-        total: 1,
-        currentPage: 5,
-        options:[{
-          value:'1', label:'收款单号'
-        }, {
-          value:'2', label:'会员姓名'
-        }, {
-          value: '3', label: '床号'
-        }],
-        Cost:[{
-          value:'1', label:'未缴费'
-        }, {
-          value:'2', label:'缴费'
-        }],
-        plan_s: '',
-        plan_e: '',
-        valueName: '1',
-        valueY: '1',
-        valueCost: '1',
-        input: '',
-        tableData: [{
-          work_time: '??',
-          cost_number: '!!',
-          name: 'oh',
-          bed: 'soga',
-          cost_type: 'kawayi',
-          money: 'like this',
-          balance: 'know',
-          time: '-100',
-        }],
+        value: null,
+      total: 1,
+      currentPage: 5,
+      options:[{
+        value:'1', label:'收款单号'
+      }, {
+        value:'2', label:'会员姓名'
+      }, {
+        value: '3', label: '床号'
+      }],
+      Cost:[{
+        value:'1', label:'未缴费'
+      }, {
+        value:'2', label:'缴费'
+      }],
+      plan_s: '',
+      plan_e: '',
+      valueName: '1',
+      valueY: '1',
+      valueCost: '1',
+      input: '',
+      tableData: null,
+      listLoading: true,
+      page: 1,
+      pageSize: 15,
       }
     },
+    created() {
+      this.getTableData();
+    },
     methods: {
+    getTableData(){
+      this.listLoading = true;
+      getList(this.page, this.pageSize).then(response => {
+        this.listLoading = false;
+        this.value = response.data;
+        console.log(this.value)
+        console.log(this.value.data.business_time);
+      })
+    },
       handleSizeChange(val) {
         console.log('???');
       },

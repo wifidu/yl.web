@@ -69,7 +69,7 @@
             <el-col :span="6" class="table-cell-title">有效期</el-col>
           </el-row>
           <el-row>
-            <el-col :span="6" class="table-cell">{{value.unit}}?</el-col>
+            <el-col :span="6" class="table-cell">{{value.unit}}</el-col>
             <el-col :span="6" class="table-cell">{{value.number}}</el-col>
             <el-col :span="6" class="table-cell">{{out_value.out_material.number}}</el-col>
             <el-col :span="6" class="table-cell">{{out_value.out_material.expiry_date}}</el-col>

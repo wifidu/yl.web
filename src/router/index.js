@@ -278,6 +278,27 @@ export const constantRouterMap = [
       component: () => import('@/views/fmg/accountMS'),
       meta: {title: '账户信息'},
       hidden: true
+    }, {
+      path: 'initiativeRefund',
+      name: 'initiativeRefund',
+      component: () => import('@/views/fmg/initiativeRefund'),
+      meta: {title: '主动退款'}
+     }, {
+      path: 'organizationMG',
+      name: 'organizationMG',
+      component: () => import('@/views/fmg/organizationMG'),
+      meta: {title: '机构账号管理'}
+    }, {
+      path: 'depositMG',
+      name: 'depositMG',
+      component: () => import('@/views/fmg/depositMG'),
+      meta: {title: '押金管理'}
+    }, {
+      path: 'billingMessage',
+      name: 'billingMessage',
+      component: () => import('@/views/fmg/compoments/billingMessage'),
+      meta: {title: '账单信息'},
+      hidden: true
     }]
   },
   {
@@ -365,26 +386,6 @@ export const constantRouterMap = [
         component: () => import('@/views/sms/subject/index'),
         meta: {title: '团队管理', icon: 'sms-subject'}
       },
-      // {
-      //   path: 'advertise',
-      //   name: 'homeAdvertise',
-      //   component: () => import('@/views/sms/advertise/index'),
-      //   meta: {title: '广告列表', icon: 'sms-ad'}
-      // },
-      // {
-      //   path: 'addAdvertise',
-      //   name: 'addHomeAdvertise',
-      //   component: () => import('@/views/sms/advertise/add'),
-      //   meta: {title: '添加广告'},
-      //   hidden:true
-      // },
-      // {
-      //   path: 'updateAdvertise',
-      //   name: 'updateHomeAdvertise',
-      //   component: () => import('@/views/sms/advertise/update'),
-      //   meta: {title: '编辑广告'},
-      //   hidden:true
-      // }
     ]
   },
   // {
@@ -453,6 +454,65 @@ export const constantRouterMap = [
   //   ]
   // },
   {
+    path: '/dailymg',
+    component: Layout,
+    redirect: '/dailymg/visiting',
+    name: 'dailymg',
+    meta: {title: '日常管理', icon: 'table'},
+    children: [{
+      path: 'accident',
+      name: 'accident',
+      component: () => import('@/views/dailymg/accident'),
+      meta: {title: '事故登记'},
+    }, {
+      path: 'visiting',
+      name: 'visiting',
+      component: () => import('@/views/dailymg/visiting'),
+      meta: {title: '来访登记'}
+    }, {
+      path: 'visitorRegistation',
+      name: 'visitorRegistation',
+      component: () => import('@/views/dailymg/compoments/visitorRegistation'),
+      meta: {title: '访客登记'},
+      hidden: true
+    }, {
+      path: 'accidentEdit',
+      name: 'accidentEdit',
+      component: () => import('@/views/dailymg/compoments/accidentEditor'),
+      meta: {title: '事故编辑'},
+      hidden: true
+    }, {
+      path: 'accidentShow',
+      name: 'accidentShow',
+      component: () => import('@/views/dailymg/accidentShow'),
+      meta: {title: '事故编辑'},
+      hidden: true
+    }, {
+      path: 'consulting',
+      name: 'consulting',
+      component: () => import('@/views/dailymg/consulting'),
+      meta: {title: '咨询登记'},
+    }, {
+      path: 'consultRegistation',
+      name: 'consultRegistation',
+      component: () => import('@/views/dailymg/compoments/consultRegistation'),
+      meta: {title: '咨询登记'},
+      hidden: true
+    }, {
+      path: 'consultEdit',
+      name: 'consultEdit',
+      component: () => import('@/views/dailymg/consultEdit'),
+      meta: {title: '咨询编辑'},
+      hidden: true
+    }, {
+      path: 'consultShow',
+      name: 'consultShow',
+      component: () => import('@/views/dailymg/consultShow'),
+      meta: {title: '咨询详情'},
+      hidden: true
+    }]
+  },
+  {
     path: '/drug',
     component: Layout,
     redirect: '/drug/drugMessage',
@@ -469,6 +529,27 @@ export const constantRouterMap = [
         name: 'drugCapturePut',
         component: () => import('@/views/drug/dcp/index'),
         meta: {title: '药品缴存'},
+      },
+      {
+        path: 'number',
+        name: 'number',
+        component: () => import('@/views/drug/dcp/number'),
+        meta: {title: '药品数量校正'},
+        hidden: true
+      },
+      {
+        path: 'remaining',
+        name: 'remaining',
+        component: () => import('@/views/drug/dcp/remaining'),
+        meta: {title: '药品预警设置'},
+        hidden: true
+      },
+      {
+        path: 'addcp',
+        name: 'addcp',
+        component: () => import('@/views/drug/dcp/addcp'),
+        meta: {title: '添加缴存'},
+        hidden: true
       },
       {
         path: 'AddDrug',
@@ -489,6 +570,33 @@ export const constantRouterMap = [
         name: 'ViewDrug',
         component: () => import('@/views/drug/dm/View'),
         meta: {title: '查看药品信息'},
+        hidden: true
+      },
+      {
+        path: 'medicineSet',
+        name: 'medicineSet',
+        component: () => import('@/views/drug/medicineSet/index'),
+        meta: {title: '用药设置'},
+      },
+      {
+        path: 'addMedicine',
+        name: 'addMedicine',
+        component: () => import('@/views/drug/medicineSet/components/addMedicine'),
+        meta: {title: '添加'},
+        hidden: true
+      },
+      {
+        path: 'showmedicine',
+        name: 'showmedicine',
+        component: () => import('@/views/drug/medicineSet/showmedicine'),
+        meta: {title: '查看'},
+        hidden: true
+      },
+      {
+        path: 'updatemedicine',
+        name: 'updatemedicine',
+        component: () => import('@/views/drug/medicineSet/updatemedicine'),
+        meta: {title: '编辑'},
         hidden: true
       }
     ]

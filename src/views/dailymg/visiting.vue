@@ -6,9 +6,13 @@
           <el-select v-model="valueName" size="small" style="width: 125px">
             <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
           </el-select>
-          <el-form-item>
-            <el-input v-model="input" placeholder="请输入搜索内容" style="width: 250px"></el-input>
-          </el-form-item>
+          <el-date-picker
+            size="small"
+            v-model="time"
+            type="datetime"
+            align="right"
+            placeholder="请选择来访时间">
+          </el-date-picker>
           <el-button type="info" icon="el-icon-search" size="small"></el-button>
         </el-form>
       </div>
@@ -17,30 +21,23 @@
               style="margin-top: 15px;width:100%"
               v-loading="listLoading"
               border>
-      <el-table-column type="selection" width="60" align="center"></el-table-column>
-      <el-table-column label="账号编号" prop="account_number" align="center"></el-table-column>
-      <el-table-column label="会员编号" prop="vip_number" align="center"></el-table-column>
-      <el-table-column label="会员姓名" prop="vip_name" align="center"></el-table-column>
-      <el-table-column label="床位" prop="bed" align="center"></el-table-column>
-      <el-table-column label="账户余额" prop="account_balance" align="center"></el-table-column>
-      <el-table-column label="床位费" prop="bed_money" align="center"></el-table-column>
-      <el-table-column label="膳食费" prop="meals" align="center"></el-table-column>
-      <el-table-column label="其他月度费" prop="month_fee" align="center"></el-table-column>
+      <el-table-column label="访客姓名" prop="visitingName" align="center"></el-table-column>
+      <el-table-column label="联系电话" prop="tel" align="center"></el-table-column>
+      <el-table-column label="来访时间" prop="visitingTime" align="center"></el-table-column>
+      <el-table-column label="会员姓名" prop="name" align="center"></el-table-column>
+      <el-table-column label="床位" prop="beds" align="center"></el-table-column>
+      <el-table-column label="来访缘由" prop="because" align="center"></el-table-column>
       <el-table-column label="操作" width="250" align="center">
         <template slot-scope="scope">
           <p>
-            <el-button size="mini" @click="handleShow(scope.$index, scope.row)">查看账单</el-button>
-            <el-button size="mini">充值</el-button>
-          </p>
-          <p>
-            <el-button size="mini">退费</el-button>
-            <el-button size="mini">提取</el-button>
+            <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+            <el-button size="mini" @click="handleShow(scope.$index, scope.row)">详情</el-button>
           </p>
         </template>
       </el-table-column>
     </el-table>
     <div class="batch-operate-container">
-      <el-button style="margin-left: 20px" size="mini" type="danger">批量补贴</el-button>
+      <el-button style="margin-left: 20px" size="mini" type="success" @click="handleRegistation">访客登记</el-button>
     </div>
     <div class="pagination-container">
       <el-pagination
@@ -58,26 +55,36 @@
 
 <script>
   export default {
-    name: 'accountMG',
+    name: 'visiting',
     data() {
       return{
         total: 1,
         currentPage: 5,
         options:[{
-          value:'1', label:'账户编号'
+          value: 0, label:'来访时间'
         }, {
-          value:'2', label:'会员姓名'
+          value: 1, label:'访客姓名'
         }, {
-          value: '3', label: '床号'
+          value: 2, label: '会员姓名'
+        }, {
+          value: 3, label: '床位'
         }],
         plan_s: '',
         plan_e: '',
-        valueName: '1',
+        valueName: 0,
         valueY: '1',
         valueCost: '1',
         input: '',
-        tableData: null,
+        tableData: [{
+          visitingName: 0,
+          visitingTime: 0,
+          tel: 0,
+          name: 0,
+          beds: 0,
+          because: 0
+        }],
         listLoading: false,
+        time: null,
       }
     },
     methods: {
@@ -88,7 +95,13 @@
         console.log('!!');
       },
       handleShow(index, row) {
-        this.$router.push({path: '/fmg/accountMS', query:{id:row.id}});
+        this.$router.push({path: '/dailymg/accidentShow', query:{id:row.id}});
+      },
+      handleEdit(index, row) {
+        this.$router.push({path: '/dailymg/accidentEdit', query:{id:row.id}});
+      },
+      handleRegistation() {
+        this.$router.push({path:'/dailymg/visitorRegistation'});
       }
     }
   }

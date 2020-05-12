@@ -18,7 +18,7 @@
             type="datetime"
             align="right"
             placeholder="开始">
-          </el-date-picker>
+        </el-date-picker>
         <i class="el-icon-caret-right"></i>
         <el-date-picker
             size="small"
@@ -26,7 +26,7 @@
             type="datetime"
             align="right"
             placeholder="结束">
-          </el-date-picker>
+        </el-date-picker>
       </div>
     </el-card>
     <el-table :data="tableData"
