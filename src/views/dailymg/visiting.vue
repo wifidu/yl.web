@@ -17,16 +17,28 @@
         </el-form>
       </div>
     </el-card>
-    <el-table :data="tableData"
+    <el-table :data="value"
               style="margin-top: 15px;width:100%"
               v-loading="listLoading"
               border>
-      <el-table-column label="访客姓名" prop="visitingName" align="center"></el-table-column>
-      <el-table-column label="联系电话" prop="tel" align="center"></el-table-column>
-      <el-table-column label="来访时间" prop="visitingTime" align="center"></el-table-column>
-      <el-table-column label="会员姓名" prop="name" align="center"></el-table-column>
-      <el-table-column label="床位" prop="beds" align="center"></el-table-column>
-      <el-table-column label="来访缘由" prop="because" align="center"></el-table-column>
+      <el-table-column label="访客姓名" align="center">
+        <template slot-scope="scope">{{scope.vaisitor}}</template>
+      </el-table-column>
+      <el-table-column label="联系电话" align="center">
+        <template slot-scope="scope">{{scope.phone}}</template>
+      </el-table-column>
+      <el-table-column label="来访时间" align="center">
+        <template slot-scope="scope">{{scope.visit_time}}</template>=
+      </el-table-column>
+      <el-table-column label="会员姓名" align="center">
+        <template slot-scope="scope">{{scope.member_name}}</template>
+      </el-table-column>
+      <el-table-column label="床位" align="center">
+        <template slot-scope="scope">{{scope.beds}}</template>
+      </el-table-column>
+      <el-table-column label="来访缘由" prop="because" align="center">
+        <template slot-scope="scope">{{scope.visit_reason}}</template>
+      </el-table-column>
       <el-table-column label="操作" width="250" align="center">
         <template slot-scope="scope">
           <p>
@@ -54,6 +66,8 @@
 </template>
 
 <script>
+  import {visitingList} from '@/api/fmg';
+
   export default {
     name: 'visiting',
     data() {
@@ -75,19 +89,22 @@
         valueY: '1',
         valueCost: '1',
         input: '',
-        tableData: [{
-          visitingName: 0,
-          visitingTime: 0,
-          tel: 0,
-          name: 0,
-          beds: 0,
-          because: 0
-        }],
+        value: null,
         listLoading: false,
         time: null,
       }
     },
+    created() {
+      this.getList();
+    },
     methods: {
+      getList() {
+        this.listLoading = true;
+        visitingList(this.page, this.pageSize).then(response => {
+          this.listLoading = false;
+          this.value = response.data.data;
+        })
+      },
       handleSizeChange(val) {
         console.log('???');
       },

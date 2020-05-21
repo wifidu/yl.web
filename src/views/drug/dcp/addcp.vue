@@ -71,7 +71,7 @@
 <script>
   import {formatDate} from '@/utils/date.js';
   import {search_id} from '@/api/materialData';
-  import {search_mate_id} from '@/api/material_in'
+  import {search_mate_id} from '@/api/material_in';
 
   const defaultvalue = {
     name: null,

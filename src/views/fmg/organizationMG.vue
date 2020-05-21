@@ -36,18 +36,34 @@
         </el-row>
       </div>
     </el-card>
-    <el-table :data="tableData"
+    <el-table :data="value"
               style="margin-top: 15px;width:100%"
               v-loading="listLoading"
               border>
-      <el-table-column label="流水号" prop="account_number" align="center"></el-table-column>
-      <el-table-column label="业务单号" prop="vip_number" align="center"></el-table-column>
-      <el-table-column label="财务类型" prop="vip_name" align="center"></el-table-column>
-      <el-table-column label="记录时间" prop="bed" align="center"></el-table-column>
-      <el-table-column label="资金流向" prop="account_balance" align="center"></el-table-column>
-      <el-table-column label="交易金额" prop="bed_money" align="center"></el-table-column>
-      <el-table-column label="支付渠道" prop="meals" align="center"></el-table-column>
-      <el-table-column label="备注" prop="month_fee" align="center"></el-table-column>
+      <el-table-column label="流水号" align="center">
+        <template slot-scope="scope">{{scope.serial_number}}</template>
+      </el-table-column>
+      <el-table-column label="业务单号" align="center">
+        <template slot-scope="scope">{{scope.business_number}}</template>
+      </el-table-column>
+      <el-table-column label="财务类型" align="center">
+        <template slot-scope="scope">{{scope.serial_number}}</template>
+      </el-table-column>
+      <el-table-column label="记录时间" align="center">\
+        <template slot-scope="scope">{{scope.created_at}}</template>
+      </el-table-column>
+      <el-table-column label="资金流向" align="center">
+        <template slot-scope="scope">{{scope.money_flow}}</template>
+      </el-table-column>
+      <el-table-column label="交易金额" align="center">
+        <template slot-scope="scope">{{scope.transaction_amount}}</template>
+      </el-table-column>
+      <el-table-column label="支付渠道" align="center">
+        <template slot-scope="scope">{{scope.payment_channel}}</template>
+      </el-table-column>
+      <el-table-column label="备注" align="center">
+        <template slot-scope="scope">{{scope.note}}</template>
+      </el-table-column>
       <el-table-column label="操作" width="250" align="center">
         <template slot-scope="scope">
           <p>
@@ -71,6 +87,8 @@
 </template>
 
 <script>
+  import {organizationMGList} from "@/api/fmg";
+
     export default {
         name: "organizationMG",
       data() {
@@ -90,13 +108,25 @@
           valueY: '1',
           valueCost: '1',
           input: '',
-          tableData: null,
+          value: null,
           listLoading: false,
           income: 0,
           spending: 0,
+          page: null,
+          pageSize: null,
         }
       },
+      created() {
+          this.getTableData();
+      },
       methods: {
+        getTableData(){
+          this.listLoading = true;
+          organizationMGList(this.page, this.pageSize).then(response => {
+            this.listLoading = false;
+            this.value = response.data.data;
+          })
+        },
         handleSizeChange(val) {
           console.log('???');
         },

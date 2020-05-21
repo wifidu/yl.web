@@ -2,7 +2,7 @@
     <div>
       <el-container>
         <el-aside width="100px">
-          <el-tree :data="menu"></el-tree>
+          <el-tree :data="menu" lazy></el-tree>
           <el-button icon="el-icon-plus" type="mini" style="width: 100px"></el-button>
         </el-aside>
         <el-main>
@@ -27,13 +27,27 @@
                     style="margin-top: 15px;width:100%"
                     v-loading="listLoading"
                     border>
-            <el-table-column label="会员姓名" prop="visitingName" align="center"></el-table-column>
-            <el-table-column label="床位" prop="visitingName" align="center"></el-table-column>
-            <el-table-column label="事故等级" prop="tel" align="center"></el-table-column>
-            <el-table-column label="发生时间" prop="visitingTime" align="center"></el-table-column>
-            <el-table-column label="值班人员" prop="name" align="center"></el-table-column>
-            <el-table-column label="负责人" prop="beds" align="center"></el-table-column>
-            <el-table-column label="事故描述" prop="because" align="center"></el-table-column>
+            <el-table-column label="会员姓名" align="center">
+              <template slot-scope="scope">{{scope.account.member_name}}</template>
+            </el-table-column>
+            <el-table-column label="床位" align="center">
+              <template slot-scope="scope">{{scope.account.beds}}</template>
+            </el-table-column>
+            <el-table-column label="事故等级" align="center">
+              <template slot-scope="scope">{{scope.level_accident}}</template>
+            </el-table-column>
+            <el-table-column label="发生时间" align="center">
+              <template slot-scope="scope">{{scope.occurrence_time}}</template>
+            </el-table-column>
+            <el-table-column label="值班人员" align="center">
+              <template slot-scope="scope">{{scope.duty_personnel}}</template>
+            </el-table-column>
+            <el-table-column label="负责人" align="center">
+              <template slot-scope="scope">{{scope.head}}</template>
+            </el-table-column>
+            <el-table-column label="事故描述" align="center">
+              <template slot-scope="scope">{{scope.description}}</template>
+            </el-table-column>
             <el-table-column label="操作" width="250" align="center">
               <template slot-scope="scope">
                 <p>
@@ -62,16 +76,12 @@
 </template>
 
 <script>
+  import {accidentTypes} from "@/api/fmg";
     export default {
         name: "accidenct",
       data (){
           return {
-            menu: [{
-              label: '全部',
-              children: [{
-                label: '残疾'
-              }]
-            }],
+            menu: null,
             valueName: null,
             options: [{
               value: 0, label: '发生时间'
@@ -91,10 +101,25 @@
               because: 0
             }],
             total: null,
-            currentPage: null
+            currentPage: null,
+            value: null
           }
       },
+      created() {
+          this.getaccidentType();
+      },
       methods: {
+          getaccidentType(){
+            this.menu = [{
+              label: '全部',
+              children: [],
+            }];
+            accidentTypes().then(response => {
+              for(let i = 0;i < response.length;++i){
+                this.menu.children.push({label: response.data.data[i].type})
+              }
+            })
+          },
         handleSizeChange(val) {
           console.log('???');
         },

@@ -3,30 +3,30 @@
     <el-card class="form-container" shadow="never">
       <el-form :inline="true" label-width="120px" size="small">
         <p>
-          <el-form-item  label="访客姓名：" prop="account_number">
-            <el-input size="mini"></el-input>
+          <el-form-item  label="访客姓名：">
+            <el-input size="mini" v-model="value.visitor"></el-input>
           </el-form-item>
-          <el-form-item  label="联系电话：" prop="vip_number">
-            <el-input size="mini"></el-input>
-          </el-form-item>
-        </p>
-        <p>
-          <el-form-item  label="来访时间：" prop="vip_name">
-            <el-input size="mini"></el-input>
-          </el-form-item>
-          <el-form-item  label="会员姓名：" prop="bed">
-            <el-input size="mini"></el-input>
+          <el-form-item  label="联系电话：">
+            <el-input size="mini" v-model="value.phone"></el-input>
           </el-form-item>
         </p>
         <p>
-          <el-form-item  label="床位：" prop="bed_money">
-            <el-input size="mini"></el-input>
+          <el-form-item  label="来访时间：">
+            <el-input size="mini" v-model="value.visit_time"></el-input>
+          </el-form-item>
+          <el-form-item  label="会员姓名：">
+            <el-input size="mini" v-model="value.member_name"></el-input>
+          </el-form-item>
+        </p>
+        <p>
+          <el-form-item  label="床位：">
+            <el-input size="mini" v-model="value.beds"></el-input>
           </el-form-item>
         </p>
         <p>
           <el-form-item label="备注：">
             <el-input
-              v-model="remarks"
+              v-model="value.visit_reason"
               type="textarea"
               :rows="2"
               style="width: 500px">
@@ -44,6 +44,8 @@
 </template>
 
 <script>
+  import {visitingList} from '@/api/fmg';
+
   export default {
     name: "visitorRegistation",
     props: {
@@ -69,6 +71,14 @@
         month_fee: '',
         other_fee: '',
         remarks: null,
+        value: null,
+      }
+    },
+    created(){
+      if(this.$route.query.id){
+        visitingList(this.$route.query.id).then(response => {
+          this.value = response.data.data
+        })
       }
     },
     methods: {

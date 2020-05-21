@@ -13,21 +13,43 @@
         </el-form>
       </div>
     </el-card>
-    <el-table :data="tableData"
+    <el-table :data="value"
               style="margin-top: 15px;width:100%"
               v-loading="listLoading"
               border>
-      <el-table-column label="咨询时间" prop="visitingName" align="center"></el-table-column>
-      <el-table-column label="咨询人" prop="tel" align="center"></el-table-column>
-      <el-table-column label="咨询人手机号码" prop="visitingTime" align="center"></el-table-column>
-      <el-table-column label="咨询方式" prop="name" align="center"></el-table-column>
-      <el-table-column label="媒介渠道" prop="beds" align="center"></el-table-column>
-      <el-table-column label="咨询意向" prop="because" align="center"></el-table-column>
-      <el-table-column label="老人姓名" prop="because" align="center"></el-table-column>
-      <el-table-column label="年龄" prop="because" align="center"></el-table-column>
-      <el-table-column label="自理能力" prop="because" align="center"></el-table-column>
-      <el-table-column label="备注" prop="because" align="center"></el-table-column>
-      <el-table-column label="回访结果" prop="because" align="center"></el-table-column>
+      <el-table-column label="咨询时间" align="center">
+        <template slot-scope="scope">{{scope.time}}</template>
+      </el-table-column>
+      <el-table-column label="咨询人" align="center">
+        <template slot-scope="scope">{{scope.consultant}}</template>
+      </el-table-column>
+      <el-table-column label="咨询人手机号码" align="center">
+        <template slot-scope="scope">{{scope.phone}}</template>
+      </el-table-column>
+      <el-table-column label="咨询方式" align="center">
+        <template slot-scope="scope">{{scope.consultant_type}}</template>
+      </el-table-column>
+      <el-table-column label="媒介渠道" prop="beds" align="center">
+        <template slot-scope="scope">{{scope.time}}</template>
+      </el-table-column>
+      <el-table-column label="咨询意向" align="center">
+        <template slot-scope="scope">{{scope.intention}}</template>
+      </el-table-column>
+      <el-table-column label="老人姓名" align="center">
+        <template slot-scope="scope">{{scope.member_name}}</template>
+      </el-table-column>
+      <el-table-column label="年龄" align="center">
+        <template slot-scope="scope">{{scope.age}}</template>
+      </el-table-column>
+      <el-table-column label="自理能力" align="center">
+        <template slot-scope="scope">{{scope.selfcare_ability}}</template>
+      </el-table-column>
+      <el-table-column label="备注" align="center">
+        <template slot-scope="scope">{{scope.note}}</template>
+      </el-table-column>
+      <el-table-column label="回访结果" align="center">
+        <template slot-scope="scope">{{scope.result}}</template>
+      </el-table-column>
       <el-table-column label="操作" width="250" align="center">
         <template slot-scope="scope">
           <p>
@@ -59,6 +81,8 @@
 </template>
 
 <script>
+  import {consultList} from "@/api/fmg";
+
   export default {
     name: 'consulting',
     data() {
@@ -80,19 +104,22 @@
         valueY: '1',
         valueCost: '1',
         input: '',
-        tableData: [{
-          visitingName: 0,
-          visitingTime: 0,
-          tel: 0,
-          name: 0,
-          beds: 0,
-          because: 0
-        }],
         listLoading: false,
         time: null,
+        value: null
       }
     },
+    created() {
+      this.getList();
+    },
     methods: {
+      getList() {
+        this.listLoading = true;
+        consultList(this.page, this.pageSize).then(response => {
+          this.listLoading = false;
+          this.value = response.data.data;
+        })
+      },
       handleSizeChange(val) {
         console.log('???');
       },

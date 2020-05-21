@@ -29,17 +29,33 @@
         </el-date-picker>
       </div>
     </el-card>
-    <el-table :data="tableData"
+    <el-table :data="value"
+              v-loading="listLoading"
               style="margin-top: 15px;width:100%"
               border>
-      <el-table-column label="业务时间" prop="work_time" align="center"></el-table-column>
-      <el-table-column label="退款单号" prop="refund_number" align="center" width="200px"></el-table-column>
-      <el-table-column label="会员姓名" prop="name" align="center"></el-table-column>
-      <el-table-column label="床位" prop="bed" align="center"></el-table-column>
-      <el-table-column label="退款类型" prop="refund_type" align="center"></el-table-column>
-      <el-table-column label="退款金额(元)" prop="money" align="center"></el-table-column>
-      <el-table-column label="退款状态" prop="status" align="center"></el-table-column>
-      <el-table-column label="退款日期" prop="time" align="center"></el-table-column>
+      <el-table-column label="业务时间" align="center">
+        <template slot-scope="scope">{{scope.business_time}}</template>
+      </el-table-column>
+      <el-table-column label="退款单号" align="center" width="200px">
+        <template slot-scope="scope">{{scope.refund_amount}}</template>
+      </el-table-column>
+<!--      <el-table-column label="会员姓名" align="center">-->
+<!--        <template slot-scope="scope">{{scope.account.member_name}}</template>-->
+<!--      </el-table-column>-->
+<!--      <el-table-column label="床位" prop="bed" align="center">-->
+<!--        <template slot-scope="scope">{{scope.account.beds}}</template>-->
+      <el-table-column label="退款类型" prop="refund_type" align="center">
+        <template slot-scope="scope">{{scope.refund_type}}</template>
+      </el-table-column>
+      <el-table-column label="退款金额(元)" prop="money" align="center">
+        <template slot-scope="scope">{{scope.real_refund}}</template>
+      </el-table-column>
+      <el-table-column label="退款状态" prop="status" align="center">
+        <template slot-scope="scope">{{scope.refund_status}}</template>
+      </el-table-column>
+      <el-table-column label="退款日期" prop="time" align="center">
+        <template slot-scope="scope">{{scope.business_time}}</template>
+      </el-table-column>
     </el-table>
     <div class="pagination-container">
       <el-pagination
@@ -56,6 +72,8 @@
 </template>
 
 <script>
+  import {refundList} from "@/api/fmg";
+
   export default {
     name: 'refund',
     data() {
@@ -75,19 +93,23 @@
         valueY: '1',
         valueCost: '1',
         input: '',
-        tableData: [{
-          work_time: '??',
-          refund_number: '!!',
-          name: 'oh',
-          bed: 'soga',
-          refund_type: 'kawayi',
-          money: 'like this',
-          status: 'know',
-          time: '-100',
-        }],
+        value: null,
+        page: 1,
+        pageSize: 15,
+        listLoading: false,
       }
     },
+    created() {
+      this.getList();
+    },
     methods: {
+      getList() {
+        this.listLoading = true;
+        refundList(this.page, this.pageSize).then(response => {
+          this.listLoading = false;
+          this.value = response.data.data;
+        })
+      },
       handleSizeChange(val) {
         console.log('???');
       },
