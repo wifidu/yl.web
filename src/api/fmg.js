@@ -42,16 +42,16 @@ export function consultList(page, pageSize){
   })
 }
 
-export function accdentTypes(){
+export function accidentTypes(){
   return({
     url: '/daily-management/accidentTypes/',
     method: 'get',
   })
 }
 
-export function accidentTypes(){
+export function consultid(){
   return({
-    url: '/daily-management/accidentTypes/',
+    url: '/daily-management/consult/',
     method: 'get',
   })
 }
