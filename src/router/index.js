@@ -418,71 +418,74 @@ export const constantRouterMap = [
       // }
     ]
   },
-  // {
-  //   path: '/pms',
-  //   component: Layout,
-  //   redirect: '/pms/product',
-  //   name: 'pms',
-  //   meta: {title: '物资管理（备份）', icon: 'product'},
-  //   children: [{
-  //     path: 'product',
-  //     name: 'product',
-  //     component: () => import('@/views/pms/product/index'),
-  //     meta: {title: '固定资产'}
-  //   },
-  //     {
-  //       path: 'addProduct',
-  //       name: 'addProduct',
-  //       component: () => import('@/views/pms/product/add'),
-  //       meta: {title: '添加'},
-  //       hidden: true
-  //     },
-  //     {
-  //       path: 'ProductView',
-  //       name: 'ProductView',
-  //       component: () => import('@/views/pms/product/view'),
-  //       meta: {title: '查看'},
-  //       hidden: true
-  //     },
-  //     {
-  //       path: 'updateProduct',
-  //       name: 'updateProduct',
-  //       component: () => import('@/views/pms/product/update'),
-  //       meta: {title: '编辑'},
-  //       hidden: true
-  //     },
-  //     {
-  //       path: 'productQuery',
-  //       name: 'productQuery',
-  //       component: () => import('@/views/pms/product/query'),
-  //       meta: {title: '物资查询'}
-  //     },
-  //     {
-  //       path: 'productPut',
-  //       name: 'productPut',
-  //       component: () => import('@/views/pms/product/put'),
-  //       meta: {title: '物资入库'}
-  //     },
-  //     {
-  //       path: 'productOut',
-  //       name: 'productOut',
-  //       component: () => import('@/views/pms/product/out'),
-  //       meta: {title: '物资出库'}
-  //     },
-  //     {
-  //       path: 'brand',
-  //       name: 'brand',
-  //       component: () => import('@/views/pms/brand/index'),
-  //       meta: {title: '盘点管理'}
-  //     },
-  //     {
-  //       path: 'updateBrand',
-  //       name: 'updateBrand',
-  //       component: () => import('@/views/pms/brand/update'),
-  //       meta: {title: '仓库日志'},
-  //     }
-  //   ]
-  // },
+  {
+    path: '/food',
+    component: Layout,
+    redirect: '/food/product',
+    name: 'food',
+    meta: {title: '膳食管理', icon: 'product'},
+    children: [{
+      path: 'product',
+      name: 'product',
+      component: () => import('@/views/food/product/index'),
+      meta: {title: '菜品管理'}
+    },
+      {
+        path: 'addProduct',
+        name: 'addProduct',
+        component: () => import('@/views/food/product/add'),
+        meta: {title: '套餐管理'},
+
+      },
+      {
+        path: 'ProductView',
+        name: 'ProductView',
+        component: () => import('@/views/food/product/view'),
+        meta: {title: '查看'},
+        hidden: true
+      },
+      {
+        path: 'updateProduct',
+        name: 'updateProduct',
+        component: () => import('@/views/food/product/update'),
+        meta: {title: '编辑'},
+        hidden: true
+      },
+      {
+        path: 'productQuery',
+        name: 'productQuery',
+        component: () => import('@/views/food/product/query'),
+        meta: {title: '食谱管理'}
+      },
+      {
+        path: 'productPut',
+        name: 'productPut',
+        component: () => import('@/views/food/product/put'),
+        meta: {title: '配送管理'}
+      },
+      {
+        path: 'productOut',
+        name: 'productOut',
+        component: () => import('@/views/food/product/out'),
+        meta: {title: '物资出库'},
+        hidden: true
+      },
+      {
+        path: 'brand',
+        name: 'brand',
+        component: () => import('@/views/food/product/index'),
+        meta: {title: '盘点管理'},
+        hidden: true
+      },
+      {
+        path: 'updateBrand',
+        name: 'updateBrand',
+        component: () => import('@/views/food/product/update'),
+        meta: {title: '仓库日志'},
+        hidden: true
+      }
+    ]
+  },
   {
     path: '/drug',
     component: Layout,
