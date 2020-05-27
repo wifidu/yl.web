@@ -39,7 +39,7 @@
         </el-form>
       </div>
     </el-card>
-    <el-table :data="tableData"
+    <el-table
               style="margin-top: 15px;width:100%"
               border>
       <el-table-column label="单号" prop="odd" align="center">{{value.odd_number}}</el-table-column>
@@ -73,6 +73,20 @@
   import {Search} from '@/api/warehouse_log'
   import {formatDate} from '@/utils/date.js';
 
+  const defaultvalue = {
+    odd_number: '',
+    type: '',
+    warehouse_name: '',
+    material_name: '',
+    brand: '',
+    supplier: '',
+    unit: '',
+    price: '',
+    number: '',
+    total: '',
+    operator: '',
+    operator_time: ''
+  };
   export default {
     name: 'warehouseLog',
     data() {
@@ -107,25 +121,26 @@
         valueY: '1',
         valueHouse: '1',
         input: '',
-        tableData: [{
-          odd: '??',
-          ope_name: '!!',
-          house_name: 'oh',
-          pro_name: 'soga',
-          brand: 'kawayi',
-          supplier: 'like this',
-          unit: 'know',
-          price: '-100',
-          ope_num: 'hehe',
-          sum: 'ai',
-          people: 'me',
-          change_time: 'today'
-        }],
+        // tableData: [{
+        //   odd: '??',
+        //   ope_name: '!!',
+        //   house_name: 'oh',
+        //   pro_name: 'soga',
+        //   brand: 'kawayi',
+        //   supplier: 'like this',
+        //   unit: 'know',
+        //   price: '-100',
+        //   ope_num: 'hehe',
+        //   sum: 'ai',
+        //   people: 'me',
+        //   change_time: 'today'
+        // }],
         page: 1,
         pageSize: 5,
       }
     },
     created() {
+      this.value = Object.assign({}, defaultvalue);
       this.getlist();
     },
     filters:{

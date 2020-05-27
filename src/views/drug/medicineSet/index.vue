@@ -17,9 +17,6 @@
             <el-input style="width: 203px" placeholder="这里输入关键词"></el-input>
           </el-form-item>
         </el-form>
-        <p/>
-        <el-radio v-model="select" :label="0">显示所有人员库存</el-radio>
-        <el-radio v-model="select" :label="1">显示0库存数据</el-radio>
       </div>
     </el-card>
     <el-card class="operate-container" shadow="never">
@@ -37,17 +34,16 @@
                 style="width:100%"
                 border>
         <el-table-column type="selection" width="60" align="center"></el-table-column>
-        <el-table-column label="会员名称" prop="name" align="center"></el-table-column>
-        <el-table-column label="床位号" prop="category" align="center"></el-table-column>
-        <el-table-column label="药品名称" prop="manufacturer" align="center"></el-table-column>
-        <el-table-column label="用药单位" prop="specification" align="center"></el-table-column>
-        <el-table-column label="剩余药品" prop="unit" align="center"></el-table-column>
-        <el-table-column label="预警数量" prop="dosage_form" align="center"></el-table-column>
+        <el-table-column label="会员名称" prop="name" align="center" width="150"></el-table-column>
+        <el-table-column label="床位号" prop="category" align="center" width="150"></el-table-column>
+        <el-table-column label="备注" prop="manufacturer" align="center"></el-table-column>
+        <el-table-column label="用药设置（药品名称/用药单位/用药剂量/用法/评论/服药时间）" prop="specification" align="center"></el-table-column>
         <el-table-column label="操作" width="250" align="center">
           <template slot-scope="scope">
             <p>
-              <el-button size="mini" @click="handleUpdateDrug(scope.$index, scope.row)">数量校正</el-button>
-              <el-button size="mini" @click="handleShowDrug(scope.$index, scope.row)">预警设置</el-button>
+              <el-button size="mini" @click="handleShowDrug(scope.$index, scope.row)">查看</el-button>
+              <el-button size="mini" @click="handleUpdateDrug(scope.$index, scope.row)">编辑</el-button>
+              <el-button size="mini" @click="handleDel" type="danger">删除</el-button>
             </p>
           </template>
         </el-table-column>
@@ -72,7 +68,7 @@
 
 <script>
   export default {
-    name: "drugCapturePut",
+    name: "medicineSet",
     data(){
       return {
         total: 1,
@@ -85,8 +81,7 @@
           unit: '瓶',
           dosage_form: '片',
         }],
-        multipleSelection: [],
-        select: 0
+        multipleSelection: []
       }
     },
     methods: {
@@ -97,13 +92,26 @@
         console.log('!!');
       },
       handleAddDrug() {
-        this.$router.push({path:'/drug/addcp'});
+        this.$router.push({path:'/drug/addMedicine'});
       },
       handleUpdateDrug(index, row) {
-        this.$router.push({path:'/drug/number',query:{id:row.id}});
+        this.$router.push({path:'/drug/updatemedicine',query:{id:row.id}});
       },
       handleShowDrug(index, row) {
-        this.$router.push({path:'/drug/remaining',query:{id:row.id}});
+        this.$router.push({path:'/drug/showmedicine',query:{id:row.id}});
+      },
+      handleDel() {
+        this.$confirm('是否删除?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$message({
+            message: '删除成功',
+            center: true,
+            type: 'success'
+          })
+        })
       },
       handleBatchOperate() {
         // if(this.multipleSelection === null || this.multipleSelection.length < 1){

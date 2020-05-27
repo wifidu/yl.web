@@ -15,7 +15,7 @@ export function save(data) {
 }
 export function search_id(id) {
   return request({
-    url: '/material-management/material/+id',
+    url: '/material-management/material/'+id,
     method: 'post',
   })
 }
@@ -23,12 +23,6 @@ export function material_del(id) {
   return request({
     url: '/material-management/material/'+id,
     method: 'delete',
-  })
-}
-export function material_batchdel(data) {
-  return request({
-    url: '/material-management/material',
-    method: 'data',
   })
 }
 

@@ -3,40 +3,40 @@
     <el-card class="form-container" shadow="never">
       <el-form :inline="true" label-width="120px" size="small">
         <p>
-          <el-form-item  label="账单编号：" prop="account_number">
-            <el-input size="mini"></el-input>
+          <el-form-item  label="账单编号：">
+            <el-input size="mini" v-model="value.account_number"></el-input>
           </el-form-item>
-          <el-form-item  label="会员编号：" prop="vip_number">
-            <el-input size="mini"></el-input>
-          </el-form-item>
-        </p>
-        <p>
-          <el-form-item  label="会员姓名：" prop="vip_name">
-            <el-input size="mini"></el-input>
-          </el-form-item>
-          <el-form-item  label="床位：" prop="bed">
-            <el-input size="mini"></el-input>
+          <el-form-item  label="会员编号：">
+            <el-input size="mini" v-model="value.member_name"></el-input>
           </el-form-item>
         </p>
         <p>
-          <el-form-item  label="账单余额：" prop="account_balance">
-            <el-input size="mini"></el-input>
+          <el-form-item  label="会员姓名：">
+            <el-input size="mini" v-model="value.member_name"></el-input>
           </el-form-item>
-          <el-form-item  label="床位费：" prop="bed_money">
-            <el-input size="mini"></el-input>
-          </el-form-item>
-        </p>
-        <p>
-          <el-form-item  label="膳食费：" prop="meals">
-            <el-input size="mini"></el-input>
-          </el-form-item>
-          <el-form-item  label="护理费：" prop="month_fee">
-            <el-input size="mini"></el-input>
+          <el-form-item  label="床位：">
+            <el-input size="mini" v-model="value.beds"></el-input>
           </el-form-item>
         </p>
         <p>
-          <el-form-item  label="其他费用：" prop="other_fee">
-            <el-input size="mini"></el-input>
+          <el-form-item  label="账单余额：">
+            <el-input size="mini" v-model="value.account_balance"></el-input>
+          </el-form-item>
+          <el-form-item  label="床位费：">
+            <el-input size="mini" v-model="value.beds_cost"></el-input>
+          </el-form-item>
+        </p>
+        <p>
+          <el-form-item  label="膳食费：">
+            <el-input size="mini" v-model="value.meal_cost"></el-input>
+          </el-form-item>
+          <el-form-item  label="护理费：">
+            <el-input size="mini" v-model="value.nursing_cost"></el-input>
+          </el-form-item>
+        </p>
+        <p>
+          <el-form-item  label="其他费用：">
+            <el-input size="mini" v-model="value.other_cost"></el-input>
           </el-form-item>
         </p>
       </el-form>
@@ -52,6 +52,8 @@
 </template>
 
 <script>
+  import {accountMGList} from "@/api/fmg";
+
   export default {
     name: "accountMessage",
     props: {
@@ -76,6 +78,13 @@
         meals: '',
         month_fee: '',
         other_fee: ''
+      }
+    },
+    created(){
+      if(this.$route.query.id){
+        accountMGList(this.$route.query.id).then(response => {
+          this.value = response.data.data
+        })
       }
     },
     methods: {

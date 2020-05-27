@@ -278,145 +278,87 @@ export const constantRouterMap = [
       component: () => import('@/views/fmg/accountMS'),
       meta: {title: '账户信息'},
       hidden: true
+    }, {
+      path: 'initiativeRefund',
+      name: 'initiativeRefund',
+      component: () => import('@/views/fmg/initiativeRefund'),
+      meta: {title: '主动退款'}
+     }, {
+      path: 'organizationMG',
+      name: 'organizationMG',
+      component: () => import('@/views/fmg/organizationMG'),
+      meta: {title: '机构账号管理'}
+    }, {
+      path: 'depositMG',
+      name: 'depositMG',
+      component: () => import('@/views/fmg/depositMG'),
+      meta: {title: '押金管理'}
+    }, {
+      path: 'billingMessage',
+      name: 'billingMessage',
+      component: () => import('@/views/fmg/compoments/billingMessage'),
+      meta: {title: '账单信息'},
+      hidden: true
     }]
   },
   {
-    path: '/sms',
+    path: '/dailymg',
     component: Layout,
-    redirect: '/sms/coupon',
-    name: 'sms',
-    meta: {title: '人事管理', icon: 'sms'},
-    children: [
-      {
-        path: 'flash',
-        name: 'flash',
-        component: () => import('@/views/sms/flash/index'),
-        meta: {title: '部门配置', icon: 'sms-flash'}
-      },
-      {
-        path: 'flashDetail',
-        name: 'flashDetail',
-        component: () => import('@/views/sms/flash/indexDetail'),
-        meta: {title: '部门配置详情'},
-        hidden: true
-      },
-      {
-        path: 'coupon',
-        name: 'coupon',
-        component: () => import('@/views/sms/coupon/index'),
-        meta: {title: '岗位管理', icon: 'sms-coupon'}
-      },
-      {
-        path: 'couponDetail',
-        name: 'couponDetail',
-        component: () => import('@/views/sms/coupon/indexDetail'),
-        meta: {title: '岗位管理详情'},
-        hidden: true
-      },
-      // {
-      //   path: 'brand',
-      //   name: 'homeBrand',
-      //   component: () => import('@/views/sms/brand/index'),
-      //   meta: {title: '权限分配', icon: 'product-brand'}
-      // },
-      // {
-      //   path: 'brandDetail',
-      //   name: 'brandDetail',
-      //   component: () => import('@/views/sms/brand/indexDetail'),
-      //   meta: {title: '权限分配详情'},
-      //   hidden: true
-      // },
-      {
-        path: 'new',
-        name: 'homeNew',
-        component: () => import('@/views/sms/new/index'),
-        meta: {title: '员工管理', icon: 'sms-new'}
-      },
-      {
-        path: 'newDetail',
-        name: 'newDetail',
-        component: () => import('@/views/sms/new/indexDetail'),
-        meta: {title: '员工管理详情'},
-        hidden: true
-      },
-      {
-        path: 'subject',
-        name: 'homeSubject',
-        component: () => import('@/views/sms/subject/index'),
-        meta: {title: '团队管理', icon: 'sms-subject'}
-      },
-      {
-        path: 'subjectDetail',
-        name: 'subjectDetail',
-        component: () => import('@/views/sms/subject/indexDetail'),
-        meta: {title: '团队管理详情'},
-        hidden: true
-      },
-      // {
-      //   path: 'flashSession',
-      //   name: 'flashSession',
-      //   component: () => import('@/views/sms/flash/sessionList'),
-      //   meta: {title: '岗位/职级管理'},
-      //   hidden:true
-      // },
-      // {
-      //   path: 'selectSession',
-      //   name: 'selectSession',
-      //   component: () => import('@/views/sms/flash/selectSessionList'),
-      //   meta: {title: '权限分配'},
-      //   hidden:true
-      // },
-      // {
-      //   path: 'flashProductRelation',
-      //   name: 'flashProductRelation',
-      //   component: () => import('@/views/sms/flash/productRelationList'),
-      //   meta: {title: '员工管理'},
-      //   hidden:true
-      // },
-
-      // {
-      //   path: 'updateCoupon',
-      //   name: 'updateCoupon',
-      //   component: () => import('@/views/sms/coupon/update'),
-      //   meta: {title: '员工管理'},
-      //   hidden:true
-      // },
-      // {
-      //   path: 'couponHistory',
-      //   name: 'couponHistory',
-      //   component: () => import('@/views/sms/coupon/history'),
-      //   meta: {title: '优惠券领取详情'},
-      //   hidden:true
-      // },
-
-      // {
-      //   path: 'hot',
-      //   name: 'homeHot',
-      //   component: () => import('@/views/sms/hot/index'),
-      //   meta: {title: '岗位/职级管理', icon: 'sms-hot'}
-      // },
-
-      // {
-      //   path: 'advertise',
-      //   name: 'homeAdvertise',
-      //   component: () => import('@/views/sms/advertise/index'),
-      //   meta: {title: '广告列表', icon: 'sms-ad'}
-      // },
-      // {
-      //   path: 'addAdvertise',
-      //   name: 'addHomeAdvertise',
-      //   component: () => import('@/views/sms/advertise/add'),
-      //   meta: {title: '添加广告'},
-      //   hidden:true
-      // },
-      // {
-      //   path: 'updateAdvertise',
-      //   name: 'updateHomeAdvertise',
-      //   component: () => import('@/views/sms/advertise/update'),
-      //   meta: {title: '编辑广告'},
-      //   hidden:true
-      // }
-    ]
+    redirect: '/dailymg/visiting',
+    name: 'dailymg',
+    meta: {title: '日常管理', icon: 'table'},
+    children: [{
+      path: 'accident',
+      name: 'accident',
+      component: () => import('@/views/dailymg/accident'),
+      meta: {title: '事故登记'},
+    }, {
+      path: 'visiting',
+      name: 'visiting',
+      component: () => import('@/views/dailymg/visiting'),
+      meta: {title: '来访登记'}
+    }, {
+      path: 'visitorRegistation',
+      name: 'visitorRegistation',
+      component: () => import('@/views/dailymg/compoments/visitorRegistation'),
+      meta: {title: '访客登记'},
+      hidden: true
+    }, {
+      path: 'accidentEdit',
+      name: 'accidentEdit',
+      component: () => import('@/views/dailymg/compoments/accidentEditor'),
+      meta: {title: '事故编辑'},
+      hidden: true
+    }, {
+      path: 'accidentShow',
+      name: 'accidentShow',
+      component: () => import('@/views/dailymg/accidentShow'),
+      meta: {title: '事故编辑'},
+      hidden: true
+    }, {
+      path: 'consulting',
+      name: 'consulting',
+      component: () => import('@/views/dailymg/consulting'),
+      meta: {title: '咨询登记'},
+    }, {
+      path: 'consultRegistation',
+      name: 'consultRegistation',
+      component: () => import('@/views/dailymg/compoments/consultRegistation'),
+      meta: {title: '咨询登记'},
+      hidden: true
+    }, {
+      path: 'consultEdit',
+      name: 'consultEdit',
+      component: () => import('@/views/dailymg/consultEdit'),
+      meta: {title: '咨询编辑'},
+      hidden: true
+    }, {
+      path: 'consultShow',
+      name: 'consultShow',
+      component: () => import('@/views/dailymg/consultShow'),
+      meta: {title: '咨询详情'},
+      hidden: true
+    }]
   },
   {
     path: '/food',
@@ -463,29 +405,9 @@ export const constantRouterMap = [
         component: () => import('@/views/food/product/put'),
         meta: {title: '配送管理'}
       },
-      {
-        path: 'productOut',
-        name: 'productOut',
-        component: () => import('@/views/food/product/out'),
-        meta: {title: '物资出库'},
-        hidden: true
-      },
-      {
-        path: 'brand',
-        name: 'brand',
-        component: () => import('@/views/food/product/index'),
-        meta: {title: '盘点管理'},
-        hidden: true
-      },
-      {
-        path: 'updateBrand',
-        name: 'updateBrand',
-        component: () => import('@/views/food/product/update'),
-        meta: {title: '仓库日志'},
-        hidden: true
-      }
     ]
   },
+
   {
     path: '/drug',
     component: Layout,
@@ -503,6 +425,27 @@ export const constantRouterMap = [
         name: 'drugCapturePut',
         component: () => import('@/views/drug/dcp/index'),
         meta: {title: '药品缴存'},
+      },
+      {
+        path: 'number',
+        name: 'number',
+        component: () => import('@/views/drug/dcp/number'),
+        meta: {title: '药品数量校正'},
+        hidden: true
+      },
+      {
+        path: 'remaining',
+        name: 'remaining',
+        component: () => import('@/views/drug/dcp/remaining'),
+        meta: {title: '药品预警设置'},
+        hidden: true
+      },
+      {
+        path: 'addcp',
+        name: 'addcp',
+        component: () => import('@/views/drug/dcp/addcp'),
+        meta: {title: '添加缴存'},
+        hidden: true
       },
       {
         path: 'AddDrug',
@@ -523,6 +466,33 @@ export const constantRouterMap = [
         name: 'ViewDrug',
         component: () => import('@/views/drug/dm/View'),
         meta: {title: '查看药品信息'},
+        hidden: true
+      },
+      {
+        path: 'medicineSet',
+        name: 'medicineSet',
+        component: () => import('@/views/drug/medicineSet/index'),
+        meta: {title: '用药设置'},
+      },
+      {
+        path: 'addMedicine',
+        name: 'addMedicine',
+        component: () => import('@/views/drug/medicineSet/components/addMedicine'),
+        meta: {title: '添加'},
+        hidden: true
+      },
+      {
+        path: 'showmedicine',
+        name: 'showmedicine',
+        component: () => import('@/views/drug/medicineSet/showmedicine'),
+        meta: {title: '查看'},
+        hidden: true
+      },
+      {
+        path: 'updatemedicine',
+        name: 'updatemedicine',
+        component: () => import('@/views/drug/medicineSet/updatemedicine'),
+        meta: {title: '编辑'},
         hidden: true
       }
     ]

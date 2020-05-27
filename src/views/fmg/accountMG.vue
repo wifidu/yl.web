@@ -13,18 +13,38 @@
         </el-form>
       </div>
     </el-card>
-    <el-table :data="tableData"
+    <el-table :data="value"
               style="margin-top: 15px;width:100%"
+              v-loading="listLoading"
               border>
       <el-table-column type="selection" width="60" align="center"></el-table-column>
-      <el-table-column label="账号编号" prop="account_number" align="center"></el-table-column>
-      <el-table-column label="会员编号" prop="vip_number" align="center"></el-table-column>
-      <el-table-column label="会员姓名" prop="vip_name" align="center"></el-table-column>
-      <el-table-column label="床位" prop="bed" align="center"></el-table-column>
-      <el-table-column label="账户余额" prop="account_balance" align="center"></el-table-column>
-      <el-table-column label="床位费" prop="bed_money" align="center"></el-table-column>
-      <el-table-column label="膳食费" prop="meals" align="center"></el-table-column>
-      <el-table-column label="其他月度费" prop="month_fee" align="center"></el-table-column>
+      <el-table-column label="账号编号" prop="account_number" align="center">
+        <template slot-scope="scope">{{value.account_number}}</template>
+      </el-table-column>
+      <el-table-column label="会员编号" align="center">
+        <template slot-scope="scope">{{value.member_number}}</template>
+      </el-table-column>
+      <el-table-column label="会员姓名" align="center">
+        <template slot-scope="scope">{{value.member_name}}</template>
+      </el-table-column>
+      <el-table-column label="床位" align="center">
+        <template slot-scope="scope">{{value.beds}}</template>
+      </el-table-column>
+      <el-table-column label="账户余额" prop="account_balance" align="center">
+        <template slot-scope="scope">{{value.account_balance}}</template>
+      </el-table-column>
+      <el-table-column label="床位费" prop="bed_money" align="center">
+        <template slot-scope="scope">{{value.beds_cost}}</template>
+      </el-table-column>
+      <el-table-column label="膳食费" prop="meals" align="center">
+        <template slot-scope="scope">{{value.meal_cost}}</template>
+      </el-table-column>
+      <el-table-column label="护理费" prop="month_fee" align="center">
+        <template slot-scope="scope">{{value.nursing_cost}}</template>
+      </el-table-column>
+      <el-table-column label="其他月度费" prop="month_fee" align="center">
+        <template slot-scope="scope">{{value.other_cost}}</template>
+      </el-table-column>
       <el-table-column label="操作" width="250" align="center">
         <template slot-scope="scope">
           <p>
@@ -56,6 +76,8 @@
 </template>
 
 <script>
+  import {accountMGList} from '@/api/fmg';
+
   export default {
     name: 'accountMG',
     data() {
@@ -75,19 +97,20 @@
         valueY: '1',
         valueCost: '1',
         input: '',
-        tableData: [{
-          account_number: '233',
-          vip_number: '-1',
-          vip_name: 'me',
-          bed: 'left',
-          account_balance: '66666',
-          bed_money: '-1',
-          meals: '99999',
-          month_fee: '??',
-        }],
+        listLoading: false,
+        page: null,
+        pageSize: null,
+        value: null
       }
     },
     methods: {
+      getList() {
+        this.listLoading = true;
+        accountMGList(this.page, this.pageSize).then(response => {
+          this.listLoading = false;
+          this.value = response.data.data;
+        })
+      },
       handleSizeChange(val) {
         console.log('???');
       },
