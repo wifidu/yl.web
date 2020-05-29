@@ -361,6 +361,54 @@ export const constantRouterMap = [
     }]
   },
   {
+    path: '/food',
+    component: Layout,
+    redirect: '/food/product',
+    name: 'food',
+    meta: {title: '膳食管理', icon: 'product'},
+    children: [{
+      path: 'product',
+      name: 'product',
+      component: () => import('@/views/food/product/index'),
+      meta: {title: '菜品管理'}
+    },
+      {
+        path: 'addProduct',
+        name: 'addProduct',
+        component: () => import('@/views/food/product/add'),
+        meta: {title: '套餐管理'},
+
+      },
+      {
+        path: 'ProductView',
+        name: 'ProductView',
+        component: () => import('@/views/food/product/view'),
+        meta: {title: '查看'},
+        hidden: true
+      },
+      {
+        path: 'updateProduct',
+        name: 'updateProduct',
+        component: () => import('@/views/food/product/update'),
+        meta: {title: '编辑'},
+        hidden: true
+      },
+      {
+        path: 'productQuery',
+        name: 'productQuery',
+        component: () => import('@/views/food/product/query'),
+        meta: {title: '食谱管理'}
+      },
+      {
+        path: 'productPut',
+        name: 'productPut',
+        component: () => import('@/views/food/product/put'),
+        meta: {title: '配送管理'}
+      },
+    ]
+  },
+
+  {
     path: '/drug',
     component: Layout,
     redirect: '/drug/drugMessage',
