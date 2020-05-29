@@ -59,6 +59,7 @@
         </el-table-column>
         <el-table-column label="状态" width="100" align="center">
           <template slot-scope="scope">{{scope.row.sale}}</template>
+          <template slot-scope="scope">{{scope.row.sale}}</template>
         </el-table-column>
         <el-table-column label="安装日期" align="center">
           <template slot-scope="scope">
@@ -180,14 +181,8 @@
   import {fetchListWithChildren} from '@/api/productCate'
 
   const defaultListQuery = {
-    keyword: null,
-    pageNum: 1,
-    pageSize: 5,
-    publishStatus: null,
-    verifyStatus: null,
-    productSn: null,
-    productCategoryId: null,
-    brandId: null
+    search_index: null,
+    content: null
   };
   export default {
     name: "productList",

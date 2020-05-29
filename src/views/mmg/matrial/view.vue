@@ -1,11 +1,11 @@
 <template>
-  <matrial-put is-edit="false"></matrial-put>
+  <matrial-put :is-edit="false"></matrial-put>
 </template>
 
 <script>
     import MatrialPut from "./components/matrialPut";
     export default {
-        name: "view",
+      name: "viewMaterial",
       components: {MatrialPut}
     }
 </script>

@@ -16,7 +16,7 @@
           <el-select v-model="valueHouse" placeholder="全部仓库" size="small" style="width: 150px">
             <el-option v-for="item in House" :key="item.value" :label="item.label" :value="item.value"></el-option>
           </el-select>
-          <el-button type="info" size="small" style="float:right">导出</el-button>
+          <el-button type="info" size="small" style="float:right" @click="handleDownloadExcel">导出</el-button>
         </el-form>
         <el-form :inline="true">
           <span>时间</span>
@@ -39,21 +39,45 @@
         </el-form>
       </div>
     </el-card>
-    <el-table
+    <el-table :data="value"
               style="margin-top: 15px;width:100%"
               border>
-      <el-table-column label="单号" prop="odd" align="center">{{value.odd_number}}</el-table-column>
-      <el-table-column label="操作类型" prop="ope_name" align="center">{{value.type}}</el-table-column>
-      <el-table-column label="仓库名称" prop="house_name" align="center">{{value.warehouse_name}}</el-table-column>
-      <el-table-column label="物资名称" prop="pro_name" align="center">{{value.material_name}}</el-table-column>
-      <el-table-column label="品牌规格" prop="brand" align="center">{{value.brand}}</el-table-column>
-      <el-table-column label="供应商" prop="supplier" align="center">{{value.supplier}}</el-table-column>
-      <el-table-column label="单位" prop="unit" align="center">{{value.unit}}</el-table-column>
-      <el-table-column label="单价" prop="price" align="center">{{value.price}}</el-table-column>
-      <el-table-column label="操作数量" prop="ope_num" align="center">{{value.number}}</el-table-column>
-      <el-table-column label="金额" prop="sum" align="center">{{value.total}}</el-table-column>
-      <el-table-column label="操作人" prop="people" align="center">{{value.operator}}</el-table-column>
-      <el-table-column label="变动时间" prop="change_time" align="center" width="250">{{value.operator_time}}</el-table-column>
+      <el-table-column label="单号" align="center">
+        <template slot-scope="scope">{{scope.row.odd_number}}</template>
+      </el-table-column>
+      <el-table-column label="操作类型" align="center">
+        <template slot-scope="scope">{{scope.row.type}}</template>
+      </el-table-column>
+      <el-table-column label="仓库名称" align="center">
+        <template slot-scope="scope">{{scope.row.warehouse_name}}</template>
+      </el-table-column>
+      <el-table-column label="物资名称" align="center">
+        <template slot-scope="scope">{{scope.row.material_name}}</template>
+      </el-table-column>
+      <el-table-column label="品牌规格" align="center">
+        <template slot-scope="scope">{{scope.row.brand}}</template>
+      </el-table-column>
+      <el-table-column label="供应商" align="center">
+        <template slot-scope="scope">{{scope.row.supplier}}</template>
+      </el-table-column>
+      <el-table-column label="单位" align="center">
+        <template slot-scope="scope">{{scope.row.unit}}</template>
+      </el-table-column>
+      <el-table-column label="单价" align="center">
+        <template slot-scope="scope">{{scope.row.price}}</template>
+      </el-table-column>
+      <el-table-column label="操作数量" align="center">
+        <template slot-scope="scope">{{scope.row.number}}</template>
+      </el-table-column>
+      <el-table-column label="金额" align="center">
+        <template slot-scope="scope">{{scope.row.total}}</template>
+      </el-table-column>
+      <el-table-column label="操作人" align="center">
+        <template slot-scope="scope">{{scope.row.operator}}</template>
+      </el-table-column>
+      <el-table-column label="变动时间" align="center" width="250">
+        <template slot-scope="scope">{{scope.row.operator_time | formatDate}}</template>
+      </el-table-column>
     </el-table>
     <div class="pagination-container">
       <el-pagination
@@ -70,22 +94,15 @@
 </template>
 
 <script>
-  import {Search} from '@/api/warehouse_log'
+  import {warehouse_logSearch, downloadExcel} from '@/api/mmg_inventory_log'
   import {formatDate} from '@/utils/date.js';
 
-  const defaultvalue = {
-    odd_number: '',
-    type: '',
-    warehouse_name: '',
-    material_name: '',
-    brand: '',
-    supplier: '',
-    unit: '',
-    price: '',
-    number: '',
-    total: '',
-    operator: '',
-    operator_time: ''
+  const defaultQueryList = {
+    search_index: null,
+    content: null,
+    operator_type: null,
+    warehouse_name: null,
+    time_range: null,
   };
   export default {
     name: 'warehouseLog',
@@ -121,26 +138,12 @@
         valueY: '1',
         valueHouse: '1',
         input: '',
-        // tableData: [{
-        //   odd: '??',
-        //   ope_name: '!!',
-        //   house_name: 'oh',
-        //   pro_name: 'soga',
-        //   brand: 'kawayi',
-        //   supplier: 'like this',
-        //   unit: 'know',
-        //   price: '-100',
-        //   ope_num: 'hehe',
-        //   sum: 'ai',
-        //   people: 'me',
-        //   change_time: 'today'
-        // }],
         page: 1,
         pageSize: 5,
+        queryList: Object.assign({}, defaultQueryList),
       }
     },
     created() {
-      this.value = Object.assign({}, defaultvalue);
       this.getlist();
     },
     filters:{
@@ -151,8 +154,9 @@
     },
     methods: {
       getlist(){
-        Search(this.page, this.pageSize).then(response => {
+        warehouse_logSearch(this.queryList).then(response => {
           this.value = response.data;
+          console.log(this.value);
         })
       },
       handleSizeChange(val) {
@@ -160,6 +164,17 @@
       },
       handleCurrentChange(val) {
         console.log('!!');
+      },
+      handleDownloadExcel() {
+        this.$confirm('是否确定下载Excel?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonClass: '取消',
+          type: 'warning'
+        }).then(() => {
+          downloadExcel().then(response => {
+            console.log('download Excel');
+          });
+        })
       }
     }
   }

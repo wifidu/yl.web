@@ -50,9 +50,9 @@
         <el-table-column label="数量" align="center">
           <template slot-scope="scope">{{scope.row.number}}</template>
         </el-table-column>
-        <el-table-column label="仓库" width="100" align="center">
-          <template slot-scope="scope">{{scope.row.mate.warehouse_name}}</template>
-        </el-table-column>
+<!--        <el-table-column label="仓库" width="100" align="center">-->
+<!--          <template slot-scope="scope">{{scope.row.mate.warehouse_name}}</template>-->
+<!--        </el-table-column>-->
 <!--        <el-table-column label="" width="100" align="center"></el-table-column>-->
 <!--        <el-table-column label="类别" align="center">-->
 <!--          <template slot-scope="scope">-->
@@ -103,7 +103,7 @@
   </div>
 </template>
 <script>
-  import {Search, material_del} from '@/api/materialData'
+  import {getList, material_del} from '@/api/mmg_material'
   import {formatDate} from '@/utils/date.js';
 
   export default {
@@ -115,7 +115,7 @@
         listLoading: true,
         tableData: null,
         page: 1,
-        pageSize: 5,
+        pageSize: 15,
       }
     },
     created() {
@@ -130,8 +130,7 @@
     methods: {
       getTable(){
         this.listLoading = true;
-        Search({page: 1, pageSize: 100}).then(response => {
-          console.log(response.data.data)
+        getList({page: 1, pageSize: 15}).then(response => {
           this.tableData = response.data.data;
           this.total = response.data.total;
           this.current_page = response.data.current_page;
@@ -161,8 +160,8 @@
       handleShow(index,row){
         this.$router.push({path:'/mmg/viewMaterial',query:{id:row.id}});
       },
-      updateDeleteStatus(id) {
-        material_del(id).then(response => {
+      updateDeleteStatus(ids) {
+        material_del(ids).then(response => {
           this.$message({
             message: '删除成功',
             type: 'success',

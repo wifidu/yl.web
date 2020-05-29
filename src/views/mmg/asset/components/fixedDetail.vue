@@ -112,25 +112,25 @@
 </template>
 
 <script>
-  import {asset_data, asset_save, get_asset_number} from '@/api/fixedAssets';
+  import {asset_data, asset_save, get_asset_number} from '@/api/mmg_asset';
   import {formatDate} from '@/utils/date.js';
 
   const defaultValue = {
     id: '',
-    name: null,
-    classification: '家电耗材',
-    serial_number: null,
-    brand: null,
-    position: null,
-    model: null,
-    department: null,
-    administrators: null,
-    price: null,
+    name: '',
+    classification: 0,
+    serial_number: '',
+    brand: '',
+    position: '',
+    model: '',
+    department: '',
+    administrators: '',
+    price: 0,
     type: 0,
-    install_date: null,
-    warranty: null,
-    remarks: null,
-    picture_url: null
+    install_date: '',
+    warranty: '',
+    remarks: '',
+    picture_url: ''
   };
   export default {
     name: "fixedDetail",
@@ -148,7 +148,8 @@
       return {
         value: null,
         classificationOptions: [
-          {value: 1, label: '家电耗材'}
+          {value: 0, label: '家电耗材'},
+          {value: 1, label: '电子产品'}
         ],
         typeOptions: [
           {value: 0, label:'已损坏'},
@@ -168,8 +169,6 @@
       if(!this.editId){
         asset_data(this.$route.query.id).then(response => {
           this.value = response.data;
-          // this.value.install_data = formatDate(this.value.install_date, "yyyy-MM-dd hh:mm");
-          // console.log(this.value.install_date)
         })
       }else{
         this.value = Object.assign({},defaultValue);
@@ -195,17 +194,23 @@
               cancelButtonText: '取消',
               type: 'warning'
             }).then(() => {
-              // this.value.install_date = (new Date(this.value.install_date)).getTime()/1000;
-              // asset_save(this.value).then(response => {
-              //   this.$message({
-              //     message: '提交成功',
-              //     type: 'success',
-              //     duration: 1000
-              //   })
-              // });
+              this.value.install_date = new Date(this.value.install_date).valueOf(this.value.install_date);
+              this.value.warranty = new Date(this.value.warranty).valueOf(this.value.warranty);
+              this.value.install_date = this.value.install_date/1000;
+              this.value.warranty = this.value.warranty/1000;
+              if(!this.editId){
+
+              }else{
+                asset_save(this.value).then(response => {
+                  this.$message({
+                    message: '提交成功',
+                    type: 'success',
+                    duration: 1000
+                  });
+                })
+              }
               this.$router.back()
             })
-
           }else{
             this.$message({
               message: '带*为必填信息',
@@ -219,8 +224,8 @@
       handleCancel() {
         this.$router.back();
       },
-      handleRemove() {
-        console.log('??');
+      handleRemove(file) {
+        console.log(file);
       },
     }
   }

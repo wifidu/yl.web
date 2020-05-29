@@ -77,8 +77,7 @@
 
 <script>
   import {formatDate} from '@/utils/date.js';
-  import {search_id} from '@/api/materialData';
-  import {search_mate_id} from '@/api/material_in'
+  import {search_id, search_in_id} from '@/api/mmg_material';
 
   const defaultvalue = {
     name: null,
@@ -155,7 +154,7 @@
       },
       getin_value(){
         if(this.material_id){
-          search_mate_id(this.material_id).then(response => {
+          search_in_id(this.material_id).then(response => {
             this.in_value = response.data;
           })
         }else{

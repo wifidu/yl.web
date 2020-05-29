@@ -33,7 +33,7 @@
         </p>
         <p>
           <el-form-item label="出库时间：" prop="out_time">
-            <el-date-picker v-model="out_value.out_time | formatDate"
+            <el-date-picker v-model="out_value.out_time"
                             type="datetime"
                             style="width: 203px"
                             placeholder="选择日期时间">
@@ -86,7 +86,7 @@
 
 <script>
   import {formatDate} from '@/utils/date.js';
-  import {search_id} from '@/api/materialData';
+  import {search_id} from '@/api/mmg_material';
   import {search_mate_id} from '@/api/material_out'
 
   const defaultvalue = {

@@ -54,27 +54,33 @@
         </el-form>
       </div>
     </el-card>
-    <el-table
+    <el-table :data="value"
+              v-loading="listLoading"
               border
               style="margin-top: 15px;width:100%">
-      <el-table-column label="盘点时间" align="center">{{value.inverntory_time | formatDate}}</el-table-column>
-      <el-table-column label="盘点名称" align="center">{{value.name}}</el-table-column>
-      <el-table-column label="盘点数量" align="center">{{value.number}}</el-table-column>
-      <el-table-column label="合计金额" align="center">{{value.total}}</el-table-column>
+      <el-table-column label="盘点时间" align="center">
+        <template slot-scope="scope">{{scope.row.inventory_time | formatDate}}</template>
+      </el-table-column>
+      <el-table-column label="盘点名称" align="center">
+        <template slot-scope="scope">{{scope.row.name}}</template>
+      </el-table-column>
+      <el-table-column label="盘点数量" align="center">
+        <template slot-scope="scope">{{scope.row.number}}</template>
+      </el-table-column>
+      <el-table-column label="合计金额" align="center">
+        <template slot-scope="scope">{{scope.row.total}}</template>
+      </el-table-column>
       <el-table-column label="盘亏" prop="lose" align="center">
         <template slot-scope="scope">{{scope.row.lose}}</template>
       </el-table-column>
       <el-table-column label="盘盈" prop="surplus" align="center">
         <template slot-scope="scope">{{scope.row.surplus}}</template>
       </el-table-column>
-      <el-table-column label="盘点人" align="center">{{value.check_person}}</el-table-column>
-      <el-table-column label="完成时间" prop="finish_time" align="center">
-        <template slot-scope="scope">{{scope.row.finish_time | formatDate}}</template>
+      <el-table-column label="盘点人" align="center">
+        <template slot-scope="scope">{{scope.row.check_person}}</template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="200">
-        <template slot-scope="scope">
-          <el-button size="mini" @click="handleIsDisplay(scope.$index, scope.row)">{{scope.row.ope}}</el-button>
-        </template>
+      <el-table-column label="完成时间" prop="finish_time" align="center">
+        <template slot-scope="scope">{{scope.row.completion_time | formatDate}}</template>
       </el-table-column>
     </el-table>
     <div class="modal-bg" v-show="show">
@@ -82,25 +88,25 @@
         <div class="modal-header">
           {{ title }}
         </div>
-        <div class="modal-main">
-          <slot>
-            <el-table
-              style="margin-top: 15px;width:100%">
-              <el-table-column label="单号" prop="odd" align="center">{{wlog.odd_number}}</el-table-column>
-              <el-table-column label="操作类型" prop="ope_name" align="center">{{wlog.type}}</el-table-column>
-              <el-table-column label="仓库名称" prop="house_name" align="center">{{wlog.warehouse_name}}</el-table-column>
-              <el-table-column label="物资名称" prop="pro_name" align="center">{{wlog.material_name}}</el-table-column>
-              <el-table-column label="品牌规格" prop="brand" align="center">{{wlog.brand}}</el-table-column>
-              <el-table-column label="供应商" prop="supplier" align="center">{{wlog.supplier}}</el-table-column>
-              <el-table-column label="单位" prop="unit" align="center">{{wlog.unit}}</el-table-column>
-              <el-table-column label="单价" prop="price" align="center">{{wlog.price}}</el-table-column>
-              <el-table-column label="操作数量" prop="ope_num" align="center">{{wlog.number}}</el-table-column>
-              <el-table-column label="金额" prop="sum" align="center">{{wlog.total}}</el-table-column>
-              <el-table-column label="操作人" prop="people" align="center">{{wlog.operator}}</el-table-column>
-              <el-table-column label="变动时间" prop="change_time" align="center" width="250">{{wlog.operator_time}}</el-table-column>
-            </el-table>
-          </slot>
-        </div>
+<!--        <div class="modal-main">-->
+<!--          <slot>-->
+<!--            <el-table-->
+<!--              style="margin-top: 15px;width:100%">-->
+<!--              <el-table-column label="单号" prop="odd" align="center">{{wlog.odd_number}}</el-table-column>-->
+<!--              <el-table-column label="操作类型" prop="ope_name" align="center">{{wlog.type}}</el-table-column>-->
+<!--              <el-table-column label="仓库名称" prop="house_name" align="center">{{wlog.warehouse_name}}</el-table-column>-->
+<!--              <el-table-column label="物资名称" prop="pro_name" align="center">{{wlog.material_name}}</el-table-column>-->
+<!--              <el-table-column label="品牌规格" prop="brand" align="center">{{wlog.brand}}</el-table-column>-->
+<!--              <el-table-column label="供应商" prop="supplier" align="center">{{wlog.supplier}}</el-table-column>-->
+<!--              <el-table-column label="单位" prop="unit" align="center">{{wlog.unit}}</el-table-column>-->
+<!--              <el-table-column label="单价" prop="price" align="center">{{wlog.price}}</el-table-column>-->
+<!--              <el-table-column label="操作数量" prop="ope_num" align="center">{{wlog.number}}</el-table-column>-->
+<!--              <el-table-column label="金额" prop="sum" align="center">{{wlog.total}}</el-table-column>-->
+<!--              <el-table-column label="操作人" prop="people" align="center">{{wlog.operator}}</el-table-column>-->
+<!--              <el-table-column label="变动时间" prop="change_time" align="center" width="250">{{wlog.operator_time}}</el-table-column>-->
+<!--            </el-table>-->
+<!--          </slot>-->
+<!--        </div>-->
         <div class="modal-footer">
           <el-button type="primary" @click="submit()" size="small">确认</el-button>
         </div>
@@ -121,35 +127,14 @@
 </template>
 
 <script>
-  import {Search} from "@/api/inventory_m";
+  import {inventoryList, warehouse_logSearch} from "@/api/mmg_inventory_log";
   import {formatDate} from '@/utils/date.js';
-  import {Search_id as warehouse_log} from '@/api/warehouse_log'
 
-  const defaultvalue = {
-    inverntory_time: null,
-    name: '1',
-    number: '2',
-    total: '3',
-    check_person: '4',
-  };
-  const defaultwlog = {
-    odd_number: '1',
-    type: '2',
-    warehouse_name: '3',
-    material_name: '4',
-    brand: '5',
-    supplier: '6',
-    unit: 'a',
-    price: 'b',
-    number: 'c',
-    total: 'd',
-    operator: 'e',
-    operator_time: '',
-  };
   export default {
     name: "inventoryManagement",
     data(){
       return{
+        listLoading: false,
         wlog: null,
         value: null,
         total: 1,
@@ -179,17 +164,11 @@
         input: '',
         page: 1,
         pageSize: 5,
-        tableData: [{
-          finish_time: null,
-          lose: null,
-          surplus: null,
-        }]
+        show: false
       }
     },
     created(){
-      this.value = Object.assign({},defaultvalue);
-      this.wlog = Object.assign({}, defaultwlog);
-      getList();
+      this.getList();
     },
     filters:{
       formatDate(time) {
@@ -199,26 +178,12 @@
     },
     methods: {
       getList(){
-        console.log('getlist')
-        Search().then(response => {
-          console.log(response.data)
-          this.value = response.data;
+        inventoryList().then(response => {
+          this.value = response.data.data;
+          for(let i = 0;i < this.value.length;++i){
+            this.value[i].status = '盘点';
+          }
         })
-      },
-      handleIsDisplay(index, row) {
-        if(row.ope === '盘点'){
-          row.ope = '详情';
-          row.lose = this.value.inventory_losses;
-          row.finish_time = this.value.completion_time;
-          row.surplus = this.value.inventory_surplus;
-        }
-        else{
-          warehouse_log(row.id).then(response => {
-            this.wlog = response.data;
-          });
-          this.show = true;
-          this.title = row.plate_name;
-        }
       },
       submit() {
         this.show = false;

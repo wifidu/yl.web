@@ -4,12 +4,12 @@
       <div>
         <i class="el-icon-search"></i>
         <span>搜索</span>
-        <el-button style="float: right" type="primary" size="small">查询结果</el-button>
+        <el-button style="float: right" size="small" @click="handleSearch()">查询结果</el-button>
       </div>
       <div style="margin-top: 15px">
-        <el-form :inline="true" size="small" label-width="140px">
+        <el-form :inline="true" :model="listQuery" size="small" label-width="140px">
           <el-form-item label="输入搜索：">
-            <el-input style="width: 203px" placeholder="这里输入关键词"></el-input>
+            <el-input style="width: 203px" v-model="listQuery.content" placeholder="这里输入需要搜索的名称"></el-input>
           </el-form-item>
         </el-form>
       </div>
@@ -98,10 +98,11 @@
   </div>
 </template>
 <script>
-  import {supplies_list, asset_data_del, asset_data_batchdel} from '@/api/fixedAssets'
+  import {searchList, asset_data_batchdel} from '@/api/mmg_asset'
   import {formatDate} from '@/utils/date.js';
 
-  const defaultQuery = {
+  const defaultListQuery = {
+    search_index: null,
     content: null
   };
   export default {
@@ -114,7 +115,8 @@
         tableData: null,
         listLoading: true,
         page: 1,
-        pageSize: 5
+        pageSize: 15,
+        listQuery: Object.assign({}, defaultListQuery),
       }
     },
     created() {
@@ -129,10 +131,10 @@
     methods: {
       getTableData() {
         this.listLoading = true;
-        supplies_list(this.page, this.pageSize).then(response => {
+        searchList(this.listQuery).then(response => {
           this.listLoading = false;
-          this.tableData = response.data.data;
-          this.total = response.data.data.length;
+          this.tableData = response.data;
+          this.total = response.data.length;
         })
       },
       handleAdd() {
@@ -188,15 +190,20 @@
         this.page = val;
         this.getTableData();
       },
+      handleSearch() {
+        this.listQuery.search_index = "name";
+        this.listQuery.pageNum = 1;
+        this.getTableData();
+      },
       updataDelete(ids){
         asset_data_batchdel(ids).then(response => {
           this.$message ({
             message: '删除成功',
             center: true,
             type: 'success'
-          })
-        })
-        this.getTableData();
+          });
+          this.getTableData();
+        });
       },
     }
   }

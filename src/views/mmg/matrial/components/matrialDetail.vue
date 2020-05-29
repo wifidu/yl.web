@@ -40,7 +40,7 @@
 </template>
 
 <script>
-  import {save} from '@/api/materialData';
+  import {save} from '@/api/mmg_material';
 
   const defaultValue = {
     id: '',
@@ -67,11 +67,6 @@
       this.value = Object.assign({},defaultValue);
     },
     methods: {
-      getAssetsNumber(){
-        get_asset_number().then( response =>{
-          this.value.id = response.data.assets_number
-        })
-      },
       handleSave(formName){
         this.$confirm('是否提交数据', '提示', {
               confirmButtonText: '确定',
@@ -81,7 +76,7 @@
           save(this.value).then(response => {
             this.$message({
               message: '保存成功',
-              type: 'error',
+              type: 'success',
               duration: 1000
             });
           });
@@ -90,10 +85,7 @@
       },
       handleCancel() {
         this.$router.back();
-      },
-      handleRemove() {
-        console.log('??');
-      },
+      }
     }
   }
 </script>

@@ -5,22 +5,23 @@
         <p>
           <el-form-item  label="仓库名称：" prop="warehouse_name">
             <el-select v-model="in_value.warehouse_name" :disabled="true">
-              <el-option v-for="item in warehouse_name"
+              <el-option
+                         v-for="item in warehouse_nameOption"
                          :key="item.value"
-                         :label="item.label"
+                         :label="item.lable"
                          :value="item.value">
               </el-option>
             </el-select>
           </el-form-item>
           <el-form-item  label="入库单号：">
-            <el-input :disabled="true" style="width: 203px" v-model="in_value.in_number"></el-input>
+            <el-input :disabled="!isEdit" style="width: 203px" v-model="in_value.in_number"></el-input>
           </el-form-item>
         </p>
         <p>
           <el-form-item label="来源：" prop="origin">
-            <el-select v-model="in_value.origin">
+            <el-select v-model="in_value.origin" :disabled="!isEdit">
               <el-option
-                v-for="item in origin"
+                v-for="item in originOption"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value">
@@ -28,53 +29,54 @@
             </el-select>
           </el-form-item>
           <el-form-item  label="批号：" prop="batch_number">
-            <el-input style="width: 203px" v-model="in_value.batch_number"></el-input>
+            <el-input :disabled="!isEdit" style="width: 203px" v-model="in_value.batch_number"></el-input>
           </el-form-item>
         </p>
         <p>
           <el-form-item label="入库时间：" prop="in_time">
-            <el-date-picker v-model="in_value.in_time | formatDate"
+            <el-date-picker :disabled="!isEdit"
+                            v-model="in_value.in_time"
                             type="datetime"
                             style="width: 203px"
                             placeholder="选择日期时间">
             </el-date-picker>
           </el-form-item>
           <el-form-item  label="操作人：">
-            <el-input :disabled="true" style="width: 203px" v-model="in_value.operator"></el-input>
+            <el-input :disabled="!isEdit" style="width: 203px" v-model="in_value.operator"></el-input>
           </el-form-item>
         </p>
         <p>
           <el-form-item label="备注：">
-            <el-input type="textarea" style="width: 558px" v-model="in_value.remarks"></el-input>
+            <el-input :disabled="!isEdit" type="textarea" style="width: 558px" v-model="in_value.remarks"></el-input>
           </el-form-item>
         </p>
         <b>入库清单</b><br/>
-        <div class="table-layout">
-          <el-row>
-            <el-col :span="6" class="table-cell-title">物资名称</el-col>
-            <el-col :span="6" class="table-cell-title">品牌</el-col>
-            <el-col :span="6" class="table-cell-title">型号</el-col>
-            <el-col :span="6" class="table-cell-title">入库单位</el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="6" class="table-cell">{{value.name}}</el-col>
-            <el-col :span="6" class="table-cell">{{value.brand}}</el-col>
-            <el-col :span="6" class="table-cell">{{value.model}}</el-col>
-            <el-col :span="6" class="table-cell">{{value.unit}}</el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="6" class="table-cell-title">入库数量</el-col>
-            <el-col :span="6" class="table-cell-title">入库单价</el-col>
-            <el-col :span="6" class="table-cell-title">有效期</el-col>
-            <el-col :span="6" class="table-cell-title">供应商</el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="6" class="table-cell">{{in_value.in_material.number}}</el-col>
-            <el-col :span="6" class="table-cell">{{in_value.in_material.price}}</el-col>
-            <el-col :span="6" class="table-cell">{{in_value.in_material.expiry_date}}</el-col>
-            <el-col :span="6" class="table-cell">{{in_value.in_material.supplier}}</el-col>
-          </el-row>
-        </div>
+<!--        <div class="table-layout">-->
+<!--          <el-row>-->
+<!--            <el-col :span="6" class="table-cell-title">物资名称</el-col>-->
+<!--            <el-col :span="6" class="table-cell-title">品牌</el-col>-->
+<!--            <el-col :span="6" class="table-cell-title">型号</el-col>-->
+<!--            <el-col :span="6" class="table-cell-title">入库单位</el-col>-->
+<!--          </el-row>-->
+<!--          <el-row>-->
+<!--            <el-col :span="6" class="table-cell">{{value.name}}</el-col>-->
+<!--            <el-col :span="6" class="table-cell">{{value.brand}}</el-col>-->
+<!--            <el-col :span="6" class="table-cell">{{value.model}}</el-col>-->
+<!--            <el-col :span="6" class="table-cell">{{value.unit}}</el-col>-->
+<!--          </el-row>-->
+<!--          <el-row>-->
+<!--            <el-col :span="6" class="table-cell-title">入库数量</el-col>-->
+<!--            <el-col :span="6" class="table-cell-title">入库单价</el-col>-->
+<!--            <el-col :span="6" class="table-cell-title">有效期</el-col>-->
+<!--            <el-col :span="6" class="table-cell-title">供应商</el-col>-->
+<!--          </el-row>-->
+<!--          <el-row>-->
+<!--            <el-col :span="6" class="table-cell">{{in_value.in_material.number}}</el-col>-->
+<!--            <el-col :span="6" class="table-cell">{{in_value.in_material.price}}</el-col>-->
+<!--            <el-col :span="6" class="table-cell">{{in_value.in_material.expiry_date}}</el-col>-->
+<!--            <el-col :span="6" class="table-cell">{{in_value.in_material.supplier}}</el-col>-->
+<!--          </el-row>-->
+<!--        </div>-->
         <el-form style="text-align: center;margin-top: 15px">
           <el-button type="success" size="mini" @click="handleSave" v-if="isEdit">保存</el-button>
           <el-button size="mini" @click="handleRet">返回</el-button>
@@ -86,17 +88,16 @@
 
 <script>
   import {formatDate} from '@/utils/date.js';
-  import {search_id} from '@/api/materialData';
-  import {search_mate_id} from '@/api/material_in'
+  import {search_id, search_in_id} from '@/api/mmg_material';
 
   const defaultvalue = {
-      name: null,
+    name: null,
     brand: null,
     model: null,
     unit: null
   };
   const defaultin_value = {
-    warehouse_name: null,
+    warehouse_name: 0,
     in_number: null,
     origin: null,
     batch_number: null,
@@ -112,19 +113,25 @@
   };
   export default {
     name: "matrialPut",
+    props: {
+      isEdit: {
+        type: Boolean,
+        default: false
+      }
+    },
     data() {
       return {
         material_id: null,
         value: null,
         in_value: null,
         total: null,
-        warehouse_name: [{value:0, label:'A库'}],
-        origin: [{value:0, label:'??'}],
+        warehouse_nameOption: [{value:0, lable:'A仓'}, {value:1, lable:'B仓'}],
+        originOption: [{value:0, lable:'购入'}, {value: 1, lable:'捐赠'}],
         rules: {
           name: [{required: true, message: '该项为必填项', trigger: 'blur'}],
           warehouse_name: [{required: true, message: '该项为必填项', trigger: 'blur'}],
           origin: [{required: true, message: '该项为必填项', trigger: 'blur'}],
-          batch_number: [{required: true, message: '该项为必填项', trigger: 'blur'}],
+          batch_number: [{required: true, message: '该项为必填项'}],
           in_time: [{required: true, message: '该项为必填项', trigger: 'blur'}],
         }
       }
@@ -143,6 +150,7 @@
       getvalue() {
         if(this.$route.query.id){
           search_id(this.$route.query.id).then(response => {
+            console.log(response.data);
             this.value = response.data;
             this.material_id = response.data.mate.material_id
           })
@@ -152,7 +160,7 @@
       },
       getin_value(){
         if(this.material_id){
-          search_mate_id(this.material_id).then(response => {
+          search_in_id(this.material_id).then(response => {
             this.in_value = response.data;
           })
         }else{
