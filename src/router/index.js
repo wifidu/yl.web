@@ -35,134 +35,234 @@ export const constantRouterMap = [
   {
     path: '/oms',
     component: Layout,
-    redirect: '/oms/order',
+    redirect: '/oms/files',
     name: 'oms',
     meta: {title: '会员管理', icon: 'order'},
     children: [
       {
-        path: 'order',
-        name: 'order',
-        component: () => import('@/views/oms/order/index'),
+        path: 'files',
+        name: 'files',
+        component: () => import('@/views/oms/MembershipFiles/index'),
         meta: {title: '会员档案'}
-        //meta: {title: '会员档案', icon: 'product-list'}
       },
       {
-        path: 'in',
-        name: 'in',
-        component: () => import('@/views/oms/order/in'),
-        meta: {title: '新增会员'},
+        path: 'files_editDetail',
+        name: 'files_editDetail',
+        component: () => import('@/views/oms/MembershipFiles/edit'),
+        meta: {title: '编辑信息'},
         hidden:true
-        //meta: {title: '新建文件', icon: 'product-list'}
       },
       {
-        path: 'orderDetail',
-        name: 'orderDetail',
-        component: () => import('@/views/oms/order/orderDetail'),
+        path: 'files_viewDetail',
+        name: 'files_viewDetail',
+        component: () => import('@/views/oms/MembershipFiles/view'),
         meta: {title: '详细信息'},
         hidden:true
       },
       {
-        path: 'deliverOrderList',
-        name: 'deliverOrderList',
-        component: () => import('@/views/oms/order/deliverOrderList'),
-        meta: {title: '发货列表'},
+        path: 'files_newDetail',
+        name: 'files_newDetail',
+        component: () => import('@/views/oms/MembershipFiles/in'),
+        meta: {title: '新增信息'},
         hidden:true
       },
+      // {
+      //   path: 'orderDetail',
+      //   name: 'orderDetail',
+      //   component: () => import('@/views/oms/order/orderDetail'),
+      //   meta: {title: '详细信息'},
+      //   hidden:true
+      // },
+      // {
+      //   path: 'deliverOrderList',
+      //   name: 'deliverOrderList',
+      //   component: () => import('@/views/oms/order/deliverOrderList'),
+      //   meta: {title: '发货列表'},
+      //   hidden:true
+      // },
 
       {
-        path: 'returnApply',
-        name: 'returnApply',
-        component: () => import('@/views/oms/apply/index'),
+        path: 'book',
+        name: 'book',
+        component: () => import('@/views/oms/BookingOccupancy/index'),
         meta: {title: '预约占床'}
         // meta: {title: '预约占床', icon: 'product-brand'}
       },
       {
-        path: 'add',
-        name: 'add',
-        component: () => import('@/views/oms/product/add'),
+        path: 'book_editDetail',
+        name: 'book_editDetail',
+        component: () => import('@/views/oms/BookingOccupancy/edit'),
+        meta: {title: '编辑信息'},
+        hidden:true
+      },
+      {
+        path: 'book_viewDetail',
+        name: 'book_viewDetail',
+        component: () => import('@/views/oms/BookingOccupancy/view'),
+        meta: {title: '详细信息'},
+        hidden:true
+      },
+      {
+        path: 'book_newDetail',
+        name: 'book_newDetail',
+        component: () => import('@/views/oms/BookingOccupancy/in'),
+        meta: {title: '新增信息'},
+        hidden:true
+      },
+      {
+        path: 'checkin',
+        name: 'checkin',
+        component: () => import('@/views/oms/CheckIn/index'),
         meta: {title: '入住登记'}
         // meta: {title: '入住登记', icon: 'product-add'}
       },
       {
-        path: 'addDetail',
-        name: 'addDetail',
-        component: () => import('@/views/oms/product/update'),
-        meta: {title: '登记信息'},
-        hidden:true,
-      },
-      {
-        path: 'viewDetail',
-        name: 'viewDetail',
-        component: () => import('@/views/oms/product/index'),
-        meta: {title: '入住详细信息'},
+        path: 'checkin_editDetail',
+        name: 'checkin_editDetail',
+        component: () => import('@/views/oms/CheckIn/edit'),
+        meta: {title: '编辑信息'},
         hidden:true
       },
       {
-        path: 'orderSetting',
-        name: 'orderSetting',
-        component: () => import('@/views/oms/order/setting'),
+        path: 'checkin_viewDetail',
+        name: 'checkin_viewDetail',
+        component: () => import('@/views/oms/CheckIn/view'),
+        meta: {title: '详细信息'},
+        hidden:true
+      },
+      {
+        path: 'checkin_newDetail',
+        name: 'checkin_newDetail',
+        component: () => import('@/views/oms/CheckIn/in'),
+        meta: {title: '新增信息'},
+        hidden:true
+      },
+      // {
+      //   path: 'addDetail',
+      //   name: 'addDetail',
+      //   component: () => import('@/views/oms/product/update'),
+      //   meta: {title: '登记信息'},
+      //   hidden:true,
+      // },
+      // {
+      //   path: 'viewDetail',
+      //   name: 'viewDetail',
+      //   component: () => import('@/views/oms/product/index'),
+      //   meta: {title: '入住详细信息'},
+      //   hidden:true
+      // },
+      {
+        path: 'withdraw',
+        name: 'withdraw',
+        component: () => import('@/views/oms/WithdrawalRegistration/index'),
         meta: {title: '退住登记'}
         // meta: {title: '退住登记', icon: 'product-add'}
       },
       {
-        path: 'out',
-        name: 'out',
-        component: () => import('@/views/oms/order/change'),
+        path: 'withdraw_editDetail',
+        name: 'withdraw_editDetail',
+        component: () => import('@/views/oms/WithdrawalRegistration/edit'),
+        meta: {title: '编辑信息'},
+        hidden:true
+      },
+      {
+        path: 'withdraw_viewDetail',
+        name: 'withdraw_viewDetail',
+        component: () => import('@/views/oms/WithdrawalRegistration/view'),
+        meta: {title: '详细信息'},
+        hidden:true
+      },
+      {
+        path: 'withdraw_newDetail',
+        name: 'withdraw_newDetail',
+        component: () => import('@/views/oms/WithdrawalRegistration/in'),
+        meta: {title: '新增信息'},
+        hidden:true
+      },
+      {
+        path: 'change',
+        name: 'change',
+        component: () => import('@/views/oms/BusinessChange/index'),
         meta: {title: '业务变更'}
         // meta: {title: '业务变更', icon: 'product-brand'}
       },
       {
-        path: 'death',
-        name: 'death',
-        component: () => import('@/views/oms/order/death'),
-        meta: {title: '死亡登记'}
-        // meta: {title: '死亡登记', icon: 'order-return-reason'}
-      },
-      {
-        path: 'deathDetail',
-        name: 'deathDetail',
-        component: () => import('@/views/oms/order/deathDetail'),
-        meta: {title: '死亡登记详情'},
+        path: 'change_editDetail',
+        name: 'change_editDetail',
+        component: () => import('@/views/oms/BusinessChange/edit'),
+        meta: {title: '编辑信息'},
         hidden:true
-
       },
       {
-        path: 'changeDetail',
-        name: 'changeDetail',
-        component: () => import('@/views/oms/order/changeDetail'),
-        meta: {title: '业务变更详情'},
+        path: 'change_viewDetail',
+        name: 'change_viewDetail',
+        component: () => import('@/views/oms/BusinessChange/view'),
+        meta: {title: '详细信息'},
         hidden:true
-
       },
       {
-        path: 'returnReason',
-        name: 'returnReason',
-        component: () => import('@/views/oms/apply/reason'),
+        path: 'change_newDetail',
+        name: 'change_newDetail',
+        component: () => import('@/views/oms/BusinessChange/in'),
+        meta: {title: '新增信息'},
+        hidden:true
+      },
+
+      {
+        path: 'outgoing',
+        name: 'outgoing',
+        component: () => import('@/views/oms/OutgoingManagement/index'),
         meta: {title: '外出管理'}
         // meta: {title: '外出管理', icon: 'order-return-reason'}
       },
       {
-        path: 'listLogin',
-        name: 'listLogin',
-        component: () => import('@/views/oms/apply/login'),
-        meta: {title: '外出管理详情'},
-        hidden:true
-        // meta: {title: '外出管理', icon: 'order-return-reason'}
-      },
-      {
-        path: 'returnDetail',
-        name: 'returnDetail',
-        component: () => import('@/views/oms/order/deliverOrderList'),
-        meta: {title: '退住详情'},
+        path: 'outgoing_editDetail',
+        name: 'outgoing_editDetail',
+        component: () => import('@/views/oms/OutgoingManagement/edit'),
+        meta: {title: '编辑信息'},
         hidden:true
       },
       {
-        path: 'returnApplyDetail',
-        name: 'returnApplyDetail',
-        component: () => import('@/views/oms/apply/applyDetail'),
-        meta: {title: '预约信息'},
+        path: 'outgoing_viewDetail',
+        name: 'outgoing_viewDetail',
+        component: () => import('@/views/oms/OutgoingManagement/view'),
+        meta: {title: '详细信息'},
         hidden:true
-      }
+      },
+      {
+        path: 'outgoing_newDetail',
+        name: 'outgoing_newDetail',
+        component: () => import('@/views/oms/OutgoingManagement/in'),
+        meta: {title: '新增信息'},
+        hidden:true
+      },
+      {
+        path: 'death',
+        name: 'death',
+        component: () => import('@/views/oms/DeathRegistration/index'),
+        meta: {title: '死亡登记'}
+      },
+      {
+        path: 'death_editDetail',
+        name: 'death_editDetail',
+        component: () => import('@/views/oms/DeathRegistration/edit'),
+        meta: {title: '编辑信息'},
+        hidden:true
+      },
+      {
+        path: 'death_viewDetail',
+        name: 'death_viewDetail',
+        component: () => import('@/views/oms/DeathRegistration/view'),
+        meta: {title: '详细信息'},
+        hidden:true
+      },
+      {
+        path: 'death_newDetail',
+        name: 'death_newDetail',
+        component: () => import('@/views/oms/DeathRegistration/in'),
+        meta: {title: '新增信息'},
+        hidden:true
+      },
     ]
   },
   {
@@ -249,6 +349,67 @@ export const constantRouterMap = [
         component: () => import('@/views/mmg/inventory_log/warehouse_log'),
         meta: {title: '仓库日志'},
       }
+    ]
+  },
+  {
+    path: '/sms',
+    component: Layout,
+    redirect: '/sms/coupon',
+    name: 'sms',
+    meta: {title: '人事管理', icon: 'sms'},
+    children: [
+      {
+        path: 'flash',
+        name: 'flash',
+        component: () => import('@/views/sms/flash/index'),
+        meta: {title: '部门配置', icon: 'sms-flash'}
+      },
+      {
+        path: 'flashDetail',
+        name: 'flashDetail',
+        component: () => import('@/views/sms/flash/indexDetail'),
+        meta: {title: '部门配置详情'},
+        hidden: true
+      },
+      {
+        path: 'coupon',
+        name: 'coupon',
+        component: () => import('@/views/sms/coupon/index'),
+        meta: {title: '岗位管理', icon: 'sms-coupon'}
+      },
+      {
+        path: 'couponDetail',
+        name: 'couponDetail',
+        component: () => import('@/views/sms/coupon/indexDetail'),
+        meta: {title: '岗位管理详情'},
+        hidden: true
+      },
+      {
+        path: 'new',
+        name: 'homeNew',
+        component: () => import('@/views/sms/new/index'),
+        meta: {title: '员工管理', icon: 'sms-new'}
+      },
+      {
+        path: 'newDetail',
+        name: 'newDetail',
+        component: () => import('@/views/sms/new/indexDetail'),
+        meta: {title: '员工管理详情'},
+        hidden: true
+      },
+      {
+        path: 'subject',
+        name: 'homeSubject',
+        component: () => import('@/views/sms/subject/index'),
+        meta: {title: '团队管理', icon: 'sms-subject'}
+      },
+      {
+        path: 'subjectDetail',
+        name: 'subjectDetail',
+        component: () => import('@/views/sms/subject/indexDetail'),
+        meta: {title: '团队管理详情'},
+        hidden: true
+      },
     ]
   },
   {

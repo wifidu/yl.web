@@ -15,9 +15,9 @@ export function bookList(params) {
   })
 }
 
-export function getList(path) {
+export function getList(path,id) {
   return request({
-    url:path,
+    url:path+id,
     method:'get',
   })
 }
@@ -41,12 +41,17 @@ export function appointList(data,path) {
   })
 }
 
-export function addList(data) {
+export function update(path,data) {
   return request({
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    url:'/member-manage/member-profile',
+    url:path,
+    method:'post',
+    data:data
+  })
+}
+
+export function addList(path,data) {
+  return request({
+    url:path,
     method:'post',
     data:data
   })
