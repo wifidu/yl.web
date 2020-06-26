@@ -207,7 +207,7 @@
         this.listQuery['check-out_time']=parseInt(this.listQuery['check-out_time'])
         this.listQuery['account_balance']=parseFloat(this.listQuery['account_balance'])
         console.log(this.listQuery)
-        appointList(this.listQuery,'/personnel-management/department-manage').then(response=>{
+        appointList(this.listQuery,'/personnel-management/department-manage/').then(response=>{
           this.$message({
             type: 'success',
             message: '退住成功!',

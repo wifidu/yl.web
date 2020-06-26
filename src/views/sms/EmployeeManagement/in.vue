@@ -1,5 +1,5 @@
 <template>
-  <fixed-detail :is-edit='true' :edit-id="false"></fixed-detail>
+<!--  <fixed-detail :is-edit='true' :edit-id="false"></fixed-detail>-->
 </template>
 
 <script>

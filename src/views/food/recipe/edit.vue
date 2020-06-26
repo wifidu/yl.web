@@ -5,7 +5,7 @@
 <script>
   import FixedDetail from "./components/fixedDetail";
   export default {
-    name: 'updateAsset',
+    name: 'editAsset',
     components: { FixedDetail }
   }
 </script>

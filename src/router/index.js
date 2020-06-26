@@ -359,57 +359,165 @@ export const constantRouterMap = [
     meta: {title: '人事管理', icon: 'sms'},
     children: [
       {
-        path: 'flash',
-        name: 'flash',
-        component: () => import('@/views/sms/flash/index'),
+        path: 'department',
+        name: 'department',
+        component: () => import('@/views/sms/DepartMentconfiguration/index'),
         meta: {title: '部门配置', icon: 'sms-flash'}
       },
       {
-        path: 'flashDetail',
-        name: 'flashDetail',
-        component: () => import('@/views/sms/flash/indexDetail'),
-        meta: {title: '部门配置详情'},
+        path: 'department_view',
+        name: 'department_view',
+        component: () => import('@/views/sms/DepartMentconfiguration/view'),
+        meta: {title: '详细信息'},
         hidden: true
       },
       {
-        path: 'coupon',
-        name: 'coupon',
-        component: () => import('@/views/sms/coupon/index'),
-        meta: {title: '岗位管理', icon: 'sms-coupon'}
-      },
-      {
-        path: 'couponDetail',
-        name: 'couponDetail',
-        component: () => import('@/views/sms/coupon/indexDetail'),
-        meta: {title: '岗位管理详情'},
+        path: 'department_new',
+        name: 'department_new',
+        component: () => import('@/views/sms/DepartMentconfiguration/in'),
+        meta: {title: '新增信息'},
         hidden: true
       },
       {
-        path: 'new',
-        name: 'homeNew',
-        component: () => import('@/views/sms/new/index'),
-        meta: {title: '员工管理', icon: 'sms-new'}
-      },
-      {
-        path: 'newDetail',
-        name: 'newDetail',
-        component: () => import('@/views/sms/new/indexDetail'),
-        meta: {title: '员工管理详情'},
+        path: 'department_edit',
+        name: 'department_edit',
+        component: () => import('@/views/sms/DepartMentconfiguration/edit'),
+        meta: {title: '编辑信息'},
         hidden: true
       },
       {
-        path: 'subject',
-        name: 'homeSubject',
-        component: () => import('@/views/sms/subject/index'),
-        meta: {title: '团队管理', icon: 'sms-subject'}
+        path: 'employee',
+        name: 'employee',
+        component: () => import('@/views/sms/EmployeeManagement/index'),
+        meta: {title: '员工管理', icon: 'sms-flash'}
       },
       {
-        path: 'subjectDetail',
-        name: 'subjectDetail',
-        component: () => import('@/views/sms/subject/indexDetail'),
-        meta: {title: '团队管理详情'},
+        path: 'employee_view',
+        name: 'employee_view',
+        component: () => import('@/views/sms/EmployeeManagement/view'),
+        meta: {title: '详细信息'},
         hidden: true
       },
+      {
+        path: 'employee_new',
+        name: 'employee_new',
+        component: () => import('@/views/sms/EmployeeManagement/in'),
+        meta: {title: '新增信息'},
+        hidden: true
+      },
+      {
+        path: 'employee_edit',
+        name: 'employee_edit',
+        component: () => import('@/views/sms/EmployeeManagement/edit'),
+        meta: {title: '编辑信息'},
+        hidden: true
+      },
+      {
+        path: 'post',
+        name: 'post',
+        component: () => import('@/views/sms/PostManagement/index'),
+        meta: {title: '岗位管理', icon: 'sms-flash'}
+      },
+      {
+        path: 'post_view',
+        name: 'post_view',
+        component: () => import('@/views/sms/PostManagement/view'),
+        meta: {title: '详细信息'},
+        hidden: true
+      },
+      {
+        path: 'post_new',
+        name: 'post_new',
+        component: () => import('@/views/sms/PostManagement/in'),
+        meta: {title: '新增信息'},
+        hidden: true
+      },
+      {
+        path: 'post_edit',
+        name: 'post_edit',
+        component: () => import('@/views/sms/PostManagement/edit'),
+        meta: {title: '编辑信息'},
+        hidden: true
+      },
+      {
+        path: 'team',
+        name: 'team',
+        component: () => import('@/views/sms/TeamManagement/index'),
+        meta: {title: '团队管理', icon: 'sms-flash'}
+      },
+      {
+        path: 'team_view',
+        name: 'team_view',
+        component: () => import('@/views/sms/TeamManagement/view'),
+        meta: {title: '详细信息'},
+        hidden: true
+      },
+      {
+        path: 'team_new',
+        name: 'team_new',
+        component: () => import('@/views/sms/TeamManagement/in'),
+        meta: {title: '新增信息'},
+        hidden: true
+      },
+      {
+        path: 'team_edit',
+        name: 'team_edit',
+        component: () => import('@/views/sms/TeamManagement/edit'),
+        meta: {title: '编辑信息'},
+        hidden: true
+      },
+      // {
+      //   path: 'flash',
+      //   name: 'flash',
+      //   component: () => import('@/views/sms/flash/index'),
+      //   meta: {title: '部门配置', icon: 'sms-flash'}
+      // },
+      // {
+      //   path: 'flashDetail',
+      //   name: 'flashDetail',
+      //   component: () => import('@/views/sms/flash/indexDetail'),
+      //   meta: {title: '部门配置详情'},
+      //   hidden: true
+      // },
+      // {
+      //   path: 'coupon',
+      //   name: 'coupon',
+      //   component: () => import('@/views/sms/coupon/index'),
+      //   meta: {title: '岗位管理', icon: 'sms-coupon'}
+      // },
+      // {
+      //   path: 'couponDetail',
+      //   name: 'couponDetail',
+      //   component: () => import('@/views/sms/coupon/indexDetail'),
+      //   meta: {title: '岗位管理详情'},
+      //   hidden: true
+      // },
+      // {
+      //   path: 'new',
+      //   name: 'homeNew',
+      //   component: () => import('@/views/sms/new/index'),
+      //   meta: {title: '员工管理', icon: 'sms-new'}
+      // },
+      // {
+      //   path: 'newDetail',
+      //   name: 'newDetail',
+      //   component: () => import('@/views/sms/new/indexDetail'),
+      //   meta: {title: '员工管理详情'},
+      //   hidden: true
+      // },
+      // {
+      //   path: 'subject',
+      //   name: 'homeSubject',
+      //   component: () => import('@/views/sms/subject/index'),
+      //   meta: {title: '团队管理', icon: 'sms-subject'}
+      // },
+      // {
+      //   path: 'subjectDetail',
+      //   name: 'subjectDetail',
+      //   component: () => import('@/views/sms/subject/indexDetail'),
+      //   meta: {title: '团队管理详情'},
+      //   hidden: true
+      // },
     ]
   },
   {
@@ -524,48 +632,157 @@ export const constantRouterMap = [
   {
     path: '/food',
     component: Layout,
-    redirect: '/food/product',
+    redirect: '/food/food_manage',
     name: 'food',
     meta: {title: '膳食管理', icon: 'product'},
-    children: [{
-      path: 'product',
-      name: 'product',
-      component: () => import('@/views/food/product/index'),
-      meta: {title: '菜品管理'}
-    },
+    children: [
       {
-        path: 'addProduct',
-        name: 'addProduct',
-        component: () => import('@/views/food/product/add'),
-        meta: {title: '套餐管理'},
-
+        path: 'food_manage',
+        name: 'food_manage',
+        component: () => import('@/views/food/food/index'),
+        meta: {title: '菜品管理'}
       },
       {
-        path: 'ProductView',
-        name: 'ProductView',
-        component: () => import('@/views/food/product/view'),
-        meta: {title: '查看'},
+        path: 'food_view',
+        name: 'food_view',
+        component: () => import('@/views/food/food/view'),
+        meta: {title: '详细信息'},
         hidden: true
       },
       {
-        path: 'updateProduct',
-        name: 'updateProduct',
-        component: () => import('@/views/food/product/update'),
-        meta: {title: '编辑'},
+        path: 'food_new',
+        name: 'food_new',
+        component: () => import('@/views/food/food/in'),
+        meta: {title: '新增信息'},
         hidden: true
       },
       {
-        path: 'productQuery',
-        name: 'productQuery',
-        component: () => import('@/views/food/product/query'),
+        path: 'food_edit',
+        name: 'food_edit',
+        component: () => import('@/views/food/food/edit'),
+        meta: {title: '编辑信息'},
+        hidden: true
+      },
+      {
+        path: 'package',
+        name: 'package',
+        component: () => import('@/views/food/package/index'),
+        meta: {title: '套餐管理'}
+      },
+      {
+        path: 'package_view',
+        name: 'package_view',
+        component: () => import('@/views/food/package/view'),
+        meta: {title: '详细信息'},
+        hidden: true
+      },
+      {
+        path: 'package_new',
+        name: 'package_new',
+        component: () => import('@/views/food/package/in'),
+        meta: {title: '新增信息'},
+        hidden: true
+      },
+      {
+        path: 'package_edit',
+        name: 'package_edit',
+        component: () => import('@/views/food/package/edit'),
+        meta: {title: '编辑信息'},
+        hidden: true
+      },
+      {
+        path: 'recipe',
+        name: 'recipe',
+        component: () => import('@/views/food/recipe/index'),
         meta: {title: '食谱管理'}
       },
       {
-        path: 'productPut',
-        name: 'productPut',
-        component: () => import('@/views/food/product/put'),
+        path: 'recipe_view',
+        name: 'recipe_view',
+        component: () => import('@/views/food/recipe/view'),
+        meta: {title: '详细信息'},
+        hidden: true
+      },
+      {
+        path: 'recipe_new',
+        name: 'recipe_new',
+        component: () => import('@/views/food/recipe/in'),
+        meta: {title: '新增信息'},
+        hidden: true
+      },
+      {
+        path: 'recipe_edit',
+        name: 'recipe_edit',
+        component: () => import('@/views/food/recipe/edit'),
+        meta: {title: '编辑信息'},
+        hidden: true
+      },
+      {
+        path: 'distribution',
+        name: 'distribution',
+        component: () => import('@/views/food/distribution/index'),
         meta: {title: '配送管理'}
       },
+      {
+        path: 'distribution_view',
+        name: 'distribution_view',
+        component: () => import('@/views/food/distribution/view'),
+        meta: {title: '详细信息'},
+        hidden: true
+      },
+      {
+        path: 'distribution_new',
+        name: 'distribution_new',
+        component: () => import('@/views/food/distribution/in'),
+        meta: {title: '新增信息'},
+        hidden: true
+      },
+      {
+        path: 'distribution_edit',
+        name: 'distribution_edit',
+        component: () => import('@/views/food/distribution/edit'),
+        meta: {title: '编辑信息'},
+        hidden: true
+      },
+    // {
+    //   path: 'product',
+    //   name: 'product',
+    //   component: () => import('@/views/food/product/index'),
+    //   meta: {title: '菜品管理'}
+    // },
+    //   {
+    //     path: 'addProduct',
+    //     name: 'addProduct',
+    //     component: () => import('@/views/food/product/add'),
+    //     meta: {title: '套餐管理'},
+    //
+    //   },
+    //   {
+    //     path: 'ProductView',
+    //     name: 'ProductView',
+    //     component: () => import('@/views/food/product/view'),
+    //     meta: {title: '查看'},
+    //     hidden: true
+    //   },
+    //   {
+    //     path: 'updateProduct',
+    //     name: 'updateProduct',
+    //     component: () => import('@/views/food/product/update'),
+    //     meta: {title: '编辑'},
+    //     hidden: true
+    //   },
+    //   {
+    //     path: 'productQuery',
+    //     name: 'productQuery',
+    //     component: () => import('@/views/food/product/query'),
+    //     meta: {title: '食谱管理'}
+    //   },
+    //   {
+    //     path: 'productPut',
+    //     name: 'productPut',
+    //     component: () => import('@/views/food/product/put'),
+    //     meta: {title: '配送管理'}
+    //   },
     ]
   },
 

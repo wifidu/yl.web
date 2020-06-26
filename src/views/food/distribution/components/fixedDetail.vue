@@ -21,44 +21,30 @@
       </div>
       <div style="margin-top: 15px">
         <el-form :inline="true" :model="add_list" :rules="rules" size="small" label-width="180px">
-          <el-form-item label="会员姓名：" prop="member_name" >
+          <el-form-item label="会员名称：" prop="member_name">
             <el-input v-model="add_list.member_name" :disabled="edit" class="input-width" style="width:320px"></el-input>
           </el-form-item>
-          <el-form-item label="床位号：" prop="bed_number" >
-            <el-input v-model="add_list.bed_number" :disabled="edit" class="input-width" style="width:320px"></el-input>
+          <el-form-item label="床位名称：" prop="bed_name">
+            <el-input v-model="add_list.bed_name" :disabled="edit" class="input-width" style="width:320px"></el-input>
           </el-form-item>
-          <el-form-item label="外出时间：" prop="out_time">
-            <el-input v-model="add_list.out_time" :disabled="edit" class="input-width" style="width:320px"></el-input>
+          <el-form-item label="就餐时间：" prop="eat_time">
+            <el-input v-model="add_list.eat_time" class="input-width" style="width:320px" :disabled="edit"></el-input>
           </el-form-item>
-          <el-form-item label="计划返回时间：" prop="plan_to_return">
-            <el-input v-model="add_list.plan_to_return" :disabled="edit" class="input-width" style="width:320px"></el-input>
+          <el-form-item label="餐次：" prop="meal_times" >
+            <el-input v-model="add_list.meal_times" class="input-width"  style="width:320px" :disabled="edit"></el-input>
           </el-form-item>
-          <el-form-item label="请假天数：" prop="leave_days">
-            <el-input v-model="add_list.leave_days" :disabled="edit" class="input-width" style="width:320px"></el-input>
+          <el-form-item label="菜品名称：" prop="dishes_name">
+            <el-input v-model="add_list.dishes_name" class="input-width" style="width:320px" :disabled="edit"></el-input>
           </el-form-item>
-          <el-form-item label="陪同人电话：" prop="accompany_number">
-            <el-input v-model="add_list.accompany_number" :disabled="edit" class="input-width" style="width:320px"></el-input>
+          <el-form-item label="就餐方式：" prop="dining_style" >
+            <el-radio v-model="add_list.dining_style" label=0 :disabled="edit" >喂食</el-radio>
+            <el-radio v-model="add_list.dining_style" label=1 :disabled="edit" >自行</el-radio>
           </el-form-item>
-          <el-form-item label="陪同人姓名：" prop="accompany_name">
-            <el-input v-model="add_list.accompany_name" :disabled="edit" class="input-width" style="width:320px"></el-input>
-          </el-form-item>
-          <el-form-item label="外出原因：" prop="out_reason">
-            <el-input v-model="add_list.out_reason" :disabled="edit" class="input-width" style="width:320px"></el-input>
-          </el-form-item>
-          <el-form-item label="登记人：" prop="register_person">
-            <el-input v-model="add_list.register_person" :disabled="edit" class="input-width" style="width:320px"></el-input>
-          </el-form-item>
-          <el-form-item label="登记时间：" prop="check-in_time">
-            <el-input v-model="add_list['check-in_time']" :disabled="edit" class="input-width" style="width:320px"></el-input>
-          </el-form-item>
-          <el-form-item label="返回时间：" prop="return_time">
-            <el-input v-model="add_list.return_time" :disabled="edit" class="input-width" style="width:320px"></el-input>
-          </el-form-item>
-          <el-form-item label="实际请假天数：" prop="actual_leave_days">
-            <el-input v-model="add_list.actual_leave_days" :disabled="edit" class="input-width" style="width:320px"></el-input>
-          </el-form-item>
-          <el-form-item label="总计：" prop="total">
-            <el-input v-model="add_list.total" :disabled="edit" class="input-width" style="width:320px"></el-input>
+        </el-form>
+        <el-form :inline="true" :model="add_list" :rules="rules" size="small" label-width="180px">
+          <el-form-item label="状态：" prop="type" >
+            <el-radio v-model="add_list.type" label=0 :disabled="edit" >未出餐</el-radio>
+            <el-radio v-model="add_list.type" label=1 :disabled="edit" >已出餐</el-radio>
           </el-form-item>
         </el-form>
       </div>
@@ -106,40 +92,23 @@
         list:null,
         rules: {
           member_name: [{required: true, message: '请输入会员名称'}],
-          bed_number: [{required: true, message: '请输入床位号'}],
-          out_time: [{required: true, message: '请输入外出时间'}],
-          "check-in_time": [{required: true, message: '请输入登记时间'}],
-          plan_to_return: [{required: true, message: '请输入计划返回时间'}],
-          leave_days: [{required: true, message: '请输入请假天数'}],
-          accompany_number: [{required: true, message: '请输入陪同人电话'}],
-          accompany_name: [{required: true, message: '请输入陪同人姓名'}],
-          out_reason: [{required: true, message: '请输入外出原因'}],
-          register_person: [{required: true, message: '请输入登记人'}],
-          return_time: [{required: true, message: '请输入返回时间'}],
-          actual_leave_days: [{required: true, message: '请输入实际外出天数'}],
-          total: [{required: true, message: '请输入总计'}],
+          bed_name: [{required: true, message: '请输入床位名称'}],
+          eat_time: [{required: true, message: '请输入就餐时间'}],
+          meal_times: [{required: true,  message: '请输入餐次'}],
+          dishes_name: [{required: true, message: '请输入菜品名称'}],
+          dining_style: [{required: true,  message: '请选择就餐方式'}],
+          type: [{required: true,  message: '请选择状态'}],
         },
-        add_list: {
+        add_list:{
+          "id": null,
           "member_name": "",
-          "bed_number": "",
-          "out_time": null,
-          "plan_to_return":null,
-          "leave_days": null,
-          "accompany_number":"",
-          "accompany_name": "",
-          "out_reason":"",
-          "register_person":"",
-          "check-in_time":null,
-          "return_time":null,
-          "actual_leave_days":null,
-          "total":null,
-          "expense_item": {
-            "type": "吃饭",
-            "cost": "12323"
-          }
-
+          "bed_name": "",
+          "eat_time": null,
+          "meal_times": "",
+          "dishes_name": "",
+          "dining_style": 0,
+          "type": 0,
         },
-
         total:null,
         listLoading:false,
         multipleSelection:[],
@@ -156,11 +125,11 @@
     created(){
       this.id = this.$route.query.id;
       this.edit = this.$route.query.edit;
-      console.log('this.id:'+this.id)
-      console.log('this.edit:'+this.edit)
+      console.log(this.id)
+      console.log(this.edit)
       if(this.id){
-        getList('/member-manage/out-manage/',this.id).then(response => {
-          console.log(response.data)
+        this.add_list.id = this.id
+        getList('/diet-manage/delivery-manage/',this.id).then(response => {
           this.add_list = response.data
           console.log(this.add_list)
         })
@@ -187,13 +156,7 @@
     },
     methods:{
       handleBack(){
-        this.$router.push({path:'/oms/outgoing'})
-      },
-      handleRemove(file, fileList) {
-        console.log(file, fileList);
-      },
-      handlePreview(file) {
-        console.log(file);
+        this.$router.push({path:'/food/distribution'})
       },
       handleSelectionChange(val){
         this.multipleSelection = val;
@@ -247,10 +210,11 @@
         this.getList();
       },
       addList(){
-        this.add_list.care_level = parseInt(this.add_list.care_level)
+        this.add_list.dining_style = parseInt(this.add_list.dining_style)
+        this.add_list.type = parseInt(this.add_list.type)
         console.log(this.add_list)
-        if (this.add_list.member_name !== "" && this.add_list.out_time !== null && this.add_list.bed_number !== '' && this.add_list.plan_to_return !== null && this.add_list.leave_days !== null && this.add_list.accompany_number !== ""&& this.add_list.accompany_name !== "" && this.add_list.out_reason !== "" && this.add_list.register_person !== ""  && this.add_list['check-in_time'] !== null && this.add_list.return_time !== null && this.add_list.actual_leave_days !== null && this.add_list.total !== null){
-          update('/member-manage/out-manage/',this.add_list).then(response => {
+        if (this.add_list.member_name !== "" && this.add_list.bed_name !== "" && this.add_list.eat_time !== null && this.add_list.meal_times !== "" && this.add_list.dishes_name !== "" && this.add_list.dining_style !== null && this.add_list.type !== null){
+          update('/diet-manage/delivery-manage/',this.add_list).then(response => {
             this.listLoading = false
             this.listLoading=true;
             if(response.status === 200){
@@ -259,7 +223,7 @@
                 message: response.message
               });
             }
-            this.$router.push({path:'/oms/outgoing'})
+            this.$router.push({path:'/food/distribution'})
           })
         } else {
           this.$message({

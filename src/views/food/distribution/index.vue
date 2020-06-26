@@ -1,43 +1,43 @@
 <template> 
   <div class="app-container">
-    <el-card class="filter-container" shadow="never">
-      <div>
-        <i class="el-icon-search"></i>
-        <span>搜索</span>
-        <el-button
-          style="float:right"
-          type="primary"
-          @click="handleSearchList()"
-          size="small">
-          查询搜索
-        </el-button>
-        <el-button
-          style="float:right;margin-right: 15px"
-          @click="handleResetSearch()"
-          size="small">
-          重置列表
-        </el-button>
-      </div>
-      <div style="margin-top: 15px">
-        <el-form :inline="true" :model="searchList" size="small" label-width="140px">
-          <el-form-item label="输入搜索：">
-            <el-input v-model="searchList.phone_number" class="input-width" placeholder="电话号码"></el-input>
-          </el-form-item>
-          <el-form-item label="会员名称：">
-            <el-input v-model="searchList.member_name" class="input-width" placeholder="会员名称"></el-input>
-          </el-form-item>
-        </el-form>
-      </div>
-    </el-card>
+    <!--    <el-card class="filter-container" shadow="never">-->
+    <!--      <div>-->
+    <!--        <i class="el-icon-search"></i>-->
+    <!--        <span>搜索</span>-->
+    <!--        <el-button-->
+    <!--          style="float:right"-->
+    <!--          type="primary"-->
+    <!--          @click="handleSearchList()"-->
+    <!--          size="small">-->
+    <!--          查询搜索-->
+    <!--        </el-button>-->
+    <!--        <el-button-->
+    <!--          style="float:right;margin-right: 15px"-->
+    <!--          @click="handleResetSearch()"-->
+    <!--          size="small">-->
+    <!--          重置列表-->
+    <!--        </el-button>-->
+    <!--      </div>-->
+    <!--      <div style="margin-top: 15px">-->
+    <!--        <el-form :inline="true" :model="searchList" size="small" label-width="140px">-->
+    <!--          <el-form-item label="输入搜索：">-->
+    <!--            <el-input v-model="searchList.phone_number" class="input-width" placeholder="电话号码"></el-input>-->
+    <!--          </el-form-item>-->
+    <!--          <el-form-item label="会员名称：">-->
+    <!--            <el-input v-model="searchList.member_name" class="input-width" placeholder="会员名称"></el-input>-->
+    <!--          </el-form-item>-->
+    <!--        </el-form>-->
+    <!--      </div>-->
+    <!--    </el-card>-->
     <el-card class="operate-container" shadow="never">
       <i class="el-icon-tickets"></i>
-      <span>会员档案</span>
+      <span>食谱列表</span>
       <el-button
         style="float:right"
         type="primary"
         @click="handleAdd()"
         size="small">
-        新增会员
+        新增食谱
       </el-button>
     </el-card>
     <div class="table-container">
@@ -48,26 +48,22 @@
                 @selection-change="handleSelectionChange"
                 v-loading="listLoading" border>
         <el-table-column type="selection" width="60" align="center"></el-table-column>
-        <el-table-column label="会员编号" width="80" align="center">
+        <el-table-column label="编号" width="100" align="center">
           <template slot-scope="scope">{{scope.row.id}}</template>
-        </el-table-column>
-<!--        <el-table-column label="注册时间" width="180" align="center">-->
-<!--          <template slot-scope="scope">{{scope.row.created_at | formatCreateTime}}</template>-->
-<!--        </el-table-column>-->
-        <el-table-column label="身份证号" align="center">
-          <template slot-scope="scope">{{scope.row.member_ID}}</template>
         </el-table-column>
         <el-table-column label="会员名称" width="180" align="center">
           <template slot-scope="scope">{{scope.row.member_name}}</template>
         </el-table-column>
-        <el-table-column label="电话号码" width="180" align="center">
-          <template slot-scope="scope">{{scope.row.phone_number}}</template>
+        <el-table-column label="床位名称" width="180" align="center">
+          <template slot-scope="scope">{{scope.row.bed_name}}</template>
         </el-table-column>
-        <el-table-column label="性别"  align="center">
-          <template slot-scope="scope">{{scope.row.gender === 0 ?"男":"女"}}</template>
+        <el-table-column label="就餐时间" width="" align="center">
+          <template slot-scope="scope" >{{scope.row.eat_time}}</template>
         </el-table-column>
-        <el-table-column label="操作" width="280"  align="center">
-        <!--进入详情页-->
+        <el-table-column label="餐次" width="180" align="center">
+          <template slot-scope="scope">{{scope.row.meal_times}}</template>
+        </el-table-column>
+        <el-table-column label="操作"  align="center">
           <template slot-scope="scope">
             <el-button
               size="mini"
@@ -77,7 +73,6 @@
               size="mini"
               @click="handleViewOrder(scope.$index, scope.row)"
             >详情</el-button>
-          <!--删除按钮-->
             <el-button
               size="mini"
               type="danger"
@@ -96,35 +91,6 @@
         批量删除
       </el-button>
     </div>
-<!--    <div class="pagination-container">-->
-<!--      <el-pagination-->
-<!--        background-->
-<!--        @size-change="handleSizeChange"-->
-<!--        @current-change="handleCurrentChange"-->
-<!--        layout="total, sizes,prev, pager, next,jumper"-->
-<!--        :current-page.sync="listQuery.pageNum"-->
-<!--        :page-size="listQuery.pageSize"-->
-<!--        :page-sizes="[5,10,15]"-->
-<!--        :total="total">-->
-<!--      </el-pagination>-->
-<!--    </div>-->
-<!--    <el-dialog-->
-<!--      title="关闭"-->
-<!--      :visible.sync="closeOrder.dialogVisible" width="30%">-->
-<!--      <span style="vertical-align: top">操作备注：</span>-->
-<!--      <el-input-->
-<!--        style="width: 80%"-->
-<!--        type="textarea"-->
-<!--        :rows="5"-->
-<!--        placeholder="请输入内容"-->
-<!--        v-model="closeOrder.content">-->
-<!--      </el-input>-->
-<!--      <span slot="footer" class="dialog-footer">-->
-<!--        <el-button @click="closeOrder.dialogVisible = false">取 消</el-button>-->
-<!--        <el-button type="primary" @click="handleCloseOrderConfirm">确 定</el-button>-->
-<!--      </span>-->
-<!--    </el-dialog>-->
-<!--    <logistics-dialog v-model="logisticsDialogVisible"></logistics-dialog>-->
   </div>
 </template>
 
@@ -149,12 +115,6 @@
     data() {
       return {
         listQuery: Object.assign({}, defaultListQuery),
-        searchList:{
-          'phone_number':'',
-          'member_name':''
-        },
-        search_phone:{'phone_number':'',},
-        search_name:{'member_name':''},
         dataList:{page: 1,size: 10},
         listLoading: true,
         list: null,
@@ -166,68 +126,13 @@
           content:null,
           orderIds:[]
         },
-        //各种标签和对应的值
-        statusOptions: [
-          {
-            label: '待付款',
-            value: 0
-          },
-          {
-            label: '待发货',
-            value: 1
-          },
-          {
-            label: '已发货',
-            value: 2
-          },
-          {
-            label: '已完成',
-            value: 3
-          },
-          {
-            label: '已关闭',
-            value: 4
-          }
-        ],
-        orderTypeOptions: [
-          {
-            label: '正常订单',
-            value: 0
-          },
-          {
-            label: '秒杀订单',
-            value: 1
-          }
-        ],
-        sourceTypeOptions: [
-          {
-            label: 'PC',
-            value: 0
-          },
-          {
-            label: 'APP',
-            value: 1
-          }
-        ],
-        operateOptions: [
-          {
-            label: "发送信息",
-            value: 1
-          },
-          {
-            label: "取消会员",
-            value: 2
-          },
-          {
-            label: "删除",
-            value: 3
-          }
-        ],
         logisticsDialogVisible:false
       }
     },
     created() {
       this.getList();
+      this.list.package_detail = JSON.parse(this.list.package_detail)
+      console.log(this.list.package_detail)
     },
     filters: {
       formatCreateTime(time) {
@@ -282,7 +187,7 @@
           console.log('通过用户名搜索：'+this.search_name.member_name)
           console.log('data为：')
           console.log(this.search_name)
-          getList(this.search_name,"/member-manage/member-profile/search/").then(response => {
+          getList(this.search_name,"/diet-manage/delivery-manage/search/").then(response => {
             this.listLoading = false;
             this.list = response.data;
             console.log(response)
@@ -292,33 +197,28 @@
           console.log('通过电话号码搜索:'+this.searchList.phone_number)
           console.log('data为：')
           console.log(this.search_phone)
-          getList(this.search_phone,"/member-manage/member-profile/search").then(response => {
+          getList(this.search_phone,"/diet-manage/delivery-manage/search").then(response => {
             this.listLoading = false;
             this.list = response.data;
             console.log(response)
           });
         }
       },
-
       handleSelectionChange(val){
         this.multipleSelection = val;
       },
       handleAdd(){
-        this.$router.push({path:'/oms/files_newDetail',query:{id:0,edit:false}})
+        this.$router.push({path:'/food/distribution_new',query:{id:0,edit:false}})
       },
       handleChangeOrder(index, row){
-        this.$router.push({path:'/oms/files_editDetail',query:{id:row.id,edit:false}})
+        this.$router.push({path:'/food/distribution_edit',query:{id:row.id,edit:false}})
       },
       handleViewOrder(index, row){
-        this.$router.push({path:'/oms/files_viewDetail',query:{id:row.id,edit:true}})
+        this.$router.push({path:'/food/distribution_view',query:{id:row.id,edit:true}})
       },
       handleCloseOrder(index, row){
         this.closeOrder.dialogVisible=true;
         this.closeOrder.orderIds=[row.id];
-      },
-      handleDeliveryOrder(index, row){
-        let listItem = this.covertOrder(row);
-        this.$router.push({path:'/oms/deliverOrderList',query:{list:[listItem]}})
       },
       handleViewLogistics(index, row){
         this.logisticsDialogVisible=true;
@@ -327,16 +227,6 @@
         let ids=[];
         ids.push(row.id);
         this.deleteOrder(row.id);
-        // axios({
-        //   method: 'delete',
-        //   url: 'http://59.110.212.116:32801/api/member-manage/member-profile/'+row.id,
-        // })
-        //   .then(function(response) {
-        //     console.log(response);
-        //   })
-        //   .catch(function(response) {
-        //     console.log(response);
-        //   });
       },
       handleBatchOperate(){
         let ids=[];
@@ -350,7 +240,7 @@
         }).then(() => {
           for(let i=0;i<ids.length;i++){
             console.log('删除编号:'+ids[i])
-            deleteOrder('/member-manage/member-profile/',ids[i]).then(response=>{
+            deleteOrder('/diet-manage/delivery-manage/',ids[i]).then(response=>{
               this.$message({
                 message: '删除成功！',
                 type: 'success',
@@ -360,47 +250,6 @@
             this.getList();
           }
         })
-
-        // if(this.multipleSelection==null||this.multipleSelection.length<1){
-        //   this.$message({
-        //     message: '请选择要操作的订单',
-        //     type: 'warning',
-        //     duration: 1000
-        //   });
-        //   return;
-        // }
-        // if(this.operateType===1){
-        //   //批量发货
-        //   let list=[];
-        //   for(let i=0;i<this.multipleSelection.length;i++){
-        //     if(this.multipleSelection[i].status===1){
-        //       list.push(this.covertOrder(this.multipleSelection[i]));
-        //     }
-        //   }
-        //   if(list.length===0){
-        //     this.$message({
-        //       message: '选中订单中没有可以发货的订单',
-        //       type: 'warning',
-        //       duration: 1000
-        //     });
-        //     return;
-        //   }
-        //   this.$router.push({path:'/oms/deliverOrderList',query:{list:list}})
-        // }else if(this.operateType===2){
-        //   //关闭订单
-        //   this.closeOrder.orderIds=[];
-        //   for(let i=0;i<this.multipleSelection.length;i++){
-        //     this.closeOrder.orderIds.push(this.multipleSelection[i].id);
-        //   }
-        //   this.closeOrder.dialogVisible=true;
-        // }else if(this.operateType===3){
-        //   //删除订单
-        //   let ids=[];
-        //   for(let i=0;i<this.multipleSelection.length;i++){
-        //     ids.push(this.multipleSelection[i].id);
-        //   }
-        //   this.deleteOrder(ids);
-        // }
       },
       handleSizeChange(val){
         this.listQuery.pageNum = 1;
@@ -436,7 +285,7 @@
       },
       getList() {
         this.listLoading = true;
-        getList(this.dataList,"/member-manage/member-profile/list/").then(response => {
+        getList(this.dataList,"/diet-manage/delivery-manage/list").then(response => {
           this.listLoading = false;
           this.list = response.data.data;
           console.log(this.list)
@@ -450,14 +299,14 @@
         }).then(() => {
           let params = new URLSearchParams();
           params.append("ids",ids);
-          deleteOrder('/member-manage/member-profile/',ids).then(response=>{
+          deleteOrder('/diet-manage/delivery-manage/',ids).then(response=>{
             this.$message({
               message: '删除成功！',
               type: 'success',
               duration: 1000
-            });
-            this.getList();
-          });
+            })
+          })
+          this.getList()
         })
       },
       covertOrder(order){

@@ -92,7 +92,7 @@
         <el-table-column label="会员名称" width="180" align="center">
           <template slot-scope="scope">{{scope.row.elderly_name}}</template>
         </el-table-column>
-        <el-table-column label="预约人" width="180" align="center">
+        <el-table-column label="预约人" width="120" align="center">
           <template slot-scope="scope">{{scope.row.appoint_person}}</template>
         </el-table-column>
 <!--        <el-table-column label="联系方式" width="180" align="center">-->
@@ -101,7 +101,7 @@
         <el-table-column label="房间价格" width="180" align="center">
           <template slot-scope="scope">￥{{scope.row.bed_cost}}</template>
         </el-table-column>
-        <el-table-column label="操作" align="center">
+        <el-table-column label="操作" width="280" align="center">
           <template slot-scope="scope">
             <el-button
               size="mini"

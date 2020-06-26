@@ -10,6 +10,14 @@
           size="small">
           保存
         </el-button>
+        <el-button
+          style="float:right"
+          type="primary"
+          @click="handleBack()"
+          v-if=" edit && this.id"
+          size="small">
+          返回
+        </el-button>
       </div>
       <div style="margin-top: 15px">
         <el-form :inline="true" :model="add_list" :rules="rules" size="small" label-width="180px">
@@ -196,6 +204,9 @@
       }
     },
     methods:{
+      handleBack(){
+        this.$router.push({path:'/oms/checkin'})
+      },
       handleRemove(file, fileList) {
         console.log(file, fileList);
       },

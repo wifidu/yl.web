@@ -53,10 +53,10 @@
         <el-table-column label="会员名称" width="180" align="center">
           <template slot-scope="scope">{{scope.row.member_name}}</template>
         </el-table-column>
-        <el-table-column label="身份证号" width="" align="center">
+        <el-table-column label="身份证号"  align="center">
           <template slot-scope="scope">{{scope.row.member_ID}}</template>
         </el-table-column>
-        <el-table-column label="床位号" width="" align="center">
+        <el-table-column label="床位号"  align="center">
           <template slot-scope="scope">{{scope.row.bed}}</template>
         </el-table-column>
 <!--        <el-table-column label="退住原因" align="center">-->
@@ -65,7 +65,7 @@
         <el-table-column label="退住时间" align="center">
           <template slot-scope="scope">{{scope.row['check-out_time']}}</template>
         </el-table-column>
-        <el-table-column label="操作" align="center">
+        <el-table-column label="操作" width="280" align="center">
           <!--进入详情页-->
           <template slot-scope="scope">
             <el-button

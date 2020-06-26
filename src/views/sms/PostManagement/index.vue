@@ -48,7 +48,7 @@
                 @selection-change="handleSelectionChange"
                 v-loading="listLoading" border>
         <el-table-column type="selection" width="60" align="center"></el-table-column>
-        <el-table-column label="会员编号" width="80" align="center">
+        <el-table-column label="会员编号" width="180" align="center">
           <template slot-scope="scope">{{scope.row.id}}</template>
         </el-table-column>
 <!--        <el-table-column label="注册时间" width="180" align="center">-->
@@ -63,10 +63,10 @@
         <el-table-column label="电话号码" width="180" align="center">
           <template slot-scope="scope">{{scope.row.phone_number}}</template>
         </el-table-column>
-        <el-table-column label="性别"  align="center">
+        <el-table-column label="性别" width="180" align="center">
           <template slot-scope="scope">{{scope.row.gender === 0 ?"男":"女"}}</template>
         </el-table-column>
-        <el-table-column label="操作" width="280"  align="center">
+        <el-table-column label="操作"  align="center">
         <!--进入详情页-->
           <template slot-scope="scope">
             <el-button
