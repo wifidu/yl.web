@@ -354,7 +354,7 @@ export const constantRouterMap = [
   {
     path: '/sms',
     component: Layout,
-    redirect: '/sms/coupon',
+    redirect: '/sms/department',
     name: 'sms',
     meta: {title: '人事管理', icon: 'sms'},
     children: [
