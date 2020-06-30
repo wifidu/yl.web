@@ -466,58 +466,7 @@ export const constantRouterMap = [
         meta: {title: '编辑信息'},
         hidden: true
       },
-      // {
-      //   path: 'flash',
-      //   name: 'flash',
-      //   component: () => import('@/views/sms/flash/index'),
-      //   meta: {title: '部门配置', icon: 'sms-flash'}
-      // },
-      // {
-      //   path: 'flashDetail',
-      //   name: 'flashDetail',
-      //   component: () => import('@/views/sms/flash/indexDetail'),
-      //   meta: {title: '部门配置详情'},
-      //   hidden: true
-      // },
-      // {
-      //   path: 'coupon',
-      //   name: 'coupon',
-      //   component: () => import('@/views/sms/coupon/index'),
-      //   meta: {title: '岗位管理', icon: 'sms-coupon'}
-      // },
-      // {
-      //   path: 'couponDetail',
-      //   name: 'couponDetail',
-      //   component: () => import('@/views/sms/coupon/indexDetail'),
-      //   meta: {title: '岗位管理详情'},
-      //   hidden: true
-      // },
-      // {
-      //   path: 'new',
-      //   name: 'homeNew',
-      //   component: () => import('@/views/sms/new/index'),
-      //   meta: {title: '员工管理', icon: 'sms-new'}
-      // },
-      // {
-      //   path: 'newDetail',
-      //   name: 'newDetail',
-      //   component: () => import('@/views/sms/new/indexDetail'),
-      //   meta: {title: '员工管理详情'},
-      //   hidden: true
-      // },
-      // {
-      //   path: 'subject',
-      //   name: 'homeSubject',
-      //   component: () => import('@/views/sms/subject/index'),
-      //   meta: {title: '团队管理', icon: 'sms-subject'}
-      // },
-      // {
-      //   path: 'subjectDetail',
-      //   name: 'subjectDetail',
-      //   component: () => import('@/views/sms/subject/indexDetail'),
-      //   meta: {title: '团队管理详情'},
-      //   hidden: true
-      // },
+
     ]
   },
   {
@@ -785,7 +734,6 @@ export const constantRouterMap = [
     //   },
     ]
   },
-
   {
     path: '/drug',
     component: Layout,
@@ -871,6 +819,69 @@ export const constantRouterMap = [
         name: 'updatemedicine',
         component: () => import('@/views/drug/medicineSet/updatemedicine'),
         meta: {title: '编辑'},
+        hidden: true
+      },
+    ]
+  },
+  {
+    path: '/rs',
+    component: Layout,
+    redirect: '/rs/waitingCharges',
+    name: 'rs',
+    meta: {title: '报表管理',icon:'sms'},
+    children: [
+      {
+        path: 'waitingCharges',
+        name: 'waitingCharges',
+        component: () => import('@/views/rs/waitingCharges/index'),
+        meta: {title: '待收费管理'}
+      },
+      {
+        path: 'wc_view',
+        name: 'wc_view',
+        component: () => import('@/views/rs/waitingCharges/view'),
+        meta: {title: '详细信息'},
+        hidden: true
+      },
+      {
+        path: 'wc_new',
+        name: 'wc_new',
+        component: () => import('@/views/rs/waitingCharges/in'),
+        meta: {title: '新增信息'},
+        hidden: true
+      },
+      {
+        path: 'wc_edit',
+        name: 'wc_edit',
+        component: () => import('@/views/rs/waitingCharges/edit'),
+        meta: {title: '编辑信息'},
+        hidden: true
+      },
+      {
+        path: 'monthlyCharges',
+        name: 'monthlyCharges',
+        component: () => import('@/views/rs/monthlyCharges/index'),
+        meta: {title: '月度报表管理'}
+      },
+      {
+        path: 'mc_view',
+        name: 'mc_view',
+        component: () => import('@/views/rs/monthlyCharges/view'),
+        meta: {title: '详细信息'},
+        hidden: true
+      },
+      {
+        path: 'mc_new',
+        name: 'mc_new',
+        component: () => import('@/views/rs/monthlyCharges/in'),
+        meta: {title: '新增信息'},
+        hidden: true
+      },
+      {
+        path: 'mc_edit',
+        name: 'mc_edit',
+        component: () => import('@/views/rs/monthlyCharges/edit'),
+        meta: {title: '编辑信息'},
         hidden: true
       }
     ]

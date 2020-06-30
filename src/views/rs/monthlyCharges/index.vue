@@ -1,37 +1,37 @@
 <template> 
   <div class="app-container">
-<!--    <el-card class="filter-container" shadow="never">-->
-<!--      <div>-->
-<!--        <i class="el-icon-search"></i>-->
-<!--        <span>搜索</span>-->
-<!--        <el-button-->
-<!--          style="float:right"-->
-<!--          type="primary"-->
-<!--          @click="handleSearchList()"-->
-<!--          size="small">-->
-<!--          查询搜索-->
-<!--        </el-button>-->
-<!--        <el-button-->
-<!--          style="float:right;margin-right: 15px"-->
-<!--          @click="handleResetSearch()"-->
-<!--          size="small">-->
-<!--          重置列表-->
-<!--        </el-button>-->
-<!--      </div>-->
-<!--      <div style="margin-top: 15px">-->
-<!--        <el-form :inline="true" :model="searchList" size="small" label-width="140px">-->
-<!--          <el-form-item label="输入搜索：">-->
-<!--            <el-input v-model="searchList.phone_number" class="input-width" placeholder="电话号码"></el-input>-->
-<!--          </el-form-item>-->
+    <el-card class="filter-container" shadow="never">
+      <div>
+        <i class="el-icon-search"></i>
+        <span>搜索</span>
+        <el-button
+          style="float:right"
+          type="primary"
+          @click="handleSearchList()"
+          size="small">
+          查询搜索
+        </el-button>
+        <el-button
+          style="float:right;margin-right: 15px"
+          @click="handleResetSearch()"
+          size="small">
+          重置列表
+        </el-button>
+      </div>
+      <div style="margin-top: 15px">
+        <el-form :inline="true" :model="searchList" size="small" label-width="140px">
+          <el-form-item label="输入搜索：">
+            <el-input v-model="searchList.phone_number" class="input-width" placeholder="电话号码"></el-input>
+          </el-form-item>
 <!--          <el-form-item label="会员名称：">-->
 <!--            <el-input v-model="searchList.member_name" class="input-width" placeholder="会员名称"></el-input>-->
 <!--          </el-form-item>-->
-<!--        </el-form>-->
-<!--      </div>-->
-<!--    </el-card>-->
+        </el-form>
+      </div>
+    </el-card>
     <el-card class="operate-container" shadow="never">
       <i class="el-icon-tickets"></i>
-      <span>部门管理</span>
+      <span>岗位列表</span>
       <el-button
         style="float:right"
         type="primary"
@@ -49,11 +49,17 @@
                 v-loading="listLoading" border>
         <el-table-column type="selection" width="60" align="center"></el-table-column>
 
-        <el-table-column label="部门名称" align="center">
-          <template slot-scope="scope">{{scope.row.department_name}}</template>
+        <el-table-column label="岗位名称" align="center">
+          <template slot-scope="scope">{{scope.row.position_name}}</template>
         </el-table-column>
-        <el-table-column label="部门描述" width="180" align="center">
-          <template slot-scope="scope">{{scope.row.department_description}}</template>
+        <el-table-column label="岗位类型" width="180" align="center">
+          <template slot-scope="scope">{{scope.row.position_type === 0 ?"行政岗": scope.row.position_type === 1 ?"财务岗":scope.row.position_type === 0 ?"护理岗":"管理岗"}}</template>
+        </el-table-column>
+        <el-table-column label="岗位薪水" width="180" align="center">
+          <template slot-scope="scope">{{scope.row.position_salary+'元/每单'}}</template>
+        </el-table-column>
+        <el-table-column label="职级名称" width="180" align="center">
+          <template slot-scope="scope">{{scope.row.rank_name}}</template>
         </el-table-column>
 
         <el-table-column label="操作" width="280" align="center">
@@ -145,7 +151,7 @@
         },
         search_phone:{'phone_number':'',},
         search_name:{'member_name':''},
-        dataList:{page: 1, page_size:10},
+        dataList:{page: 1,size: 10},
         listLoading: true,
         list: null,
         total: null,
@@ -269,10 +275,7 @@
           this.getList()
         } else if(this.searchList.phone_number === ''){
           this.search_name.member_name=this.searchList.member_name
-          console.log('通过用户名搜索：'+this.search_name.member_name)
-          console.log('data为：')
-          console.log(this.search_name)
-          getList(this.search_name,"/personnel-management/department-manage/search/").then(response => {
+          getList(this.search_name,"/personnel-management/position-manage/search/").then(response => {
             this.listLoading = false;
             this.list = response.data;
             console.log(response)
@@ -282,7 +285,7 @@
           console.log('通过电话号码搜索:'+this.searchList.phone_number)
           console.log('data为：')
           console.log(this.search_phone)
-          getList(this.search_phone,"/personnel-management/department-manage/search").then(response => {
+          getList(this.search_phone,"/personnel-management/position-manage/search").then(response => {
             this.listLoading = false;
             this.list = response.data;
             console.log(response)
@@ -294,21 +297,17 @@
         this.multipleSelection = val;
       },
       handleAdd(){
-        this.$router.push({path:'/oms/files_newDetail',query:{id:0,edit:false}})
+        this.$router.push({path:'/sms/employee_in',query:{id:0,edit:false}})
       },
       handleChangeOrder(index, row){
-        this.$router.push({path:'/oms/files_editDetail',query:{id:row.id,edit:false}})
+        this.$router.push({path:'/sms/employee_edit',query:{id:row.id,edit:false}})
       },
       handleViewOrder(index, row){
-        this.$router.push({path:'/oms/files_viewDetail',query:{id:row.id,edit:true}})
+        this.$router.push({path:'/sms/employee_view',query:{id:row.id,edit:true}})
       },
       handleCloseOrder(index, row){
         this.closeOrder.dialogVisible=true;
         this.closeOrder.orderIds=[row.id];
-      },
-      handleDeliveryOrder(index, row){
-        let listItem = this.covertOrder(row);
-        this.$router.push({path:'/oms/deliverOrderList',query:{list:[listItem]}})
       },
       handleViewLogistics(index, row){
         this.logisticsDialogVisible=true;
@@ -330,7 +329,7 @@
         }).then(() => {
           for(let i=0;i<ids.length;i++){
             console.log('删除编号:'+ids[i])
-            deleteOrder('/personnel-management/department-manage/',ids[i]).then(response=>{
+            deleteOrder('/personnel-management/position-manage/',ids[i]).then(response=>{
               this.$message({
                 message: '删除成功！',
                 type: 'success',
@@ -375,7 +374,7 @@
       },
       getList() {
         this.listLoading = true;
-        getList(this.dataList,"/personnel-management/department-manage/list").then(response => {
+        getList(this.dataList,"/personnel-management/position-manage/list").then(response => {
           this.listLoading = false;
           this.list = response.data.data;
           console.log(this.list)
@@ -389,7 +388,7 @@
         }).then(() => {
           let params = new URLSearchParams();
           params.append("ids",ids);
-          deleteOrder('/personnel-management/department-manage/',ids).then(response=>{
+          deleteOrder('/personnel-management/position-manage/',ids).then(response=>{
             this.$message({
               message: '删除成功！',
               type: 'success',
