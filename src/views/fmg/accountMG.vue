@@ -19,31 +19,31 @@
               border>
       <el-table-column type="selection" width="60" align="center"></el-table-column>
       <el-table-column label="账号编号" prop="account_number" align="center">
-        <template slot-scope="scope">{{value.account_number}}</template>
+        <!-- <template slot-scope="scope">{{value.account_number}}</template> -->
       </el-table-column>
-      <el-table-column label="会员编号" align="center">
-        <template slot-scope="scope">{{value.member_number}}</template>
+      <el-table-column label="会员编号" align="center" prop="member_number">
+        <!-- <template slot-scope="scope">{{value.member_number}}</template> -->
       </el-table-column>
-      <el-table-column label="会员姓名" align="center">
-        <template slot-scope="scope">{{value.member_name}}</template>
+      <el-table-column label="会员姓名" align="center" prop="member_name">
+        <!-- <template slot-scope="scope">{{value.member_name}}</template> -->
       </el-table-column>
-      <el-table-column label="床位" align="center">
-        <template slot-scope="scope">{{value.beds}}</template>
+      <el-table-column label="床位" align="center" prop="beds" width="130px">
+        <!-- <template slot-scope="scope">{{value.beds}}</template> -->
       </el-table-column>
-      <el-table-column label="账户余额" prop="account_balance" align="center">
-        <template slot-scope="scope">{{value.account_balance}}</template>
+      <el-table-column label="账户余额(元)" prop="account_balance" align="center">
+        <!-- <template slot-scope="scope">{{value.account_balance}}</template> -->
       </el-table-column>
-      <el-table-column label="床位费" prop="bed_money" align="center">
-        <template slot-scope="scope">{{value.beds_cost}}</template>
+      <el-table-column label="床位费(元)" prop="beds_cost" align="center">
+        <!-- <template slot-scope="scope">{{value.beds_cost}}</template> -->
       </el-table-column>
-      <el-table-column label="膳食费" prop="meals" align="center">
-        <template slot-scope="scope">{{value.meal_cost}}</template>
+      <el-table-column label="膳食费(元)" prop="meal_cost" align="center">
+        <!-- <template slot-scope="scope">{{value.meal_cost}}</template> -->
       </el-table-column>
-      <el-table-column label="护理费" prop="month_fee" align="center">
-        <template slot-scope="scope">{{value.nursing_cost}}</template>
+      <el-table-column label="护理费(元)" prop="nursing_cost" align="center">
+        <!-- <template slot-scope="scope">{{value.nursing_cost}}</template> -->
       </el-table-column>
-      <el-table-column label="其他月度费" prop="month_fee" align="center">
-        <template slot-scope="scope">{{value.other_cost}}</template>
+      <el-table-column label="其他月度费(元)" prop="other_cost" align="center">
+        <!-- <template slot-scope="scope">{{value.other_cost}}</template> -->
       </el-table-column>
       <el-table-column label="操作" width="250" align="center">
         <template slot-scope="scope">
@@ -68,6 +68,7 @@
         @current-change="handleCurrentChange"
         :current-page="currentPage"
         :page-sizes="[5, 10, 15]"
+        :page-size="5"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total">
       </el-pagination>
@@ -100,8 +101,8 @@
         input: '',
         listLoading: false,
         number:{
-          page: 2,
-          pageSize: 1,
+          page: 1,
+          page_size: 5,
         },
 
         value: null
@@ -116,13 +117,22 @@
         getList(this.number,'/financial-management/account/').then(response => {
           this.listLoading = false;
           this.value = response.data.data;
+          this.total = response.data.total;
         })
       },
       handleSizeChange(val) {
-        console.log('???');
+        this.listLoading = true;
+        getList({page: this.number.page, page_size: val},'/financial-management/account/').then(response => {
+          this.listLoading = false;
+          this.value = response.data.data;
+        })
       },
       handleCurrentChange(val) {
-        console.log('!!');
+        this.listLoading = true;
+        getList({page: val, page_size: this.number.page_size},'/financial-management/account/').then(response => {
+          this.listLoading = false;
+          this.value = response.data.data;
+        })
       },
       handleShow(index, row) {
         this.$router.push({path: '/fmg/accountMS', query:{id:row.id}});

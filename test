@@ -1,0 +1,305 @@
+commit 21d1beaadb75ed7f35b2659403157c61c49bc355
+Author: luowenda <1215092611@qq.com>
+Date:   Wed Jul 1 12:34:07 2020 +0800
+
+    a
+
+diff --git a/src/views/fmg/accountMG.vue b/src/views/fmg/accountMG.vue
+index bc6b09d..4d34ac9 100644
+--- a/src/views/fmg/accountMG.vue
++++ b/src/views/fmg/accountMG.vue
+@@ -1,129 +1,136 @@
+-<template>
+-  <div class="app-container" >
+-    <el-card class="filter-container" shadow="never">
+-      <div style="margin-top: 15px">
+-        <el-form :inline="true" size="small">
+-          <el-select v-model="valueName" size="small" style="width: 125px">
+-            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+-          </el-select>
+-          <el-form-item>
+-            <el-input v-model="input" placeholder="请输入搜索内容" style="width: 250px"></el-input>
+-          </el-form-item>
+-          <el-button type="info" icon="el-icon-search" size="small"></el-button>
+-        </el-form>
+-      </div>
+-    </el-card>
+-    <el-table :data="value"
+-              style="margin-top: 15px;width:100%"
+-              v-loading="listLoading"
+-              border>
+-      <el-table-column type="selection" width="60" align="center"></el-table-column>
+-      <el-table-column label="账号编号" prop="account_number" align="center">
+-        <template slot-scope="scope">{{value.account_number}}</template>
+-      </el-table-column>
+-      <el-table-column label="会员编号" align="center">
+-        <template slot-scope="scope">{{value.member_number}}</template>
+-      </el-table-column>
+-      <el-table-column label="会员姓名" align="center">
+-        <template slot-scope="scope">{{value.member_name}}</template>
+-      </el-table-column>
+-      <el-table-column label="床位" align="center">
+-        <template slot-scope="scope">{{value.beds}}</template>
+-      </el-table-column>
+-      <el-table-column label="账户余额" prop="account_balance" align="center">
+-        <template slot-scope="scope">{{value.account_balance}}</template>
+-      </el-table-column>
+-      <el-table-column label="床位费" prop="bed_money" align="center">
+-        <template slot-scope="scope">{{value.beds_cost}}</template>
+-      </el-table-column>
+-      <el-table-column label="膳食费" prop="meals" align="center">
+-        <template slot-scope="scope">{{value.meal_cost}}</template>
+-      </el-table-column>
+-      <el-table-column label="护理费" prop="month_fee" align="center">
+-        <template slot-scope="scope">{{value.nursing_cost}}</template>
+-      </el-table-column>
+-      <el-table-column label="其他月度费" prop="month_fee" align="center">
+-        <template slot-scope="scope">{{value.other_cost}}</template>
+-      </el-table-column>
+-      <el-table-column label="操作" width="250" align="center">
+-        <template slot-scope="scope">
+-          <p>
+-            <el-button size="mini" @click="handleShow(scope.$index, scope.row)">查看账单</el-button>
+-            <el-button size="mini">充值</el-button>
+-          </p>
+-          <p>
+-            <el-button size="mini">退费</el-button>
+-            <el-button size="mini">提取</el-button>
+-          </p>
+-        </template>
+-      </el-table-column>
+-    </el-table>
+-    <div class="batch-operate-container">
+-      <el-button style="margin-left: 20px" size="mini" type="danger">批量补贴</el-button>
+-    </div>
+-    <div class="pagination-container">
+-      <el-pagination
+-        background
+-        @size-change="handleSizeChange"
+-        @current-change="handleCurrentChange"
+-        :current-page="currentPage"
+-        :page-sizes="[5, 10, 15]"
+-        layout="total, sizes, prev, pager, next, jumper"
+-        :total="total">
+-      </el-pagination>
+-    </div>
+-  </div>
+-</template>
+-
+-<script>
+-  import {accountMGList} from '@/api/fmg';
+-
+-  export default {
+-    name: 'accountMG',
+-    data() {
+-      return{
+-        total: 1,
+-        currentPage: 5,
+-        options:[{
+-          value:'1', label:'账户编号'
+-        }, {
+-          value:'2', label:'会员姓名'
+-        }, {
+-          value: '3', label: '床号'
+-        }],
+-        plan_s: '',
+-        plan_e: '',
+-        valueName: '1',
+-        valueY: '1',
+-        valueCost: '1',
+-        input: '',
+-        listLoading: false,
+-        page: null,
+-        pageSize: null,
+-        value: null
+-      }
+-    },
+-    methods: {
+-      getList() {
+-        this.listLoading = true;
+-        accountMGList(this.page, this.pageSize).then(response => {
+-          this.listLoading = false;
+-          this.value = response.data.data;
+-        })
+-      },
+-      handleSizeChange(val) {
+-        console.log('???');
+-      },
+-      handleCurrentChange(val) {
+-        console.log('!!');
+-      },
+-      handleShow(index, row) {
+-        this.$router.push({path: '/fmg/accountMS', query:{id:row.id}});
+-      }
+-    }
+-  }
+-</script>
+-
+-<stype>
+-
+-</stype>
++<template>
++  <div class="app-container" >
++    <el-card class="filter-container" shadow="never">
++      <div style="margin-top: 15px">
++        <el-form :inline="true" size="small">
++          <el-select v-model="valueName" size="small" style="width: 125px">
++            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
++          </el-select>
++          <el-form-item>
++            <el-input v-model="input" placeholder="请输入搜索内容" style="width: 250px"></el-input>
++          </el-form-item>
++          <el-button type="info" icon="el-icon-search" size="small"></el-button>
++        </el-form>
++      </div>
++    </el-card>
++    <el-table :data="value"
++              style="margin-top: 15px;width:100%"
++              v-loading="listLoading"
++              border>
++      <el-table-column type="selection" width="60" align="center"></el-table-column>
++      <el-table-column label="账号编号" prop="account_number" align="center">
++        <template slot-scope="scope">{{value.account_number}}</template>
++      </el-table-column>
++      <el-table-column label="会员编号" align="center">
++        <template slot-scope="scope">{{value.member_number}}</template>
++      </el-table-column>
++      <el-table-column label="会员姓名" align="center">
++        <template slot-scope="scope">{{value.member_name}}</template>
++      </el-table-column>
++      <el-table-column label="床位" align="center">
++        <template slot-scope="scope">{{value.beds}}</template>
++      </el-table-column>
++      <el-table-column label="账户余额" prop="account_balance" align="center">
++        <template slot-scope="scope">{{value.account_balance}}</template>
++      </el-table-column>
++      <el-table-column label="床位费" prop="bed_money" align="center">
++        <template slot-scope="scope">{{value.beds_cost}}</template>
++      </el-table-column>
++      <el-table-column label="膳食费" prop="meals" align="center">
++        <template slot-scope="scope">{{value.meal_cost}}</template>
++      </el-table-column>
++      <el-table-column label="护理费" prop="month_fee" align="center">
++        <template slot-scope="scope">{{value.nursing_cost}}</template>
++      </el-table-column>
++      <el-table-column label="其他月度费" prop="month_fee" align="center">
++        <template slot-scope="scope">{{value.other_cost}}</template>
++      </el-table-column>
++      <el-table-column label="操作" width="250" align="center">
++        <template slot-scope="scope">
++          <p>
++            <el-button size="mini" @click="handleShow(scope.$index, scope.row)">查看账单</el-button>
++            <el-button size="mini">充值</el-button>
++          </p>
++          <p>
++            <el-button size="mini">退费</el-button>
++            <el-button size="mini">提取</el-button>
++          </p>
++        </template>
++      </el-table-column>
++    </el-table>
++    <div class="batch-operate-container">
++      <el-button style="margin-left: 20px" size="mini" type="danger">批量补贴</el-button>
++    </div>
++    <div class="pagination-container">
++      <el-pagination
++        background
++        @size-change="handleSizeChange"
++        @current-change="handleCurrentChange"
++        :current-page="currentPage"
++        :page-sizes="[5, 10, 15]"
++        layout="total, sizes, prev, pager, next, jumper"
++        :total="total">
++      </el-pagination>
++    </div>
++  </div>
++</template>
++
++<script>
++  import {accountMGList} from '@/api/fmg';
++  import {fetchList,closeOrder,deleteOrder,getList,deleteMulOrder} from '@/api/order'
++
++  export default {
++    name: 'accountMG',
++    data() {
++      return{
++        total: 1,
++        currentPage: 5,
++        options:[{
++          value:'1', label:'账户编号'
++        }, {
++          value:'2', label:'会员姓名'
++        }, {
++          value: '3', label: '床号'
++        }],
++        plan_s: '',
++        plan_e: '',
++        valueName: '1',
++        valueY: '1',
++        valueCost: '1',
++        input: '',
++        listLoading: false,
++        number:{
++          page: 2,
++          pageSize: 1,
++        },
++
++        value: null
++      }
++    },
++    created() {
++      this.getList();
++    },
++    methods: {
++      getList() {
++        this.listLoading = true;
++        getList(this.number,'/financial-management/account/').then(response => {
++          this.listLoading = false;
++          this.value = response.data.data;
++        })
++      },
++      handleSizeChange(val) {
++        console.log('???');
++      },
++      handleCurrentChange(val) {
++        console.log('!!');
++      },
++      handleShow(index, row) {
++        this.$router.push({path: '/fmg/accountMS', query:{id:row.id}});
++      }
++    }
++  }
++</script>
++
++<stype>
++
++</stype>
+
+commit c07aa8cccf2ceaeb7e9f91be6c2fb3afb0f6efa8
+Author: wifidu <875147715@qq.com>
+Date:   Wed Jul 1 00:33:07 2020 +0800
+
+    修改后端端口
+
+diff --git a/config/dev.env.js b/config/dev.env.js
+index daf8d73..afe53bf 100644
+--- a/config/dev.env.js
++++ b/config/dev.env.js
+@@ -4,5 +4,5 @@ const prodEnv = require('./prod.env')
+ 
+ module.exports = merge(prodEnv, {
+   NODE_ENV: '"development"',
+-  BASE_API: '"http://59.110.212.116:32801/api"'
++  BASE_API: '"http://59.110.212.116:8090/api"'
+ })
+diff --git a/config/prod.env.js b/config/prod.env.js
+index a65d55e..8b40827 100644
+--- a/config/prod.env.js
++++ b/config/prod.env.js
+@@ -1,5 +1,5 @@
+ 'use strict'
+ module.exports = {
+   NODE_ENV: '"production"',
+-  BASE_API: '"http://120.27.63.9:8080"'
++  BASE_API: '"http://120.27.63.9:8090"'
+ }
