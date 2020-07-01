@@ -77,6 +77,7 @@
 
 <script>
   import {accountMGList} from '@/api/fmg';
+  import {fetchList,closeOrder,deleteOrder,getList,deleteMulOrder} from '@/api/order'
 
   export default {
     name: 'accountMG',
@@ -98,15 +99,21 @@
         valueCost: '1',
         input: '',
         listLoading: false,
-        page: null,
-        pageSize: null,
+        number:{
+          page: 2,
+          pageSize: 1,
+        },
+
         value: null
       }
+    },
+    created() {
+      this.getList();
     },
     methods: {
       getList() {
         this.listLoading = true;
-        accountMGList(this.page, this.pageSize).then(response => {
+        getList(this.number,'/financial-management/account/').then(response => {
           this.listLoading = false;
           this.value = response.data.data;
         })
